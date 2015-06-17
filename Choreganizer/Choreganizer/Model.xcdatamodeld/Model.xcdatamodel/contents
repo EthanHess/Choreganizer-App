@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14C2055" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Chore" representedClassName="Chore" syncable="YES">
+        <attribute name="detail" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="day" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Day" inverseName="chores" inverseEntity="Day" syncable="YES"/>
+    </entity>
+    <entity name="Day" representedClassName="Day" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="chores" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Chore" inverseName="day" inverseEntity="Chore" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Chore" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="Day" positionX="-63" positionY="0" width="128" height="75"/>
+    </elements>
+</model>

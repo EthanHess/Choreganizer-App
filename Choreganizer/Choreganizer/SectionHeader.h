@@ -14,7 +14,7 @@
 
 @required
 
-- (void)addChore;
+- (void)popAddChoreView;
 
 @end
 

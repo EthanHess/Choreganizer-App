@@ -10,14 +10,13 @@
 #import "ChoreController.h"
 #import "SectionHeader.h"
 #import "TableViewCell.h"
-#import "AddView.h"
+#import "AddChoreViewController.h"
 
-@interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate, DismissDelegate>
+@interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SectionHeader *sectionHeader;
-@property (nonatomic, strong) AddView *addView;
-@property (nonatomic, strong) Day *currentDay;
+@property (nonatomic, strong) Day *day;
 
 @end
 
@@ -36,17 +35,8 @@
     
     [self.view addSubview:self.tableView];
     
-    [self setUpAddView];
-    
 }
 
-- (void)setUpAddView {
-    
-    self.addView = [[AddView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height)];
-    self.addView.delegate = self;
-    [self.view addSubview:self.addView];
-    
-}
 
 - (void)registerTableView:(UITableView *)tableView {
     
@@ -72,9 +62,9 @@
     [self.sectionHeader updateWithTitle:section];
     self.sectionHeader.delegate = self;
     
-    self.currentDay = [ChoreController sharedInstance].days[section];
+    Day *day = [ChoreController sharedInstance].days[section];
     
-    [self.sectionHeader updateWithDay:self.currentDay];
+    [self.sectionHeader updateWithDay:day];
     
     return self.sectionHeader;
 }
@@ -105,54 +95,22 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
-    //configure
-    
     Day *day = [[ChoreController sharedInstance].days objectAtIndex:section];
     
     return day.chores.count;
     
 }
 
-
-- (void)addChore {
+- (void)popAddChoreView {
     
-    [self popUpAddView:self.addView distance:self.addView.frame.size.height];
-
-}
-
-- (void)popUpAddView:(UIView *)view distance:(float)distance {
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        view.center = CGPointMake(view.center.x, view.center.y - distance);
-        
-    }];
-    
-}
-
-- (void)dismissView {
-    
-    [self popDownAddView:self.addView distance:self.addView.frame.size.height];
-    
-}
-
-- (void)popDownAddView:(UIView *)view distance:(float)distance {
-    
-    [UIView animateWithDuration:0.5 animations:^{
-        
-        view.center = CGPointMake(view.center.x, view.center.y + distance);
-        
-    }];
+    AddChoreViewController *addChoreVC = [AddChoreViewController new];
+    [self.navigationController presentViewController:addChoreVC animated:YES completion:nil];
     
 }
 
 - (void)saveChoreToDay:(Day *)day {
     
-    [self.addView updateWithDay:self.currentDay];
     
-    [self dismissView];
-    
-    [[ChoreController sharedInstance]addChoreWithTitle:self.addView.textField.text andDescription:self.addView.textView.text toDay:day];
     
     [self.tableView reloadData];
     

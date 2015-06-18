@@ -11,7 +11,7 @@
 		27B1274E1B225E0B007BACD1 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B1274D1B225E0B007BACD1 /* Stack.m */; };
 		27B259EA1B30A6CA00544F52 /* Chore.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B259E91B30A6CA00544F52 /* Chore.m */; };
 		27B259ED1B30A6CB00544F52 /* Day.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B259EC1B30A6CB00544F52 /* Day.m */; };
-		27BC84061B2E285600668F80 /* AddView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BC84051B2E285600668F80 /* AddView.m */; };
+		27B25A701B326A9100544F52 /* AddChoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B25A6F1B326A9100544F52 /* AddChoreViewController.m */; };
 		27DF7B021B22389500883F06 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B011B22389500883F06 /* main.m */; };
 		27DF7B051B22389500883F06 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B041B22389500883F06 /* AppDelegate.m */; };
 		27DF7B081B22389500883F06 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B071B22389500883F06 /* ViewController.m */; };
@@ -42,8 +42,8 @@
 		27B259E91B30A6CA00544F52 /* Chore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Chore.m; path = ../Chore.m; sourceTree = "<group>"; };
 		27B259EB1B30A6CB00544F52 /* Day.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Day.h; path = ../Day.h; sourceTree = "<group>"; };
 		27B259EC1B30A6CB00544F52 /* Day.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Day.m; path = ../Day.m; sourceTree = "<group>"; };
-		27BC84041B2E285600668F80 /* AddView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddView.h; sourceTree = "<group>"; };
-		27BC84051B2E285600668F80 /* AddView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddView.m; sourceTree = "<group>"; };
+		27B25A6E1B326A9100544F52 /* AddChoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddChoreViewController.h; sourceTree = "<group>"; };
+		27B25A6F1B326A9100544F52 /* AddChoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddChoreViewController.m; sourceTree = "<group>"; };
 		27DF7AFC1B22389500883F06 /* Choreganizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Choreganizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DF7B001B22389500883F06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27DF7B011B22389500883F06 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -110,8 +110,8 @@
 				27DF7B071B22389500883F06 /* ViewController.m */,
 				27DF7B2B1B2244A300883F06 /* SectionHeader.h */,
 				27DF7B2C1B2244A300883F06 /* SectionHeader.m */,
-				27BC84041B2E285600668F80 /* AddView.h */,
-				27BC84051B2E285600668F80 /* AddView.m */,
+				27B25A6E1B326A9100544F52 /* AddChoreViewController.h */,
+				27B25A6F1B326A9100544F52 /* AddChoreViewController.m */,
 				27DF7B2E1B2244BF00883F06 /* TableViewCell.h */,
 				27DF7B2F1B2244BF00883F06 /* TableViewCell.m */,
 				27DF7B251B22397000883F06 /* ChoreController.h */,
@@ -261,7 +261,7 @@
 				27DF7B2D1B2244A300883F06 /* SectionHeader.m in Sources */,
 				27B259EA1B30A6CA00544F52 /* Chore.m in Sources */,
 				27B1274E1B225E0B007BACD1 /* Stack.m in Sources */,
-				27BC84061B2E285600668F80 /* AddView.m in Sources */,
+				27B25A701B326A9100544F52 /* AddChoreViewController.m in Sources */,
 				27DF7B301B2244BF00883F06 /* TableViewCell.m in Sources */,
 				2703E4FA1B24C412005F82FE /* Model.xcdatamodeld in Sources */,
 				27DF7B081B22389500883F06 /* ViewController.m in Sources */,

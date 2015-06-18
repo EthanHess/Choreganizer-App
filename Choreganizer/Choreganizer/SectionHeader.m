@@ -30,8 +30,9 @@
         self.addButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.addButton setTitle:@"+" forState:UIControlStateNormal];
         [self.addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        self.addButton.backgroundColor = [UIColor blueColor];
         [self.addButton addTarget:self action:@selector(addChore) forControlEvents:UIControlEventTouchUpInside];
+        self.addButton.backgroundColor = [UIColor blueColor];
+        
         [self addSubview:self.addButton];
         
         [self setUpConstraints];
@@ -86,8 +87,10 @@
 
 - (void)addChore {
     
-    [self.delegate addChore];
+    [self.delegate popAddChoreView];
+    
 }
+
 
 
 @end

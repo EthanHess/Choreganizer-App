@@ -28,6 +28,12 @@
     
     [self setUpCoreData];
     
+    UILocalNotification *locationNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (locationNotification) {
+        // Set icon badge number to zero
+        application.applicationIconBadgeNumber = 0;
+    }
+    
     return YES;
 }
      
@@ -66,7 +72,23 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]){ //iOS8
+        
+        [application registerUserNotificationSettings:
+         [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge |
+                               UIRemoteNotificationTypeSound |
+                               UIRemoteNotificationTypeAlert)
+                               categories:nil]];
+        [application registerForRemoteNotifications];
+        
+    } else {
+        
+        [application registerForRemoteNotificationTypes:(UIRemoteNotificationType)
+         (UIRemoteNotificationTypeBadge |
+          UIRemoteNotificationTypeSound |
+          UIRemoteNotificationTypeAlert)];
+ }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

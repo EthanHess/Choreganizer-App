@@ -22,6 +22,11 @@
 
 @implementation ViewController
 
+- (void)viewWillAppear:(BOOL)animated {
+    
+    [self.tableView reloadData];
+}
+
 - (void)viewDidLoad {
 
     [super viewDidLoad];
@@ -101,20 +106,15 @@
     
 }
 
-- (void)popAddChoreView {
+- (void)popAddChoreView:(Day *)day {
     
     AddChoreViewController *addChoreVC = [AddChoreViewController new];
+    [addChoreVC updateWithDay:day];
+    
     [self.navigationController presentViewController:addChoreVC animated:YES completion:nil];
     
 }
 
-- (void)saveChoreToDay:(Day *)day {
-    
-    
-    
-    [self.tableView reloadData];
-    
-}
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     

@@ -14,7 +14,7 @@
 
 @required
 
-- (void)popAddChoreView;
+- (void)popAddChoreView:(Day *)day;
 
 @end
 

@@ -87,7 +87,7 @@
 
 - (void)addChore {
     
-    [self.delegate popAddChoreView];
+    [self.delegate popAddChoreView:self.day];
     
 }
 

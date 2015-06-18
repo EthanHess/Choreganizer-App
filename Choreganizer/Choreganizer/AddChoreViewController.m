@@ -7,6 +7,8 @@
 //
 
 #import "AddChoreViewController.h"
+#import "ViewController.h"
+#import "ChoreController.h"
 
 @interface AddChoreViewController ()
 
@@ -34,6 +36,7 @@
     self.saveButton.backgroundColor = [UIColor redColor];
     [self.saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.saveButton setTitle:@"Save" forState:UIControlStateNormal];
+    [self.saveButton addTarget:self action:@selector(saveChoreToDay:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.saveButton];
     
     self.dismissButton = [UIButton new];
@@ -99,9 +102,19 @@
 
 - (void)dismissSelf {
     
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     
 }
+
+- (void)saveChoreToDay:(Day *)day {
+    
+    [[ChoreController sharedInstance]addChoreWithTitle:self.textField.text andDescription:self.textView.text toDay:self.day];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
 
 - (void)clearFields {
     

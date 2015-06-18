@@ -10,7 +10,7 @@
 #import "ViewController.h"
 #import "ChoreController.h"
 
-@interface AddChoreViewController ()
+@interface AddChoreViewController () <UITextFieldDelegate, UITextViewDelegate>
 
 @end
 
@@ -22,12 +22,14 @@
     self.view.backgroundColor = [UIColor colorWithRed:255/255.0f green:232/255.0f blue:248/255.0f alpha:1.0f];
     
     self.textField = [UITextField new];
+    self.textField.delegate = self;
     self.textField.translatesAutoresizingMaskIntoConstraints = NO;
     self.textField.placeholder = @"Add Chore Title";
     self.textField.borderStyle = UITextBorderStyleRoundedRect;
     [self.view addSubview:self.textField];
     
     self.textView = [UITextView new];
+    self.textView.delegate = self;
     self.textView.translatesAutoresizingMaskIntoConstraints = NO;
     [self.view addSubview:self.textView];
     
@@ -122,6 +124,18 @@
     self.textView.text = @"";
 }
 
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    [textField resignFirstResponder];
+    
+    return YES;
+}
+
+- (void)textViewDidEndEditing:(UITextView *)textView {
+    
+    [textView resignFirstResponder];
+    
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

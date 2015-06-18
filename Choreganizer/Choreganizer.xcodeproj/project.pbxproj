@@ -12,6 +12,7 @@
 		27B259EA1B30A6CA00544F52 /* Chore.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B259E91B30A6CA00544F52 /* Chore.m */; };
 		27B259ED1B30A6CB00544F52 /* Day.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B259EC1B30A6CB00544F52 /* Day.m */; };
 		27B25A701B326A9100544F52 /* AddChoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B25A6F1B326A9100544F52 /* AddChoreViewController.m */; };
+		27B25A731B3353C700544F52 /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B25A721B3353C700544F52 /* PickerViewController.m */; };
 		27DF7B021B22389500883F06 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B011B22389500883F06 /* main.m */; };
 		27DF7B051B22389500883F06 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B041B22389500883F06 /* AppDelegate.m */; };
 		27DF7B081B22389500883F06 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B071B22389500883F06 /* ViewController.m */; };
@@ -44,6 +45,8 @@
 		27B259EC1B30A6CB00544F52 /* Day.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Day.m; path = ../Day.m; sourceTree = "<group>"; };
 		27B25A6E1B326A9100544F52 /* AddChoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddChoreViewController.h; sourceTree = "<group>"; };
 		27B25A6F1B326A9100544F52 /* AddChoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddChoreViewController.m; sourceTree = "<group>"; };
+		27B25A711B3353C700544F52 /* PickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerViewController.h; sourceTree = "<group>"; };
+		27B25A721B3353C700544F52 /* PickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewController.m; sourceTree = "<group>"; };
 		27DF7AFC1B22389500883F06 /* Choreganizer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Choreganizer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DF7B001B22389500883F06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27DF7B011B22389500883F06 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -112,6 +115,8 @@
 				27DF7B2C1B2244A300883F06 /* SectionHeader.m */,
 				27B25A6E1B326A9100544F52 /* AddChoreViewController.h */,
 				27B25A6F1B326A9100544F52 /* AddChoreViewController.m */,
+				27B25A711B3353C700544F52 /* PickerViewController.h */,
+				27B25A721B3353C700544F52 /* PickerViewController.m */,
 				27DF7B2E1B2244BF00883F06 /* TableViewCell.h */,
 				27DF7B2F1B2244BF00883F06 /* TableViewCell.m */,
 				27DF7B251B22397000883F06 /* ChoreController.h */,
@@ -267,6 +272,7 @@
 				27DF7B081B22389500883F06 /* ViewController.m in Sources */,
 				27DF7B271B22397000883F06 /* ChoreController.m in Sources */,
 				27DF7B051B22389500883F06 /* AppDelegate.m in Sources */,
+				27B25A731B3353C700544F52 /* PickerViewController.m in Sources */,
 				27DF7B021B22389500883F06 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

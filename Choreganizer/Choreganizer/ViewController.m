@@ -11,6 +11,7 @@
 #import "SectionHeader.h"
 #import "TableViewCell.h"
 #import "AddChoreViewController.h"
+#import "PickerViewController.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate>
 
@@ -138,6 +139,8 @@
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
+        [self popPickerViewController];
+        
     }]];
      
     [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
@@ -145,6 +148,14 @@
     }]];
     
     [self presentViewController:alert animated:YES completion:nil];
+    
+}
+
+- (void)popPickerViewController {
+    
+    PickerViewController *pickerVC = [PickerViewController new];
+    
+    [self.navigationController presentViewController:pickerVC animated:YES completion:nil];
     
 }
 

@@ -139,7 +139,7 @@
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
-        [self popPickerViewController];
+        [self popPickerViewControllerWithChore:[ChoreController sharedInstance].chores[indexPath.row]];
         
     }]];
      
@@ -151,9 +151,10 @@
     
 }
 
-- (void)popPickerViewController {
+- (void)popPickerViewControllerWithChore:(Chore *)chore {
     
     PickerViewController *pickerVC = [PickerViewController new];
+    [pickerVC updateWithChore:chore];
     
     [self.navigationController presentViewController:pickerVC animated:YES completion:nil];
     

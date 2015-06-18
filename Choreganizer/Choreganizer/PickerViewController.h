@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "Chore.h"
+#import "Day.h"
 
 @interface PickerViewController : UIViewController
 
-- (void)updateWithChore:(Chore *)chore;
+- (void)updateWithChore:(Chore *)chore andDay:(Day *)day;
 
 @end

@@ -87,7 +87,12 @@
     Chore *chore = [day.chores objectAtIndex:indexPath.row];
     
     cell.textLabel.text = chore.title;
+    cell.textLabel.font = [UIFont fontWithName:@"Chalkduster" size:24];
+    cell.textLabel.textColor = [UIColor brownColor];
     cell.detailTextLabel.text = chore.detail;
+    cell.detailTextLabel.font = [UIFont fontWithName:@"Chalkduster" size:16];
+    cell.detailTextLabel.textColor = [UIColor brownColor];
+    cell.imageView.image = [UIImage imageNamed:@"List-50"]; 
     cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"lightParchment"]];
     
     
@@ -139,7 +144,9 @@
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
-        [self popPickerViewControllerWithChore:[ChoreController sharedInstance].chores[indexPath.row]];
+        Chore *chore = [ChoreController sharedInstance].chores[indexPath.row];
+        
+        [self popPickerViewControllerWithChore:chore andDay:chore.day];
         
     }]];
      
@@ -151,10 +158,10 @@
     
 }
 
-- (void)popPickerViewControllerWithChore:(Chore *)chore {
+- (void)popPickerViewControllerWithChore:(Chore *)chore andDay:(Day *)day {
     
     PickerViewController *pickerVC = [PickerViewController new];
-    [pickerVC updateWithChore:chore];
+    [pickerVC updateWithChore:chore andDay:day];
     
     [self.navigationController presentViewController:pickerVC animated:YES completion:nil];
     

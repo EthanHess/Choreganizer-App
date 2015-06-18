@@ -19,7 +19,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:255/255.0f green:232/255.0f blue:248/255.0f alpha:1.0f];
+    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"chalkboard"]];
     
     self.textField = [UITextField new];
     self.textField.delegate = self;

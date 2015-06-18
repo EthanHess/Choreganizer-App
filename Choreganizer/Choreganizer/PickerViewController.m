@@ -19,9 +19,10 @@
 
 @implementation PickerViewController
 
-- (void)updateWithChore:(Chore *)chore {
+- (void)updateWithChore:(Chore *)chore andDay:(Day *)day {
     
     self.chore = chore;
+    chore.day = day;
     
 }
 

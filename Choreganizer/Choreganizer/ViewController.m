@@ -92,6 +92,7 @@
     cell.detailTextLabel.text = chore.detail;
     cell.detailTextLabel.font = [UIFont fontWithName:@"Chalkduster" size:16];
     cell.detailTextLabel.textColor = [UIColor brownColor];
+    cell.detailTextLabel.numberOfLines = 0;
     cell.imageView.image = [UIImage imageNamed:@"List-50"]; 
     cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"lightParchment"]];
     
@@ -144,9 +145,10 @@
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         
-        Chore *chore = [ChoreController sharedInstance].chores[indexPath.row];
+        Day *day = [ChoreController sharedInstance].days[indexPath.section];
+        Chore *chore = day.chores[indexPath.row];
         
-        [self popPickerViewControllerWithChore:chore andDay:chore.day];
+        [self popPickerViewControllerWithChore:chore andDay:day];
         
     }]];
      

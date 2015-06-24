@@ -67,11 +67,11 @@
     
     NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-25-[_textField(==50)]-75-[_textView(==200)]-50-[_dismissButton(==75)]" options:0 metrics:nil views:viewsDictionary];
     
-    NSArray *horizontalConstraintI = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-25-[_textField(==300)]" options:0 metrics:nil views:viewsDictionary];
+    NSArray *horizontalConstraintI = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-35-[_textField(==300)]" options:0 metrics:nil views:viewsDictionary];
     
-    NSArray *horizontalConstraintII = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-25-[_textView(==300)]" options:0 metrics:nil views:viewsDictionary];
+    NSArray *horizontalConstraintII = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-35-[_textView(==300)]" options:0 metrics:nil views:viewsDictionary];
     
-    NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-25-[_saveButton(==75)]-25-[_dismissButton(==75)]-25-[_clearButton(==75)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:viewsDictionary];
+    NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-35-[_saveButton(==75)]-25-[_dismissButton(==75)]-25-[_clearButton(==75)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:viewsDictionary];
     
     NSLayoutConstraint *equalConstraint = [NSLayoutConstraint constraintWithItem:self.dismissButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.clearButton attribute:NSLayoutAttributeHeight multiplier:1 constant:0.0];
     
@@ -131,10 +131,13 @@
     return YES;
 }
 
-- (void)textViewDidEndEditing:(UITextView *)textView {
+- (BOOL)textView:(UITextView *)txtView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if( [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound ) {
+        return YES;
+    }
     
-    [textView resignFirstResponder];
-    
+    [txtView resignFirstResponder];
+    return NO;
 }
 
 - (void)didReceiveMemoryWarning {

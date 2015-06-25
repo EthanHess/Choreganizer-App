@@ -35,7 +35,7 @@
     [self.view addSubview:self.datePicker];
     
     self.sendButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 300, 100, 100)];
-    self.sendButton.backgroundColor = [UIColor greenColor];
+    self.sendButton.backgroundColor = [UIColor colorWithRed:99/255.0f green:176/255.0f blue:230/255.0f alpha:1.0f];
     [self.sendButton setTitle:@"Send" forState:UIControlStateNormal];
     self.sendButton.layer.borderColor = [[UIColor blackColor]CGColor];
     self.sendButton.layer.borderWidth = 3.0;
@@ -44,7 +44,7 @@
     [self.view addSubview:self.sendButton];
     
     self.dismissButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 150, 300, 100, 100)];
-    self.dismissButton.backgroundColor = [UIColor redColor];
+    self.dismissButton.backgroundColor = [UIColor colorWithRed:99/255.0f green:17/255.0f blue:36/255.0f alpha:1.0f];
     [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
     self.dismissButton.layer.borderColor = [[UIColor blackColor]CGColor];
     self.dismissButton.layer.borderWidth = 3.0;

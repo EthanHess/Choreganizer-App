@@ -73,22 +73,6 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
-    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]){ //iOS8
-        
-        [application registerUserNotificationSettings:
-         [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge |
-                               UIRemoteNotificationTypeSound |
-                               UIRemoteNotificationTypeAlert)
-                               categories:nil]];
-        [application registerForRemoteNotifications];
-        
-    } else {
-        
-        [application registerForRemoteNotificationTypes:(UIRemoteNotificationType)
-         (UIRemoteNotificationTypeBadge |
-          UIRemoteNotificationTypeSound |
-          UIRemoteNotificationTypeAlert)];
- }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

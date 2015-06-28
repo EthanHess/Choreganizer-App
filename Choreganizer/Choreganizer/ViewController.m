@@ -9,7 +9,6 @@
 #import "ViewController.h"
 #import "ChoreController.h"
 #import "SectionHeader.h"
-#import "TableViewCell.h"
 #import "AddChoreViewController.h"
 #import "PickerViewController.h"
 
@@ -46,7 +45,7 @@
 
 - (void)registerTableView:(UITableView *)tableView {
     
-    [tableView registerClass:[TableViewCell class] forCellReuseIdentifier:NSStringFromClass([TableViewCell class])];
+    [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
 }
 
@@ -88,14 +87,14 @@
     
     cell.textLabel.text = chore.title;
     cell.textLabel.font = [UIFont fontWithName:@"Chalkduster" size:24];
-    cell.textLabel.textColor = [UIColor brownColor];
+    cell.textLabel.textColor = [UIColor colorWithRed:128/255.0f green:57/255.0f blue:40/255.0f alpha:1.0f];
     cell.textLabel.numberOfLines = 0;
     cell.detailTextLabel.text = chore.detail;
     cell.detailTextLabel.font = [UIFont fontWithName:@"Chalkduster" size:16];
-    cell.detailTextLabel.textColor = [UIColor brownColor];
+    cell.detailTextLabel.textColor = [UIColor colorWithRed:128/255.0f green:57/255.0f blue:40/255.0f alpha:1.0f];
     cell.detailTextLabel.numberOfLines = 0;
     cell.imageView.image = [UIImage imageNamed:@"List-50"]; 
-    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"lightParchment"]];
+    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"yellowParch"]];
     
     
     return cell;

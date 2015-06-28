@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TableViewCell.h"
 #import "Day.h"
 
 @protocol AddDelegate <NSObject>
@@ -23,7 +22,6 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UIButton *addButton;
 @property (nonatomic, strong) id <AddDelegate> delegate;
-@property (nonatomic, strong) TableViewCell *cell;
 @property (nonatomic, strong) Day *day; 
 
 + (CGFloat)headerHeight;

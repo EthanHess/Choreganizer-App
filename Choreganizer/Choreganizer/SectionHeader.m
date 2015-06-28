@@ -17,12 +17,12 @@
     
     if (self) {
         
-        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"darkParchment"]];
+        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"woodTexture"]];
         
         self.titleLabel = [UILabel new];
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         self.titleLabel.backgroundColor = [UIColor clearColor];
-        self.titleLabel.textColor = [UIColor whiteColor];
+        self.titleLabel.textColor = [UIColor colorWithRed:128/255.0f green:57/255.0f blue:40/255.0f alpha:1.0f];
         self.titleLabel.font = [UIFont fontWithName:@"Chalkduster" size:20];
         [self addSubview:self.titleLabel];
         

@@ -22,7 +22,6 @@
 		27DF7B1C1B22389500883F06 /* ChoreganizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B1B1B22389500883F06 /* ChoreganizerTests.m */; };
 		27DF7B271B22397000883F06 /* ChoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B261B22397000883F06 /* ChoreController.m */; };
 		27DF7B2D1B2244A300883F06 /* SectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B2C1B2244A300883F06 /* SectionHeader.m */; };
-		27DF7B301B2244BF00883F06 /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B2F1B2244BF00883F06 /* TableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,8 +63,6 @@
 		27DF7B261B22397000883F06 /* ChoreController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChoreController.m; sourceTree = "<group>"; };
 		27DF7B2B1B2244A300883F06 /* SectionHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SectionHeader.h; sourceTree = "<group>"; };
 		27DF7B2C1B2244A300883F06 /* SectionHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SectionHeader.m; sourceTree = "<group>"; };
-		27DF7B2E1B2244BF00883F06 /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
-		27DF7B2F1B2244BF00883F06 /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,8 +114,6 @@
 				27B25A6F1B326A9100544F52 /* AddChoreViewController.m */,
 				27B25A711B3353C700544F52 /* PickerViewController.h */,
 				27B25A721B3353C700544F52 /* PickerViewController.m */,
-				27DF7B2E1B2244BF00883F06 /* TableViewCell.h */,
-				27DF7B2F1B2244BF00883F06 /* TableViewCell.m */,
 				27DF7B251B22397000883F06 /* ChoreController.h */,
 				27DF7B261B22397000883F06 /* ChoreController.m */,
 				27B259EB1B30A6CB00544F52 /* Day.h */,
@@ -268,7 +263,6 @@
 				27B259EA1B30A6CA00544F52 /* Chore.m in Sources */,
 				27B1274E1B225E0B007BACD1 /* Stack.m in Sources */,
 				27B25A701B326A9100544F52 /* AddChoreViewController.m in Sources */,
-				27DF7B301B2244BF00883F06 /* TableViewCell.m in Sources */,
 				2703E4FA1B24C412005F82FE /* Model.xcdatamodeld in Sources */,
 				27DF7B081B22389500883F06 /* ViewController.m in Sources */,
 				27DF7B271B22397000883F06 /* ChoreController.m in Sources */,

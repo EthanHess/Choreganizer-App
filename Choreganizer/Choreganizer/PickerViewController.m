@@ -29,7 +29,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"beach"]];
+//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"beach"]];
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    
+    imageView.image = [UIImage imageNamed:@"addNotificationBackground"];
+    [self.view addSubview:imageView];
     
     self.datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 150)];
     [self.view addSubview:self.datePicker];

@@ -19,18 +19,27 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"chalkboard"]];
+//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"addChoreBackground"]];
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+
+    imageView.image = [UIImage imageNamed:@"addChoreBackground"];
+    [self.view addSubview:imageView];
     
     self.textField = [UITextField new];
     self.textField.delegate = self;
     self.textField.translatesAutoresizingMaskIntoConstraints = NO;
     self.textField.placeholder = @"Add Chore Title";
     self.textField.borderStyle = UITextBorderStyleRoundedRect;
+    self.textField.layer.borderColor = [[UIColor blackColor]CGColor];
+    self.textField.layer.borderWidth = 3.0;
     [self.view addSubview:self.textField];
     
     self.textView = [UITextView new];
     self.textView.delegate = self;
     self.textView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.textView.layer.borderColor = [[UIColor blackColor]CGColor];
+    self.textView.layer.borderWidth = 3.0;
     [self.view addSubview:self.textView];
     
     self.saveButton = [UIButton new];

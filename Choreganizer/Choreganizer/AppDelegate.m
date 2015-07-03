@@ -28,12 +28,12 @@
     
     [self setUpCoreData];
     
-    UILocalNotification *locationNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+   /* UILocalNotification *locationNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (locationNotification) {
         // Set icon badge number to zero
         application.applicationIconBadgeNumber = 0;
     }
-    
+    */
     return YES;
 }
      
@@ -73,6 +73,10 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
+    if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+        //iOS 8
+        [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound) categories:nil]];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

@@ -53,7 +53,7 @@
     self.dismissButton = [UIButton new];
     self.dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
     self.dismissButton.backgroundColor = [UIColor colorWithRed:182/255.0f green:243/255.0f blue:13/255.0f alpha:1.0f];
-    [self.dismissButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
     [self.dismissButton addTarget:self action:@selector(dismissSelf) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.dismissButton];

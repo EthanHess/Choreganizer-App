@@ -79,7 +79,20 @@
         [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
     }
     
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"dd MMM yyyy HH:mm"];
+    NSDate *date = self.datePicker.date;
+    NSString *formattedDateString = [dateFormatter stringFromDate:date];
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"An alert will be sent to you on %@",formattedDateString] message:nil preferredStyle:UIAlertControllerStyleAlert];
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Okay!" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+       
     [self dismissViewControllerAnimated:YES completion:nil];
+        
+    }]];
+    
+    [self presentViewController:alertController animated:YES completion:nil];
 
 }
 

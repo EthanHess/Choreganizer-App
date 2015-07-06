@@ -11,11 +11,13 @@
 #import "SectionHeader.h"
 #import "AddChoreViewController.h"
 #import "PickerViewController.h"
+#import "QuestionsViewController.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SectionHeader *sectionHeader;
+@property (nonatomic, strong) UIToolbar *toolbar; 
 @property (nonatomic, strong) Day *day;
 
 @end
@@ -33,12 +35,45 @@
     
     self.navigationController.navigationBarHidden = YES;
     
-    self.tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height - 60)];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self registerTableView:self.tableView];
     
     [self.view addSubview:self.tableView];
+    
+    [self setUpToolbar];
+    
+}
+
+- (void)setUpToolbar {
+    
+    self.toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
+    [self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    [self.view addSubview:self.toolbar];
+    
+    UIImage *question = [UIImage imageNamed:@"questionMark"];
+    
+    NSMutableArray *navItems = [[NSMutableArray alloc] initWithCapacity:3];
+    
+    UIBarButtonItem *flexItem0 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [navItems addObject:flexItem0];
+    
+    UIBarButtonItem *questionItem = [[UIBarButtonItem alloc]initWithImage:question style:UIBarButtonItemStylePlain target:self action:@selector(pushToOnboarding)];
+    [navItems addObject:questionItem];
+    
+    UIBarButtonItem *flexItem1 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [navItems addObject:flexItem1];
+    
+    [self.toolbar setItems:navItems];
+    
+}
+
+- (void)pushToOnboarding {
+    
+    QuestionsViewController *questionsView = [QuestionsViewController new];
+    
+    [self.navigationController pushViewController:questionsView animated:YES]; 
     
 }
 

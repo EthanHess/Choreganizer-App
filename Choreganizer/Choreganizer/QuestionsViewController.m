@@ -41,7 +41,7 @@
     self.questionLabel.textColor = [UIColor colorWithRed:16/255.0f green:58/255.0f blue:131/255.0f alpha:1.0f];
     self.questionLabel.font = [UIFont fontWithName:@"Chalkduster" size:14];
     self.questionLabel.backgroundColor = [UIColor colorWithRed:147/255.0f green:243/255.0f blue:210/255.0f alpha:1.0f];
-    self.questionLabel.text = @"Welcome to Choreganizer! Start by clicking the '+' button beside any day of the week to add a chore. If you happen to be forgetful and wish to have a notification sent to your phone, no problem. Just select the chore and send yourself as many notifications as you like!";
+    self.questionLabel.text = @"Welcome to Choreganizer! Start by clicking the '+' button beside any day of the week to add a chore. If you happen to be forgetful and wish to have a notification sent to your phone, no problem. Just select the chore and send yourself as many notifications as you like! When you've finished just swipe to delete.";
     [self.view addSubview:self.questionLabel];
     
 }

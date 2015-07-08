@@ -49,7 +49,7 @@
 - (void)setUpToolbar {
     
     self.toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
-    [self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    [self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbarBackground"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
     [self.view addSubview:self.toolbar];
     
     UIImage *question = [UIImage imageNamed:@"questionMark"];
@@ -129,7 +129,7 @@
     cell.detailTextLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.numberOfLines = 0;
     cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
-    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"cellBackground"]];
+    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBackground"]];
     
     
     return cell;

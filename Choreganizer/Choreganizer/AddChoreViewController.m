@@ -19,11 +19,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-//    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"addChoreBackground"]];
-    
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
 
-    imageView.image = [UIImage imageNamed:@"addChoreBackground"];
+    imageView.image = [UIImage imageNamed:@"ChoreganizerAdd"];
     [self.view addSubview:imageView];
     
     self.textField = [UITextField new];

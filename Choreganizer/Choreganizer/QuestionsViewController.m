@@ -21,7 +21,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor colorWithRed:255/255.0f green:186/255.0f blue:99/255.0f alpha:1.0f];
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    
+    imageView.image = [UIImage imageNamed:@"ChoreganizerInstructions"];
+    [self.view addSubview:imageView];
     
     [self setUpLabel];
     
@@ -49,7 +52,7 @@
 - (void)setUpToolbar {
     
     self.toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
-    [self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbar"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    [self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbarBackground"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
     [self.view addSubview:self.toolbar];
     
     UIImage *arrow = [UIImage imageNamed:@"arrow"];

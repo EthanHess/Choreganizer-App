@@ -28,6 +28,7 @@
     self.textField.delegate = self;
     self.textField.translatesAutoresizingMaskIntoConstraints = NO;
     self.textField.placeholder = @"Add Chore Title";
+    self.textField.backgroundColor = [UIColor colorWithRed:217/255.0f green:251/255.0f blue:244/255.0f alpha:1.0f];
     self.textField.borderStyle = UITextBorderStyleRoundedRect;
     self.textField.layer.borderColor = [[UIColor blackColor]CGColor];
     self.textField.layer.borderWidth = 3.0;
@@ -36,6 +37,7 @@
     self.textView = [UITextView new];
     self.textView.delegate = self;
     self.textView.translatesAutoresizingMaskIntoConstraints = NO;
+    self.textView.backgroundColor = [UIColor colorWithRed:217/255.0f green:251/255.0f blue:244/255.0f alpha:1.0f];
     self.textView.layer.borderColor = [[UIColor blackColor]CGColor];
     self.textView.layer.borderWidth = 3.0;
     [self.view addSubview:self.textView];
@@ -93,6 +95,9 @@
     self.clearButton.layer.cornerRadius = 37.5;
     self.clearButton.layer.borderColor = [[UIColor blackColor]CGColor];
     self.clearButton.layer.borderWidth = 3.0;
+    
+    self.textField.layer.cornerRadius = 10;
+    self.textView.layer.cornerRadius = 10; 
     
     [self.view addConstraints:verticalConstraints];
     [self.view addConstraints:horizontalConstraintI];

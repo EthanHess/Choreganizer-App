@@ -39,7 +39,7 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self registerTableView:self.tableView];
-    
+    self.tableView.backgroundColor = [UIColor blackColor]; 
     [self.view addSubview:self.tableView];
     
     [self setUpToolbar];

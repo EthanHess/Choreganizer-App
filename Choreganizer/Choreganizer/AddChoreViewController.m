@@ -47,7 +47,7 @@
     self.saveButton.backgroundColor = [UIColor colorWithRed:182/255.0f green:66/255.0f blue:45/255.0f alpha:1.0f];
     [self.saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.saveButton setTitle:@"Save" forState:UIControlStateNormal];
-    [self.saveButton addTarget:self action:@selector(saveChoreToDay:) forControlEvents:UIControlEventTouchUpInside];
+    [self.saveButton addTarget:self action:@selector(saveChoreToDay) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.saveButton];
     
     self.dismissButton = [UIButton new];
@@ -121,7 +121,7 @@
     
 }
 
-- (void)saveChoreToDay:(Day *)day {
+- (void)saveChoreToDay {
     
     [[ChoreController sharedInstance]addChoreWithTitle:self.textField.text andDescription:self.textView.text toDay:self.day];
     

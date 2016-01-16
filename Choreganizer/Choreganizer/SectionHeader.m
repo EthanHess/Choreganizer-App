@@ -17,7 +17,10 @@
     
     if (self) {
         
-        self.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"sectionHeader"]];
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.bounds];
+        
+        imageView.image = [UIImage imageNamed:@"SectionHeader"];
+        [self addSubview:imageView]; 
         
         self.titleLabel = [UILabel new];
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;

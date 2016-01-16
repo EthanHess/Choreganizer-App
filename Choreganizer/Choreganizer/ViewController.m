@@ -39,6 +39,7 @@
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self registerTableView:self.tableView];
+    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     self.tableView.backgroundColor = [UIColor blackColor]; 
     [self.view addSubview:self.tableView];
     
@@ -109,6 +110,12 @@
     return self.sectionHeader;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 160;
+}
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -116,6 +123,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+//    cell.frame = CGRectMake(0, 0, self.view.frame.size.width, 160);
     
     Day *day = [[ChoreController sharedInstance].days objectAtIndex:indexPath.section];
     Chore *chore = [day.chores objectAtIndex:indexPath.row];
@@ -129,15 +137,17 @@
     cell.detailTextLabel.textColor = [UIColor whiteColor];
     cell.detailTextLabel.numberOfLines = 0;
     cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
-    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellBackground"]];
     
+//    UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:cell.bounds];
+//
+//    cellImageView.image = [UIImage imageNamed:@"ChoreganizerCellBackground"];
+//    //    cellImageView.clipsToBounds = YES;
+//    [cell sendSubviewToBack:cellImageView];
+//    [cell addSubview:cellImageView];
+    
+    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
     
     return cell;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 160;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -175,6 +185,8 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES]; 
     
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Send notification?" message:@"Would you like to be sent a reminder to do this chore?" preferredStyle:UIAlertControllerStyleAlert];
     

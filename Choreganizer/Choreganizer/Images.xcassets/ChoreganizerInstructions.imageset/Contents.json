@@ -2,8 +2,8 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "ChoreganizerInstructions.jpg"
+      "filename" : "ChoreganizerInstructions.jpg",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

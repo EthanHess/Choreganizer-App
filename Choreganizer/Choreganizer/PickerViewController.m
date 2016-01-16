@@ -35,6 +35,7 @@
     [self.view addSubview:imageView];
     
     self.datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 150)];
+    [self.datePicker setValue:[UIColor whiteColor] forKey:@"textColor"];
     [self.view addSubview:self.datePicker];
     
     self.sendButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 300, 100, 100)];

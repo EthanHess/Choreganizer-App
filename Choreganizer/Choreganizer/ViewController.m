@@ -130,7 +130,7 @@
     
     cell.textLabel.text = chore.title;
     cell.textLabel.font = [UIFont fontWithName:@"Chalkduster" size:24];
-    cell.textLabel.textColor = [UIColor yellowColor];
+    cell.textLabel.textColor = [UIColor cyanColor];
     cell.textLabel.numberOfLines = 0;
     cell.detailTextLabel.text = chore.detail;
     cell.detailTextLabel.font = [UIFont fontWithName:@"Chalkduster" size:16];

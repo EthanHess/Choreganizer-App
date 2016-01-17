@@ -32,9 +32,9 @@
         self.addButton = [UIButton new];
         self.addButton.translatesAutoresizingMaskIntoConstraints = NO;
         [self.addButton setTitle:@"+" forState:UIControlStateNormal];
-        [self.addButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.addButton addTarget:self action:@selector(addChore) forControlEvents:UIControlEventTouchUpInside];
-        self.addButton.backgroundColor = [UIColor colorWithRed:246/255.0f green:249/255.0f blue:181/255.0f alpha:1.0f];
+        self.addButton.backgroundColor = [UIColor colorWithRed:55/255.0f green:155/255.0f blue:255/255.0f alpha:1.0f];
         
         [self addSubview:self.addButton];
         
@@ -58,7 +58,7 @@
     NSLayoutConstraint *equalConstraint = [NSLayoutConstraint constraintWithItem:self.titleLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.addButton attribute:NSLayoutAttributeHeight multiplier:1 constant:0.0];
     
     self.addButton.layer.cornerRadius = 25;
-    self.addButton.layer.borderColor = [[UIColor brownColor]CGColor];
+    self.addButton.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.addButton.layer.borderWidth = 3.0;
     
     

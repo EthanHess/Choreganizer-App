@@ -34,16 +34,16 @@
 
 - (void)setUpLabel {
     
-    self.questionLabel = [[UILabel alloc]initWithFrame:CGRectMake(50, 150, self.view.frame.size.width - 100, 300)];
+    self.questionLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 150, self.view.frame.size.width - 60, 300)];
     self.questionLabel.layer.cornerRadius = 10;
-    self.questionLabel.layer.borderColor = [[UIColor blackColor]CGColor]; 
+    self.questionLabel.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.questionLabel.layer.borderWidth = 3.0; 
     self.questionLabel.layer.masksToBounds = YES;
     self.questionLabel.numberOfLines = 0;
     self.questionLabel.textAlignment = NSTextAlignmentCenter;
     self.questionLabel.textColor = [UIColor whiteColor];
     self.questionLabel.font = [UIFont fontWithName:@"Chalkduster" size:14];
-    self.questionLabel.backgroundColor = [UIColor darkGrayColor];
+    self.questionLabel.backgroundColor = [UIColor blackColor];
     self.questionLabel.text = @"Welcome to Choreganizer! Start by clicking the '+' button beside any day of the week to add a chore. If you happen to be forgetful and wish to have a notification sent to your phone, no problem. Just select the chore and send yourself as many notifications as you like! When you've finished just swipe to delete.";
     [self.view addSubview:self.questionLabel];
     

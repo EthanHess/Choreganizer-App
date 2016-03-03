@@ -37,7 +37,7 @@
     self.questionLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 150, self.view.frame.size.width - 60, 300)];
     self.questionLabel.layer.cornerRadius = 10;
     self.questionLabel.layer.borderColor = [[UIColor whiteColor]CGColor];
-    self.questionLabel.layer.borderWidth = 3.0; 
+    self.questionLabel.layer.borderWidth = 1.0;
     self.questionLabel.layer.masksToBounds = YES;
     self.questionLabel.numberOfLines = 0;
     self.questionLabel.textAlignment = NSTextAlignmentCenter;

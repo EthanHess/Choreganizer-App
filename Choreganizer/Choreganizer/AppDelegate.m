@@ -75,6 +75,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+    
     if ([application respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         //iOS 8
         [application registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert | UIUserNotificationTypeBadge | UIUserNotificationTypeSound) categories:nil]];

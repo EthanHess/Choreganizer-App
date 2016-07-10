@@ -15,10 +15,17 @@
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate>
 
+typedef enum {
+    Space,
+    Color,
+} Scheme;
+
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) SectionHeader *sectionHeader;
 @property (nonatomic, strong) UIToolbar *toolbar; 
 @property (nonatomic, strong) Day *day;
+
+@property (nonatomic, assign) Scheme scheme;
 
 @end
 
@@ -26,12 +33,26 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     
+    NSString *schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
+    
+    if (schemeString) {
+        
+        if ([schemeString isEqualToString:@"Space"]) {
+            
+            self.scheme = (Scheme)Space;
+            
+        } else if ([schemeString isEqualToString:@"Color"]) {
+            
+            self.scheme = (Scheme)Color;
+        }
+    }
+    
     [self.tableView reloadData];
+    
+    [self setUpTableView];
 }
 
-- (void)viewDidLoad {
-
-    [super viewDidLoad];
+- (void)setUpTableView {
     
     self.navigationController.navigationBarHidden = YES;
     
@@ -40,8 +61,34 @@
     self.tableView.delegate = self;
     [self registerTableView:self.tableView];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-    self.tableView.backgroundColor = [UIColor blackColor]; 
+    
+    switch (self.scheme) {
+        case Space:
+            
+            self.tableView.backgroundColor = [UIColor blackColor];
+            
+            break;
+            
+        case Color:
+            
+            self.tableView.backgroundColor = [UIColor cyanColor];
+            
+            break;
+            
+        default:
+            
+            self.tableView.backgroundColor = [UIColor blackColor];
+            
+            break;
+    }
+    
+    
     [self.view addSubview:self.tableView];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
     
     [self setUpToolbar];
     
@@ -107,6 +154,27 @@
     
     [self.sectionHeader updateWithDay:day];
     
+    switch (self.scheme) {
+            
+        case Space:
+            
+            [self.sectionHeader updateWithBackgroundImage:@"SectionHeader"];
+            
+            break;
+            
+        case Color:
+            
+            [self.sectionHeader updateWithBackgroundImage:@"DayCellTwo"];
+            
+            break;
+            
+        default:
+            
+            [self.sectionHeader updateWithBackgroundImage:@"SectionHeader"];
+            
+            break;
+    }
+    
     return self.sectionHeader;
 }
 
@@ -145,7 +213,28 @@
 //    [cell sendSubviewToBack:cellImageView];
 //    [cell addSubview:cellImageView];
     
-    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
+    switch (self.scheme) {
+            
+        case Space:
+            
+            cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
+            
+            break;
+            
+        case Color:
+            
+            cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellTwo"]];
+            
+            break;
+            
+        default:
+            
+            cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
+            
+            break;
+    }
+    
+    
     
     return cell;
 }

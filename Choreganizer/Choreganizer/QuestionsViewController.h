@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+static NSString * const schemeKey = @"Scheme";
+
 @interface QuestionsViewController : UIViewController
+
 
 @end

@@ -17,10 +17,6 @@
     
     if (self) {
         
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.bounds];
-        
-        imageView.image = [UIImage imageNamed:@"SectionHeader"];
-        [self addSubview:imageView]; 
         
         self.titleLabel = [UILabel new];
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
@@ -72,6 +68,16 @@
 + (CGFloat)headerHeight {
     
     return 80;
+}
+
+- (void)updateWithBackgroundImage:(NSString *)imageName {
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.bounds];
+    
+    imageView.image = [UIImage imageNamed:imageName];
+    [self insertSubview:imageView atIndex:0];
+    
+//    [self addSubview:imageView];
 }
 
 - (void)updateWithDay:(Day *)day {

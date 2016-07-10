@@ -27,5 +27,6 @@
 + (CGFloat)headerHeight;
 - (void)updateWithDay:(Day *)day;
 - (void)updateWithTitle:(NSInteger)index;
+- (void)updateWithBackgroundImage:(NSString *)imageName;
 
 @end

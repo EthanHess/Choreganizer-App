@@ -9,10 +9,12 @@
 #import "QuestionsViewController.h"
 #import "ViewController.h"
 
+
 @interface QuestionsViewController ()
 
 @property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) UIToolbar *toolbar;
+@property (nonatomic, strong) UISegmentedControl *segController;
 
 @end
 
@@ -30,14 +32,16 @@
     
     [self setUpToolbar];
     
+    [self setUpSegControl];
+    
 }
 
 - (void)setUpLabel {
     
     self.questionLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 150, self.view.frame.size.width - 60, 300)];
     self.questionLabel.layer.cornerRadius = 10;
-    self.questionLabel.layer.borderColor = [[UIColor whiteColor]CGColor];
-    self.questionLabel.layer.borderWidth = 1.0;
+//    self.questionLabel.layer.borderColor = [[UIColor whiteColor]CGColor];
+//    self.questionLabel.layer.borderWidth = 1.0;
     self.questionLabel.layer.masksToBounds = YES;
     self.questionLabel.numberOfLines = 0;
     self.questionLabel.textAlignment = NSTextAlignmentCenter;
@@ -72,14 +76,56 @@
     
 }
 
+- (void)setUpSegControl {
+    
+    CGRect segFrame = CGRectMake(30, 480, self.view.frame.size.width - 60, 50);
+    
+    self.segController = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Space Scheme", @"Color Scheme", nil]];
+    
+    self.segController.frame = segFrame;
+    self.segController.tintColor = [UIColor whiteColor];
+    self.segController.backgroundColor = [UIColor clearColor];
+    
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [UIFont fontWithName:@"Chalkduster" size:15], NSFontAttributeName,
+                                [UIColor whiteColor], NSForegroundColorAttributeName, nil];
+    [self.segController setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    
+    
+    [self.segController addTarget:self action:@selector(valueChanged:) forControlEvents: UIControlEventValueChanged];
+    [self.view addSubview:self.segController];
+}
+
+- (void)valueChanged:(UISegmentedControl *)segment {
+    
+    switch (segment.selectedSegmentIndex) {
+            
+        case 0: {
+            
+            [[NSUserDefaults standardUserDefaults]setObject:@"Space" forKey:schemeKey];
+            
+            break; }
+        case 1: {
+            
+            [[NSUserDefaults standardUserDefaults]setObject:@"Color" forKey:schemeKey];
+            
+            break; }
+            
+        default:
+            break;
+    }
+}
+
 - (void)home {
     
-    ViewController *viewController = [ViewController new];
-                                      
-    [self.navigationController pushViewController:viewController animated:YES];
+    [self.navigationController popToRootViewControllerAnimated:YES];
     
+//    ViewController *viewController = [ViewController new];
     
+//    [self.navigationController pushViewController:viewController animated:YES];
+
 }
+
 
 
 

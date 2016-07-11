@@ -9,8 +9,13 @@
 #import "AddChoreViewController.h"
 #import "ViewController.h"
 #import "ChoreController.h"
+#import "QuestionsViewController.h"
+#import "AppDelegate.h"
 
 @interface AddChoreViewController () <UITextFieldDelegate, UITextViewDelegate>
+
+@property (nonatomic, strong) NSString *schemeString;
+@property (nonatomic, strong) UIColor *labelColor;
 
 @end
 
@@ -19,10 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-
-    imageView.image = [UIImage imageNamed:@"ChoreganizerAdd"];
-    [self.view addSubview:imageView];
+    [self setScheme];
     
     self.textField = [UITextField new];
     self.textField.delegate = self;
@@ -66,8 +68,60 @@
     [self.clearButton addTarget:self action:@selector(clearFields) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.clearButton];
     
-    
+
     [self setUpConstraints];
+}
+
+- (void)setUpTitleLabel {
+    
+    CGRect labelFrame = CGRectMake(0, self.view.frame.size.height -100, self.view.frame.size.width, 100);
+    
+    self.titleLabel = [[UILabel alloc]initWithFrame:labelFrame];
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.font = [UIFont fontWithName:arialHebrew size:96];
+    self.titleLabel.text = self.day.name;
+    self.titleLabel.textColor = self.labelColor;
+    [self.view addSubview:self.titleLabel];
+}
+
+- (void)setScheme {
+    
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:schemeKey]) {
+        
+        self.schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
+        
+    }
+    
+    if ([self.schemeString isEqualToString:@"Space"]) {
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+        
+        imageView.image = [UIImage imageNamed:@"ChoreganizerAdd"];
+        [self.view addSubview:imageView];
+        
+        self.labelColor = [UIColor whiteColor];
+        
+    } else if ([self.schemeString isEqualToString:@"Color"]) {
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+        
+        imageView.image = [UIImage imageNamed:@"ColorBackground"];
+        [self.view addSubview:imageView];
+        
+        self.labelColor = [UIColor blackColor];
+        
+    }
+    
+    else {
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+        
+        imageView.image = [UIImage imageNamed:@"ChoreganizerAdd"];
+        [self.view addSubview:imageView];
+        
+        self.labelColor = [UIColor whiteColor];
+        
+    };
 }
 
 - (void)setUpConstraints {
@@ -111,6 +165,8 @@
 - (void)updateWithDay:(Day *)day {
     
     self.day = day;
+    
+    [self setUpTitleLabel];
     
 }
 

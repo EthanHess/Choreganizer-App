@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIButton *saveButton;
 @property (nonatomic, strong) UIButton *dismissButton;
 @property (nonatomic, strong) UIButton *clearButton;
+@property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) Day *day;
 
 - (void)updateWithDay:(Day *)day;

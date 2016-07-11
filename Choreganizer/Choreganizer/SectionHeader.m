@@ -8,6 +8,7 @@
 
 #import "SectionHeader.h"
 #import "ChoreController.h"
+#import "AppDelegate.h"
 
 @implementation SectionHeader
 
@@ -22,7 +23,7 @@
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         self.titleLabel.backgroundColor = [UIColor clearColor];
         self.titleLabel.textColor = [UIColor whiteColor];
-        self.titleLabel.font = [UIFont fontWithName:@"Chalkduster" size:20];
+        self.titleLabel.font = [UIFont fontWithName:arialHebrew size:36];
         [self addSubview:self.titleLabel];
         
         self.addButton = [UIButton new];

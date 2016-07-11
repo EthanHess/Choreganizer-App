@@ -12,6 +12,7 @@
 #import "AddChoreViewController.h"
 #import "PickerViewController.h"
 #import "QuestionsViewController.h"
+#import "AppDelegate.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate>
 
@@ -50,13 +51,15 @@ typedef enum {
     [self.tableView reloadData];
     
     [self setUpTableView];
+    
+    [self setUpToolbar];
 }
 
 - (void)setUpTableView {
     
     self.navigationController.navigationBarHidden = YES;
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 60, self.view.frame.size.width, self.view.frame.size.height - 60)];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 75, self.view.frame.size.width, self.view.frame.size.height - 60)];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     [self registerTableView:self.tableView];
@@ -90,17 +93,44 @@ typedef enum {
     [super viewDidLoad];
     
     
-    [self setUpToolbar];
+    
     
 }
 
 - (void)setUpToolbar {
     
     self.toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
-    [self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbarBackground"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    
+    
+    switch (self.scheme) {
+            
+        case Space:
+            
+            [self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbarBackground"] forToolbarPosition:
+             UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+            
+            
+            break;
+            
+        case Color:
+            
+            [self.toolbar setBackgroundImage:[UIImage imageNamed:@"ColorToolbar"] forToolbarPosition:
+             UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+            
+            break;
+            
+        default:
+            
+            [self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbarBackground"] forToolbarPosition:
+             UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+            
+            break;
+
+    }
+    
     [self.view addSubview:self.toolbar];
     
-    UIImage *question = [UIImage imageNamed:@"questionMark"];
+    UIImage *question = [UIImage imageNamed:@"ToolbarImage"];
     
     NSMutableArray *navItems = [[NSMutableArray alloc] initWithCapacity:3];
     
@@ -108,6 +138,7 @@ typedef enum {
     [navItems addObject:flexItem0];
     
     UIBarButtonItem *questionItem = [[UIBarButtonItem alloc]initWithImage:question style:UIBarButtonItemStylePlain target:self action:@selector(pushToOnboarding)];
+    questionItem.tintColor = [UIColor whiteColor]; 
     [navItems addObject:questionItem];
     
     UIBarButtonItem *flexItem1 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -197,14 +228,13 @@ typedef enum {
     Chore *chore = [day.chores objectAtIndex:indexPath.row];
     
     cell.textLabel.text = chore.title;
-    cell.textLabel.font = [UIFont fontWithName:@"Chalkduster" size:24];
-    cell.textLabel.textColor = [UIColor cyanColor];
+    cell.textLabel.font = [UIFont fontWithName:arialHebrew size:42];
+    
     cell.textLabel.numberOfLines = 0;
     cell.detailTextLabel.text = chore.detail;
-    cell.detailTextLabel.font = [UIFont fontWithName:@"Chalkduster" size:16];
-    cell.detailTextLabel.textColor = [UIColor whiteColor];
+    cell.detailTextLabel.font = [UIFont fontWithName:arialHebrew size:32];
+    
     cell.detailTextLabel.numberOfLines = 0;
-    cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
     
 //    UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:cell.bounds];
 //
@@ -219,17 +249,29 @@ typedef enum {
             
             cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
             
+            cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
+            cell.textLabel.textColor = [UIColor cyanColor];
+            cell.detailTextLabel.textColor = [UIColor whiteColor];
+            
             break;
             
         case Color:
             
             cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellTwo"]];
             
+            cell.imageView.image = [UIImage imageNamed:@"CellImageTwo"];
+            cell.textLabel.textColor = [UIColor blackColor];
+            cell.detailTextLabel.textColor = [UIColor darkGrayColor];
+            
             break;
             
         default:
             
             cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
+            
+            cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
+            cell.textLabel.textColor = [UIColor cyanColor];
+            cell.detailTextLabel.textColor = [UIColor whiteColor];
             
             break;
     }

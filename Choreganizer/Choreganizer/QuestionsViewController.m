@@ -8,7 +8,7 @@
 
 #import "QuestionsViewController.h"
 #import "ViewController.h"
-
+#import "AppDelegate.h"
 
 @interface QuestionsViewController ()
 
@@ -46,7 +46,7 @@
     self.questionLabel.numberOfLines = 0;
     self.questionLabel.textAlignment = NSTextAlignmentCenter;
     self.questionLabel.textColor = [UIColor whiteColor];
-    self.questionLabel.font = [UIFont fontWithName:@"Chalkduster" size:14];
+    self.questionLabel.font = [UIFont fontWithName:arialHebrew size:14];
     self.questionLabel.backgroundColor = [UIColor blackColor];
     self.questionLabel.text = @"Welcome to Choreganizer! Start by clicking the '+' button beside any day of the week to add a chore. If you happen to be forgetful and wish to have a notification sent to your phone, no problem. Just select the chore and send yourself as many notifications as you like! When you've finished just swipe to delete.";
     [self.view addSubview:self.questionLabel];
@@ -87,7 +87,7 @@
     self.segController.backgroundColor = [UIColor clearColor];
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIFont fontWithName:@"Chalkduster" size:15], NSFontAttributeName,
+                                [UIFont fontWithName:arialHebrew size:15], NSFontAttributeName,
                                 [UIColor whiteColor], NSForegroundColorAttributeName, nil];
     [self.segController setTitleTextAttributes:attributes forState:UIControlStateNormal];
     

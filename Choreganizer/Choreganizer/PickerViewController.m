@@ -7,6 +7,7 @@
 //
 
 #import "PickerViewController.h"
+#import "QuestionsViewController.h"
 
 @interface PickerViewController ()
 
@@ -14,6 +15,10 @@
 @property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) UIButton *sendButton;
 @property (nonatomic, strong) UIButton *dismissButton;
+@property (nonatomic, strong) NSString *schemeString;
+
+@property (nonatomic, strong) UIColor *backgroundColorOne;
+@property (nonatomic, strong) UIColor *backgroundColorTwo;
 
 @end
 
@@ -29,17 +34,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-    
-    imageView.image = [UIImage imageNamed:@"ChoreganizerPicker"];
-    [self.view addSubview:imageView];
+    [self setScheme];
     
     self.datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 150)];
     [self.datePicker setValue:[UIColor whiteColor] forKey:@"textColor"];
     [self.view addSubview:self.datePicker];
     
     self.sendButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 300, 100, 100)];
-    self.sendButton.backgroundColor = [UIColor colorWithRed:99/255.0f green:176/255.0f blue:230/255.0f alpha:1.0f];
+    self.sendButton.backgroundColor = self.backgroundColorOne;
     [self.sendButton setTitle:@"Send" forState:UIControlStateNormal];
     self.sendButton.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.sendButton.layer.borderWidth = 3.0;
@@ -48,7 +50,7 @@
     [self.view addSubview:self.sendButton];
     
     self.dismissButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 150, 300, 100, 100)];
-    self.dismissButton.backgroundColor = [UIColor colorWithRed:99/255.0f green:17/255.0f blue:36/255.0f alpha:1.0f];
+    self.dismissButton.backgroundColor = self.backgroundColorTwo;
     [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
     self.dismissButton.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.dismissButton.layer.borderWidth = 3.0;
@@ -58,9 +60,57 @@
     
 }
 
+- (void)setScheme {
+    
+    if ([[NSUserDefaults standardUserDefaults]objectForKey:schemeKey]) {
+        
+        self.schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
+        
+    }
+    
+    if ([self.schemeString isEqualToString:@"Space"]) {
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+        
+        imageView.image = [UIImage imageNamed:@"ChoreganizerPicker"];
+        [self.view addSubview:imageView];
+        
+        [self buttonSchemeOne];
+        
+    } else if ([self.schemeString isEqualToString:@"Color"]) {
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+        
+        imageView.image = [UIImage imageNamed:@"PickerColorBackground"];
+        [self.view addSubview:imageView];
+        
+        [self buttonSchemeTwo];
+    }
+    
+    else {
+        
+        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+        
+        imageView.image = [UIImage imageNamed:@"ChoreganizerPicker"];
+        [self.view addSubview:imageView];
+        
+        [self buttonSchemeOne];
+        
+    };
+    
+}
 
+- (void)buttonSchemeOne {
+    
+    self.backgroundColorOne = [UIColor colorWithRed:99/255.0f green:176/255.0f blue:230/255.0f alpha:1.0f];
+    self.backgroundColorTwo = [UIColor colorWithRed:99/255.0f green:17/255.0f blue:36/255.0f alpha:1.0f];
+}
 
-
+- (void)buttonSchemeTwo {
+    
+    self.backgroundColorOne = [UIColor colorWithRed:7.0f/255.0f green:87.0f/255.0f blue:33.0f/255.0f alpha:1.0];
+    self.backgroundColorTwo = [UIColor colorWithRed:153.0f/255.0f green:98.0f/255.0f blue:42.0f/255.0f alpha:1.0];
+}
 
 - (void)sendNotification {
     

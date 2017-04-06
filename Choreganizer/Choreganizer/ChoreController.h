@@ -10,12 +10,15 @@
 #import "Day.h"
 #import "Chore.h"
 
+@import UIKit; 
+
 @interface ChoreController : NSObject
 
 @property (nonatomic, strong, readonly) NSArray *chores;
-@property (nonatomic, strong, readonly) NSArray *days; 
+@property (nonatomic, strong, readonly) NSArray *days;
 
-+ (ChoreController *)sharedInstance; 
++ (ChoreController *)sharedInstance;
+
 - (void)addChoreWithTitle:(NSString *)title andDescription:(NSString *)detail toDay:(Day *)day;
 - (void)addDayWithName:(NSString *)name;
 - (void)removeChore:(Chore *)chore;

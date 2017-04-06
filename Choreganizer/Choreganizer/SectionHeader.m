@@ -24,6 +24,7 @@
         self.titleLabel.backgroundColor = [UIColor clearColor];
         self.titleLabel.textColor = [UIColor whiteColor];
         self.titleLabel.font = [UIFont fontWithName:arialHebrew size:36];
+        self.titleLabel.font = [UIFont systemFontOfSize:24];
         [self addSubview:self.titleLabel];
         
         self.addButton = [UIButton new];

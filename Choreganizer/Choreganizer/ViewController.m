@@ -50,18 +50,20 @@ typedef enum {
     
     [self.tableView reloadData];
     
+    [self setUpToolbar];
+    
     [self setUpTableView];
     
-    [self setUpToolbar];
 }
 
 - (void)setUpTableView {
     
     self.navigationController.navigationBarHidden = YES;
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 75, self.view.frame.size.width, self.view.frame.size.height - 60)];
+    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.toolbar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - 60)];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
+//    self.tableView.panGestureRecognizer.cancelsTouchesInView = NO; 
     [self registerTableView:self.tableView];
     [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     
@@ -74,7 +76,7 @@ typedef enum {
             
         case Color:
             
-            self.tableView.backgroundColor = [UIColor cyanColor];
+            self.tableView.backgroundColor = [UIColor colorWithRed:10.0f/255.0f green:116.0f/255.0f blue:245.0f/255.0f alpha:1.0];
             
             break;
             
@@ -228,11 +230,13 @@ typedef enum {
     Chore *chore = [day.chores objectAtIndex:indexPath.row];
     
     cell.textLabel.text = chore.title;
-    cell.textLabel.font = [UIFont fontWithName:arialHebrew size:42];
+    cell.textLabel.font = [UIFont fontWithName:arialHebrew size:22];
+    cell.textLabel.font = [UIFont systemFontOfSize:22];
     
     cell.textLabel.numberOfLines = 0;
     cell.detailTextLabel.text = chore.detail;
-    cell.detailTextLabel.font = [UIFont fontWithName:arialHebrew size:32];
+    cell.detailTextLabel.font = [UIFont fontWithName:arialHebrew size:18];
+    cell.detailTextLabel.font = [UIFont systemFontOfSize:18];
     
     cell.detailTextLabel.numberOfLines = 0;
     
@@ -337,6 +341,34 @@ typedef enum {
     [self presentViewController:alert animated:YES completion:nil];
     
 }
+
+//maybe move chore from one day to another?
+
+//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
+//{
+//    
+//    if (fromIndexPath != toIndexPath ) {
+//        
+//        Day *dayToRemove = [[ChoreController sharedInstance].days objectAtIndex:fromIndexPath.section];
+//        Chore *chore = [dayToRemove.chores objectAtIndex:fromIndexPath.row];
+//        
+//        Day *dayToAdd = [[ChoreController sharedInstance].days objectAtIndex:toIndexPath.section];
+//        
+//        [tableView beginUpdates];
+//        [[ChoreController sharedInstance]removeChore:chore];
+//        [[ChoreController sharedInstance]addChoreWithTitle:chore.title andDescription:chore.detail toDay:dayToAdd];
+//        [tableView moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
+//        [self.tableView endUpdates];
+//    }
+//}
+//
+//- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return YES;
+//}
+//
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+//    return YES;
+//}
 
 - (void)popPickerViewControllerWithChore:(Chore *)chore andDay:(Day *)day {
     

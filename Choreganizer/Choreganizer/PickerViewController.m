@@ -12,6 +12,7 @@
 @interface PickerViewController ()
 
 @property (nonatomic, strong) Chore *chore;
+
 @property (nonatomic, strong) UIDatePicker *datePicker;
 @property (nonatomic, strong) UIButton *sendButton;
 @property (nonatomic, strong) UIButton *dismissButton;

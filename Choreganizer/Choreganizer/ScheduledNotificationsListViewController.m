@@ -27,8 +27,10 @@
         NSLog(@"No notifications"); //alert
     }
     
+    self.view.backgroundColor = [UIColor grayColor];
+    
     [self setUpTableView];
-    [self setUpDismissButton]; 
+    [self setUpDismissButton];
 }
 
 - (NSArray *)notificationArray {
@@ -56,6 +58,7 @@
     CGRect tableFrame = CGRectMake(0, 75, self.view.frame.size.width, self.view.frame.size.height - 75);
     
     self.tableView = [[UITableView alloc]initWithFrame:tableFrame style:UITableViewStyleGrouped];
+    self.tableView.backgroundColor = [UIColor grayColor]; 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self registerTableView:self.tableView];
@@ -69,6 +72,11 @@
 
 //Table View Delegate + Datasource
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    return 80;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     
     return  [self notificationArray].count;
@@ -78,8 +86,12 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"]; 
-
+    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    
+    cell.backgroundColor = [UIColor darkGrayColor];
+    cell.textLabel.textColor = [UIColor greenColor];
+    cell.detailTextLabel.textColor = [UIColor greenColor]; 
+    
     UILocalNotification *notif = [self notificationArray][indexPath.row];
     
     cell.textLabel.text = [self cutString:notif.alertBody];
@@ -121,7 +133,7 @@
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     
-    formatter.dateFormat = @"YYYY-MM-DD";
+    formatter.dateFormat = @"YYYY-MM-HH";
     
     return [formatter stringFromDate:date];
 }

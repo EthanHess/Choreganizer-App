@@ -264,8 +264,8 @@ typedef enum {
             cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellTwo"]];
             
             cell.imageView.image = [UIImage imageNamed:@"CellImageTwo"];
-            cell.textLabel.textColor = [UIColor blackColor];
-            cell.detailTextLabel.textColor = [UIColor darkGrayColor];
+            cell.textLabel.textColor = [UIColor whiteColor];
+            cell.detailTextLabel.textColor = [UIColor whiteColor];
             
             break;
             

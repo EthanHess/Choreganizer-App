@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2703E4FA1B24C412005F82FE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2703E4F81B24C412005F82FE /* Model.xcdatamodeld */; };
-		27212F661E96BFB90050053B /* NotificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27212F651E96BFB90050053B /* NotificationController.m */; };
 		27212F691E96C2FD0050053B /* ScheduledNotificationsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27212F681E96C2FD0050053B /* ScheduledNotificationsListViewController.m */; };
+		273B782C1E9C96D900E504F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 273B782B1E9C96D900E504F5 /* LaunchScreen.storyboard */; };
 		27A837231B4B28FF00F02B14 /* QuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A837221B4B28FF00F02B14 /* QuestionsViewController.m */; };
 		27B1274E1B225E0B007BACD1 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B1274D1B225E0B007BACD1 /* Stack.m */; };
 		27B259EA1B30A6CA00544F52 /* Chore.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B259E91B30A6CA00544F52 /* Chore.m */; };
@@ -21,7 +21,6 @@
 		27DF7B081B22389500883F06 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B071B22389500883F06 /* ViewController.m */; };
 		27DF7B0B1B22389500883F06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27DF7B091B22389500883F06 /* Main.storyboard */; };
 		27DF7B0D1B22389500883F06 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27DF7B0C1B22389500883F06 /* Images.xcassets */; };
-		27DF7B101B22389500883F06 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27DF7B0E1B22389500883F06 /* LaunchScreen.xib */; };
 		27DF7B1C1B22389500883F06 /* ChoreganizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B1B1B22389500883F06 /* ChoreganizerTests.m */; };
 		27DF7B271B22397000883F06 /* ChoreController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B261B22397000883F06 /* ChoreController.m */; };
 		27DF7B2D1B2244A300883F06 /* SectionHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B2C1B2244A300883F06 /* SectionHeader.m */; };
@@ -39,10 +38,9 @@
 
 /* Begin PBXFileReference section */
 		2703E4F91B24C412005F82FE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
-		27212F641E96BFB90050053B /* NotificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationController.h; sourceTree = "<group>"; };
-		27212F651E96BFB90050053B /* NotificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationController.m; sourceTree = "<group>"; };
 		27212F671E96C2FD0050053B /* ScheduledNotificationsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduledNotificationsListViewController.h; sourceTree = "<group>"; };
 		27212F681E96C2FD0050053B /* ScheduledNotificationsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduledNotificationsListViewController.m; sourceTree = "<group>"; };
+		273B782B1E9C96D900E504F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27A837211B4B28FF00F02B14 /* QuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsViewController.h; sourceTree = "<group>"; };
 		27A837221B4B28FF00F02B14 /* QuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsViewController.m; sourceTree = "<group>"; };
 		27B1274C1B225E0B007BACD1 /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
@@ -64,7 +62,6 @@
 		27DF7B071B22389500883F06 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		27DF7B0A1B22389500883F06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		27DF7B0C1B22389500883F06 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		27DF7B0F1B22389500883F06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		27DF7B151B22389500883F06 /* ChoreganizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChoreganizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DF7B1A1B22389500883F06 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27DF7B1B1B22389500883F06 /* ChoreganizerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChoreganizerTests.m; sourceTree = "<group>"; };
@@ -125,8 +122,6 @@
 				27B25A721B3353C700544F52 /* PickerViewController.m */,
 				27DF7B251B22397000883F06 /* ChoreController.h */,
 				27DF7B261B22397000883F06 /* ChoreController.m */,
-				27212F641E96BFB90050053B /* NotificationController.h */,
-				27212F651E96BFB90050053B /* NotificationController.m */,
 				27212F671E96C2FD0050053B /* ScheduledNotificationsListViewController.h */,
 				27212F681E96C2FD0050053B /* ScheduledNotificationsListViewController.m */,
 				27A837211B4B28FF00F02B14 /* QuestionsViewController.h */,
@@ -139,8 +134,8 @@
 				27B1274D1B225E0B007BACD1 /* Stack.m */,
 				2703E4F81B24C412005F82FE /* Model.xcdatamodeld */,
 				27DF7B091B22389500883F06 /* Main.storyboard */,
+				273B782B1E9C96D900E504F5 /* LaunchScreen.storyboard */,
 				27DF7B0C1B22389500883F06 /* Images.xcassets */,
-				27DF7B0E1B22389500883F06 /* LaunchScreen.xib */,
 				27DF7AFF1B22389500883F06 /* Supporting Files */,
 			);
 			path = Choreganizer;
@@ -254,8 +249,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				273B782C1E9C96D900E504F5 /* LaunchScreen.storyboard in Resources */,
 				27DF7B0B1B22389500883F06 /* Main.storyboard in Resources */,
-				27DF7B101B22389500883F06 /* LaunchScreen.xib in Resources */,
 				27DF7B0D1B22389500883F06 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,7 +280,6 @@
 				27DF7B271B22397000883F06 /* ChoreController.m in Sources */,
 				27212F691E96C2FD0050053B /* ScheduledNotificationsListViewController.m in Sources */,
 				27DF7B051B22389500883F06 /* AppDelegate.m in Sources */,
-				27212F661E96BFB90050053B /* NotificationController.m in Sources */,
 				27B25A731B3353C700544F52 /* PickerViewController.m in Sources */,
 				27DF7B021B22389500883F06 /* main.m in Sources */,
 			);
@@ -316,14 +310,6 @@
 				27DF7B0A1B22389500883F06 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		27DF7B0E1B22389500883F06 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				27DF7B0F1B22389500883F06 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -419,6 +405,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Choreganizer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -435,6 +422,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Choreganizer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

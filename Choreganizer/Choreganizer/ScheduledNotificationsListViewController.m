@@ -7,6 +7,7 @@
 //
 
 #import "ScheduledNotificationsListViewController.h"
+@import UserNotificationsUI; //For iOS 10
 
 @interface ScheduledNotificationsListViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -31,6 +32,10 @@
     
     [self setUpTableView];
     [self setUpDismissButton];
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    imageView.image = [UIImage imageNamed:@"NotifBG"];
+    [self.view insertSubview:imageView atIndex:0]; 
 }
 
 - (NSArray *)notificationArray {
@@ -58,7 +63,7 @@
     CGRect tableFrame = CGRectMake(0, 75, self.view.frame.size.width, self.view.frame.size.height - 75);
     
     self.tableView = [[UITableView alloc]initWithFrame:tableFrame style:UITableViewStyleGrouped];
-    self.tableView.backgroundColor = [UIColor grayColor]; 
+    self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self registerTableView:self.tableView];
@@ -90,7 +95,17 @@
     
     cell.backgroundColor = [UIColor darkGrayColor];
     cell.textLabel.textColor = [UIColor greenColor];
-    cell.detailTextLabel.textColor = [UIColor greenColor]; 
+    cell.detailTextLabel.textColor = [UIColor greenColor];
+    cell.textLabel.backgroundColor = [UIColor clearColor];
+    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+    
+    cell.imageView.image = [UIImage imageNamed:@"Clock"];
+    
+//    UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:cell.bounds];
+//    cellImageView.image = [UIImage imageNamed:@"NCBG"];
+//    [cell insertSubview:cellImageView atIndex:0];
+    
+    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"NCBG"]];
     
     UILocalNotification *notif = [self notificationArray][indexPath.row];
     

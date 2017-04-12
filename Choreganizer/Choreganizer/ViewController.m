@@ -95,8 +95,6 @@ typedef enum {
     [super viewDidLoad];
     
     
-    
-    
 }
 
 - (void)setUpToolbar {

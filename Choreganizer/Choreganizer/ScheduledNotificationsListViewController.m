@@ -7,7 +7,9 @@
 //
 
 #import "ScheduledNotificationsListViewController.h"
-@import UserNotificationsUI; //For iOS 10
+
+@import UserNotificationsUI; //For iOS 10 (TODO: Update)
+@import UserNotifications;
 
 @interface ScheduledNotificationsListViewController () <UITableViewDelegate, UITableViewDataSource>
 
@@ -101,11 +103,11 @@
     
     cell.imageView.image = [UIImage imageNamed:@"Clock"];
     
-//    UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:cell.bounds];
-//    cellImageView.image = [UIImage imageNamed:@"NCBG"];
-//    [cell insertSubview:cellImageView atIndex:0];
+    CGRect cellFrame = CGRectMake(0, 0, self.tableView.contentSize.width, 80);
     
-    cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"NCBG"]];
+    UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:cellFrame];
+    cellImageView.image = [UIImage imageNamed:@"NCBG"];
+    [cell.contentView insertSubview:cellImageView atIndex:0];
     
     UILocalNotification *notif = [self notificationArray][indexPath.row];
     
@@ -120,6 +122,8 @@
     UILocalNotification *theNotif = [self notificationArray][indexPath.row];
     
     [self popOptionsAlertWithNotification:theNotif];
+    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
 }
 
 #pragma helper fuctions
@@ -148,7 +152,7 @@
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     
-    formatter.dateFormat = @"YYYY-MM-HH";
+    formatter.dateFormat = @"yyyy-MMM-dd HH:mm:ss";
     
     return [formatter stringFromDate:date];
 }

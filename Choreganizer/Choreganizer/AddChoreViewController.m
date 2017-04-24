@@ -52,15 +52,19 @@
     
     self.saveButton = [UIButton new];
     self.saveButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.saveButton.backgroundColor = [UIColor colorWithRed:182/255.0f green:66/255.0f blue:45/255.0f alpha:1.0f];
-    [self.saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //self.saveButton.backgroundColor = [UIColor colorWithRed:182/255.0f green:66/255.0f blue:45/255.0f alpha:1.0f];
+    self.saveButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [self.saveButton setBackgroundImage:[UIImage imageNamed:@"BBG"] forState:UIControlStateNormal];
+    [self.saveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.saveButton setTitle:@"Save" forState:UIControlStateNormal];
     [self.saveButton addTarget:self action:@selector(saveChoreToDay) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.saveButton];
     
     self.dismissButton = [UIButton new];
     self.dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.dismissButton.backgroundColor = [UIColor colorWithRed:182/255.0f green:243/255.0f blue:13/255.0f alpha:1.0f];
+    //self.dismissButton.backgroundColor = [UIColor colorWithRed:182/255.0f green:243/255.0f blue:13/255.0f alpha:1.0f];
+    self.dismissButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [self.dismissButton setBackgroundImage:[UIImage imageNamed:@"BBG"] forState:UIControlStateNormal];
     [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
     [self.dismissButton addTarget:self action:@selector(dismissSelf) forControlEvents:UIControlEventTouchUpInside];
@@ -68,8 +72,10 @@
     
     self.clearButton = [UIButton new];
     self.clearButton.translatesAutoresizingMaskIntoConstraints = NO;
-    self.clearButton.backgroundColor = [UIColor colorWithRed:99/255.0f green:48/255.0f blue:225/255.0f alpha:1.0f];
-    [self.clearButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    //self.clearButton.backgroundColor = [UIColor colorWithRed:99/255.0f green:48/255.0f blue:225/255.0f alpha:1.0f];
+    self.clearButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
+    [self.clearButton setBackgroundImage:[UIImage imageNamed:@"BBG"] forState:UIControlStateNormal];
+    [self.clearButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self.clearButton setTitle:@"Clear" forState:UIControlStateNormal];
     [self.clearButton addTarget:self action:@selector(clearFields) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.clearButton];
@@ -123,7 +129,7 @@
         imageView.image = [UIImage imageNamed:@"ColorBackground"];
         [self.view addSubview:imageView];
         
-        self.labelColor = [UIColor blackColor];
+        self.labelColor = [UIColor whiteColor];
         
     }
     
@@ -162,14 +168,17 @@
     
     self.saveButton.layer.cornerRadius = buttonWidth / 2;
     self.saveButton.layer.borderColor = [[UIColor blackColor]CGColor];
+    self.saveButton.layer.masksToBounds = YES;
     self.saveButton.layer.borderWidth = 1.5;
     
     self.dismissButton.layer.cornerRadius = buttonWidth / 2;
     self.dismissButton.layer.borderColor = [[UIColor blackColor]CGColor];
+    self.dismissButton.layer.masksToBounds = YES;
     self.dismissButton.layer.borderWidth = 1.5;
     
     self.clearButton.layer.cornerRadius = buttonWidth / 2;
     self.clearButton.layer.borderColor = [[UIColor blackColor]CGColor];
+    self.clearButton.layer.masksToBounds = YES;
     self.clearButton.layer.borderWidth = 1.5;
     
     self.textField.layer.cornerRadius = 10;

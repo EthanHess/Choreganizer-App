@@ -97,6 +97,15 @@ typedef enum {
     
 }
 
+- (void)addImageToToolbar:(NSString *)imageName andToolbar:(UIToolbar *)toolbar {
+    
+    CGRect imageFrame = CGRectMake(0, 0, self.view.frame.size.width, 80);
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:imageFrame];
+    imageView.image = [UIImage imageNamed:imageName];
+    [toolbar addSubview:imageView];
+}
+
 - (void)setUpToolbar {
     
     self.toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
@@ -106,23 +115,29 @@ typedef enum {
             
         case Space:
             
-            [self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbarBackground"] forToolbarPosition:
-             UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+            [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
+            
+            //[self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbarBackground"] forToolbarPosition:
+             //UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
             
             
             break;
             
         case Color:
             
-            [self.toolbar setBackgroundImage:[UIImage imageNamed:@"ColorToolbar"] forToolbarPosition:
-             UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+            [self addImageToToolbar:@"ColorToolbar" andToolbar:self.toolbar];
+            
+            //[self.toolbar setBackgroundImage:[UIImage imageNamed:@"ColorToolbar"] forToolbarPosition:
+             //UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
             
             break;
             
         default:
             
-            [self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbarBackground"] forToolbarPosition:
-             UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+            [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
+            
+            //[self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbarBackground"] forToolbarPosition:
+             //UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
             
             break;
 
@@ -249,7 +264,9 @@ typedef enum {
             
         case Space:
             
-            cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
+//            cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
+            
+            [self addImageToCell:@"ChoreganizerCellBackground" andCell:cell];
             
             cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
             cell.textLabel.textColor = [UIColor cyanColor];
@@ -259,7 +276,9 @@ typedef enum {
             
         case Color:
             
-            cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellTwo"]];
+            [self addImageToCell:@"CellTwo" andCell:cell];
+            
+            //cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"CellTwo"]];
             
             cell.imageView.image = [UIImage imageNamed:@"CellImageTwo"];
             cell.textLabel.textColor = [UIColor whiteColor];
@@ -268,6 +287,8 @@ typedef enum {
             break;
             
         default:
+            
+            [self addImageToCell:@"ChoreganizerCellBackground" andCell:cell];
             
             cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
             
@@ -281,6 +302,15 @@ typedef enum {
     
     
     return cell;
+}
+
+- (void)addImageToCell:(NSString *)imageName andCell:(UITableViewCell *)cell {
+    
+    CGRect imageFrame = CGRectMake(0, 0, self.tableView.contentSize.width, 160);
+    
+    UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:imageFrame];
+    cellImageView.image = [UIImage imageNamed:imageName];
+    [cell.contentView insertSubview:cellImageView atIndex:0];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

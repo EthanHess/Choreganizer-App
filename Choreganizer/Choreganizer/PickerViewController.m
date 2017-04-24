@@ -18,9 +18,6 @@
 @property (nonatomic, strong) UIButton *dismissButton;
 @property (nonatomic, strong) NSString *schemeString;
 
-@property (nonatomic, strong) UIColor *backgroundColorOne;
-@property (nonatomic, strong) UIColor *backgroundColorTwo;
-
 @end
 
 @implementation PickerViewController
@@ -41,24 +38,6 @@
     [self.datePicker setValue:[UIColor whiteColor] forKey:@"textColor"];
     [self.view addSubview:self.datePicker];
     
-    self.sendButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 300, 100, 100)];
-    self.sendButton.backgroundColor = self.backgroundColorOne;
-    [self.sendButton setTitle:@"Send" forState:UIControlStateNormal];
-    self.sendButton.layer.borderColor = [[UIColor whiteColor]CGColor];
-    self.sendButton.layer.borderWidth = 3.0;
-    self.sendButton.layer.cornerRadius = 50;
-    [self.sendButton addTarget:self action:@selector(sendNotification) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.sendButton];
-    
-    self.dismissButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 150, 300, 100, 100)];
-    self.dismissButton.backgroundColor = self.backgroundColorTwo;
-    [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
-    self.dismissButton.layer.borderColor = [[UIColor whiteColor]CGColor];
-    self.dismissButton.layer.borderWidth = 3.0;
-    self.dismissButton.layer.cornerRadius = 50;
-    [self.dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:self.dismissButton];
-    
 }
 
 - (void)setScheme {
@@ -76,7 +55,7 @@
         imageView.image = [UIImage imageNamed:@"ChoreganizerPicker"];
         [self.view addSubview:imageView];
         
-        [self buttonSchemeOne];
+        [self buttonSchemeWithTitleColor:[UIColor whiteColor] backgroundColor:[UIColor blackColor] andBorderColor:[UIColor whiteColor]];
         
     } else if ([self.schemeString isEqualToString:@"Color"]) {
         
@@ -85,7 +64,7 @@
         imageView.image = [UIImage imageNamed:@"PickerColorBackground"];
         [self.view addSubview:imageView];
         
-        [self buttonSchemeTwo];
+        [self buttonSchemeWithTitleColor:[UIColor blackColor] backgroundColor:[UIColor whiteColor] andBorderColor:[UIColor blackColor]];
     }
     
     else {
@@ -95,22 +74,35 @@
         imageView.image = [UIImage imageNamed:@"ChoreganizerPicker"];
         [self.view addSubview:imageView];
         
-        [self buttonSchemeOne];
+        [self buttonSchemeWithTitleColor:[UIColor whiteColor] backgroundColor:[UIColor blackColor] andBorderColor:[UIColor whiteColor]];
         
     };
     
 }
 
-- (void)buttonSchemeOne {
-    
-    self.backgroundColorOne = [UIColor colorWithRed:99/255.0f green:176/255.0f blue:230/255.0f alpha:1.0f];
-    self.backgroundColorTwo = [UIColor colorWithRed:99/255.0f green:17/255.0f blue:36/255.0f alpha:1.0f];
-}
+- (void)buttonSchemeWithTitleColor:(UIColor *)titleColor backgroundColor:(UIColor *)backgroundColor andBorderColor:(UIColor *)borderColor {
 
-- (void)buttonSchemeTwo {
+    self.sendButton = [[UIButton alloc]initWithFrame:CGRectMake(50, 300, 100, 100)];
+    self.sendButton.backgroundColor = backgroundColor;
+    [self.sendButton setTitle:@"Send" forState:UIControlStateNormal];
+    [self.sendButton setTitleColor:titleColor forState:UIControlStateNormal];
+    self.sendButton.layer.borderWidth = 3.0;
+    self.sendButton.layer.cornerRadius = 50;
+    self.sendButton.layer.masksToBounds = YES;
+    self.sendButton.layer.borderColor = [borderColor CGColor];
+    [self.sendButton addTarget:self action:@selector(sendNotification) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.sendButton];
     
-    self.backgroundColorOne = [UIColor colorWithRed:7.0f/255.0f green:87.0f/255.0f blue:33.0f/255.0f alpha:1.0];
-    self.backgroundColorTwo = [UIColor colorWithRed:153.0f/255.0f green:98.0f/255.0f blue:42.0f/255.0f alpha:1.0];
+    self.dismissButton = [[UIButton alloc]initWithFrame:CGRectMake(self.view.frame.size.width - 150, 300, 100, 100)];
+    self.dismissButton.backgroundColor = backgroundColor;
+    [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
+    [self.dismissButton setTitleColor:titleColor forState:UIControlStateNormal];
+    self.dismissButton.layer.borderWidth = 3.0;
+    self.dismissButton.layer.cornerRadius = 50;
+    self.dismissButton.layer.masksToBounds = YES;
+    self.dismissButton.layer.borderColor = [borderColor CGColor];
+    [self.dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.dismissButton];
 }
 
 - (void)sendNotification {
@@ -119,6 +111,7 @@
     NSString *choreDetail = [NSString stringWithFormat:@"%@", self.chore.detail];
     
     UILocalNotification* localNotification = [[UILocalNotification alloc] init];
+    
     if (localNotification) {
         localNotification.fireDate = self.datePicker.date;
         localNotification.timeZone = [NSTimeZone defaultTimeZone];

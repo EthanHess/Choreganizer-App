@@ -126,19 +126,13 @@ typedef enum {
         case Color:
             
             [self addImageToToolbar:@"ColorToolbar" andToolbar:self.toolbar];
-            
-            //[self.toolbar setBackgroundImage:[UIImage imageNamed:@"ColorToolbar"] forToolbarPosition:
-             //UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-            
+
             break;
             
         default:
             
             [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
-            
-            //[self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbarBackground"] forToolbarPosition:
-             //UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-            
+        
             break;
 
     }

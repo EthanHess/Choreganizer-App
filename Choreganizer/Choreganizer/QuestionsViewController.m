@@ -138,7 +138,7 @@
 - (void)setUpToolbar {
     
     self.toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
-    [self.toolbar setBackgroundImage:[UIImage imageNamed:@"toolbarBackground"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
     [self.view addSubview:self.toolbar];
     
     UIImage *arrow = [UIImage imageNamed:@"arrow"];
@@ -157,6 +157,16 @@
     [self.toolbar setItems:navItems];
     
 }
+
+- (void)addImageToToolbar:(NSString *)imageName andToolbar:(UIToolbar *)toolbar {
+    
+    CGRect imageFrame = CGRectMake(0, 0, self.view.frame.size.width, 80);
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:imageFrame];
+    imageView.image = [UIImage imageNamed:imageName];
+    [toolbar addSubview:imageView];
+}
+
 
 - (void)setUpSegControl {
     

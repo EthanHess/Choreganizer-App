@@ -101,6 +101,8 @@
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     
+    cell.textLabel.numberOfLines = 0;
+    
     cell.imageView.image = [UIImage imageNamed:@"Clock"];
     
     CGRect cellFrame = CGRectMake(0, 0, self.tableView.contentSize.width, 80);
@@ -165,9 +167,7 @@
 }
 
 - (void)refresh {
-    
     dispatch_async(dispatch_get_main_queue(), ^{
-        
         [self.tableView reloadData];
     });
 }

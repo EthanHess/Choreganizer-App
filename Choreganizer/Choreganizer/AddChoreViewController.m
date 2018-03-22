@@ -11,15 +11,22 @@
 #import "ChoreController.h"
 #import "QuestionsViewController.h"
 #import "AppDelegate.h"
+#import <Speech/Speech.h>
 
 #define IS_IPHONE_4 ([UIScreen mainScreen].bounds.size.height == 480.0)
 
-@interface AddChoreViewController () <UITextFieldDelegate, UITextViewDelegate>
+@interface AddChoreViewController () <UITextFieldDelegate, UITextViewDelegate, SFSpeechRecognizerDelegate>
 
 @property (nonatomic, strong) NSString *schemeString;
 @property (nonatomic, strong) UIColor *labelColor;
-
 @property (nonatomic, assign) CGRect labelFrame;
+
+//Speech
+@property (nonatomic, strong) SFSpeechRecognizer *speechRec;
+@property (nonatomic, strong) SFSpeechAudioBufferRecognitionRequest *speechRequest;
+@property (nonatomic, strong) SFSpeechRecognitionTask *speechTask;
+@property (nonatomic, strong) AVAudioEngine *theAudioEngine;
+@property (nonatomic, strong) NSString *chosenString;
 
 @end
 
@@ -84,16 +91,97 @@
     [self setUpConstraints];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self setUpSpeechRecognizer];
+}
+
+- (void)setUpSpeechRecognizer {
+    
+    NSLocale *theLocale = [[NSLocale alloc]initWithLocaleIdentifier:@"en-US"]; //TODO, update for other languages
+    
+    self.speechRec = [[SFSpeechRecognizer alloc]initWithLocale:theLocale];
+    self.speechRec.delegate = self;
+    
+    [SFSpeechRecognizer requestAuthorization:^(SFSpeechRecognizerAuthorizationStatus status) {
+        switch (status) {
+            case SFSpeechRecognizerAuthorizationStatusAuthorized:
+                NSLog(@"Authorized");
+                break;
+            case SFSpeechRecognizerAuthorizationStatusDenied:
+                NSLog(@"Denied");
+                break;
+            case SFSpeechRecognizerAuthorizationStatusRestricted:
+                NSLog(@"Restricted");
+                break;
+            case SFSpeechRecognizerAuthorizationStatusNotDetermined:
+                NSLog(@"Determined");
+                break;
+            default:
+                break;
+        }
+    }];
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [self startRecording];
+}
+
+- (void)startRecording {
+    
+    if (self.speechTask != nil) { //refresh it
+        [self.speechTask cancel];
+        self.speechTask = nil;
+    }
+    
+    AVAudioSession *theSession = [AVAudioSession sharedInstance];
+    
+    NSError *theError = nil;
+    
+    [theSession setCategory:AVAudioSessionCategoryRecord error:&theError];
+    [theSession setMode:AVAudioSessionModeMeasurement error:&theError];
+    [theSession setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&theError];
+    
+    self.speechRequest = [[SFSpeechAudioBufferRecognitionRequest alloc]init];
+    
+    if (self.theAudioEngine.inputNode != nil) {
+        if (self.speechRequest) {
+            
+            self.speechRequest.shouldReportPartialResults = YES;
+            self.speechTask = [self.speechRec recognitionTaskWithRequest:self.speechRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+                if (error) {
+                    NSLog(@"ERROR %@", error.localizedDescription);
+                }
+                else {
+                    
+                    BOOL isFinal = NO;
+                    
+                    if (result != nil) {
+                        self.chosenString = result.bestTranscription.formattedString;
+                        isFinal = result.isFinal;
+                    }
+                    if (error != nil || isFinal == YES) {
+                        [self.theAudioEngine stop];
+                        [self.theAudioEngine.inputNode removeTapOnBus:0];
+                        
+                        self.speechTask = nil;
+                        self.speechRequest = nil;
+                    }
+                }
+            }];
+        }
+    } else {
+        NSLog(@"No input node!");
+    }
+}
+
 - (void)setUpTitleLabel {
     
     if (IS_IPHONE_4) {
-        
         _labelFrame = CGRectMake(0, 60, self.view.frame.size.width, 100);
-        
     } else {
-    
         _labelFrame = CGRectMake(0, self.view.frame.size.height -100, self.view.frame.size.width, 100);
-        
     }
     
     self.titleLabel = [[UILabel alloc]initWithFrame:_labelFrame];
@@ -108,40 +196,29 @@
 - (void)setScheme {
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:schemeKey]) {
-        
         self.schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
-        
     }
     
     if ([self.schemeString isEqualToString:@"Space"]) {
         
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-        
         imageView.image = [UIImage imageNamed:@"ChoreganizerAdd"];
         [self.view addSubview:imageView];
-        
         self.labelColor = [UIColor whiteColor];
         
     } else if ([self.schemeString isEqualToString:@"Color"]) {
         
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-        
         imageView.image = [UIImage imageNamed:@"ColorBackground"];
         [self.view addSubview:imageView];
-        
         self.labelColor = [UIColor whiteColor];
-        
     }
-    
     else {
         
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-        
         imageView.image = [UIImage imageNamed:@"ChoreganizerAdd"];
         [self.view addSubview:imageView];
-        
         self.labelColor = [UIColor whiteColor];
-        
     };
 }
 
@@ -232,7 +309,7 @@
 }
 
 - (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
-    if( [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound ) {
+    if( [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound) {
         return YES;
     }
     
@@ -241,7 +318,6 @@
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
-    
     textView.text = @"";
 }
 

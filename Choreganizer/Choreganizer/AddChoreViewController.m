@@ -87,7 +87,6 @@
     [self.clearButton addTarget:self action:@selector(clearFields) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.clearButton];
     
-
     [self setUpConstraints];
 }
 
@@ -103,6 +102,8 @@
     
     self.speechRec = [[SFSpeechRecognizer alloc]initWithLocale:theLocale];
     self.speechRec.delegate = self;
+    
+    self.theAudioEngine = [[AVAudioEngine alloc]init];
     
     [SFSpeechRecognizer requestAuthorization:^(SFSpeechRecognizerAuthorizationStatus status) {
         switch (status) {
@@ -130,7 +131,7 @@
 
 - (void)startRecording {
     
-    if (self.speechTask != nil) { //refresh it
+    if (self.speechTask != nil) {
         [self.speechTask cancel];
         self.speechTask = nil;
     }
@@ -151,7 +152,7 @@
             self.speechRequest.shouldReportPartialResults = YES;
             self.speechTask = [self.speechRec recognitionTaskWithRequest:self.speechRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
                 if (error) {
-                    NSLog(@"ERROR %@", error.localizedDescription);
+                    NSLog(@"ERROR %@", error.localizedDescription); //Pop alert?
                 }
                 else {
                     
@@ -170,6 +171,15 @@
                     }
                 }
             }];
+            
+            AVAudioFormat *format = [self.theAudioEngine.inputNode outputFormatForBus:0];
+            
+            [self.theAudioEngine.inputNode installTapOnBus:0 bufferSize:1024 format:format block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when) {
+                [self.speechRequest appendAudioPCMBuffer:buffer];
+            }];
+            
+            [self.theAudioEngine prepare];
+            [self.theAudioEngine startAndReturnError:&theError];
         }
     } else {
         NSLog(@"No input node!");
@@ -271,19 +281,13 @@
 }
 
 - (void)updateWithDay:(Day *)day {
-    
     self.day = day;
-    
     [self setUpTitleLabel];
-    
 }
 
 
 - (void)dismissSelf {
-    
     [self dismissViewControllerAnimated:YES completion:nil];
-    
-    
 }
 
 - (void)saveChoreToDay {
@@ -291,12 +295,10 @@
     [[ChoreController sharedInstance]addChoreWithTitle:self.textField.text andDescription:self.textView.text toDay:self.day];
     
     [self dismissViewControllerAnimated:YES completion:nil];
-    
 }
 
 
 - (void)clearFields {
-    
     self.textField.text = @"";
     self.textView.text = @"";
 }
@@ -304,7 +306,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     
     [textField resignFirstResponder];
-    
     return YES;
 }
 
@@ -322,7 +323,6 @@
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {
-    
     if ([textView.text isEqualToString:@""]) {
         textView.text = @"Chore Description";
     }

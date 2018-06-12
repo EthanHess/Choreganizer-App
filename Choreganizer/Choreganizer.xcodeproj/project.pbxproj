@@ -18,7 +18,7 @@
 		27B25A731B3353C700544F52 /* PickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B25A721B3353C700544F52 /* PickerViewController.m */; };
 		27DF7B021B22389500883F06 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B011B22389500883F06 /* main.m */; };
 		27DF7B051B22389500883F06 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B041B22389500883F06 /* AppDelegate.m */; };
-		27DF7B081B22389500883F06 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B071B22389500883F06 /* ViewController.m */; };
+		27DF7B081B22389500883F06 /* z.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B071B22389500883F06 /* z.m */; };
 		27DF7B0B1B22389500883F06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27DF7B091B22389500883F06 /* Main.storyboard */; };
 		27DF7B0D1B22389500883F06 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27DF7B0C1B22389500883F06 /* Images.xcassets */; };
 		27DF7B1C1B22389500883F06 /* ChoreganizerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DF7B1B1B22389500883F06 /* ChoreganizerTests.m */; };
@@ -59,7 +59,7 @@
 		27DF7B031B22389500883F06 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		27DF7B041B22389500883F06 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		27DF7B061B22389500883F06 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		27DF7B071B22389500883F06 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		27DF7B071B22389500883F06 /* z.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = z.m; sourceTree = "<group>"; };
 		27DF7B0A1B22389500883F06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		27DF7B0C1B22389500883F06 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		27DF7B151B22389500883F06 /* ChoreganizerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChoreganizerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,7 +113,7 @@
 				27DF7B031B22389500883F06 /* AppDelegate.h */,
 				27DF7B041B22389500883F06 /* AppDelegate.m */,
 				27DF7B061B22389500883F06 /* ViewController.h */,
-				27DF7B071B22389500883F06 /* ViewController.m */,
+				27DF7B071B22389500883F06 /* z.m */,
 				27DF7B2B1B2244A300883F06 /* SectionHeader.h */,
 				27DF7B2C1B2244A300883F06 /* SectionHeader.m */,
 				27B25A6E1B326A9100544F52 /* AddChoreViewController.h */,
@@ -276,7 +276,7 @@
 				27B25A701B326A9100544F52 /* AddChoreViewController.m in Sources */,
 				2703E4FA1B24C412005F82FE /* Model.xcdatamodeld in Sources */,
 				27A837231B4B28FF00F02B14 /* QuestionsViewController.m in Sources */,
-				27DF7B081B22389500883F06 /* ViewController.m in Sources */,
+				27DF7B081B22389500883F06 /* z.m in Sources */,
 				27DF7B271B22397000883F06 /* ChoreController.m in Sources */,
 				27212F691E96C2FD0050053B /* ScheduledNotificationsListViewController.m in Sources */,
 				27DF7B051B22389500883F06 /* AppDelegate.m in Sources */,

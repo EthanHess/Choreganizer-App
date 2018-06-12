@@ -26,7 +26,6 @@
     [super viewWillAppear:animated];
     
     if (![self notificationArray]) {
-        
         NSLog(@"No notifications"); //alert
     }
     
@@ -41,7 +40,6 @@
 }
 
 - (NSArray *)notificationArray {
-    
     return [[UIApplication sharedApplication]scheduledLocalNotifications];
 }
 
@@ -73,19 +71,16 @@
 }
 
 - (void)registerTableView:(UITableView *)tableView {
-    
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
 }
 
 //Table View Delegate + Datasource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     return 80;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     return  [self notificationArray].count;
 }
 
@@ -122,7 +117,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UILocalNotification *theNotif = [self notificationArray][indexPath.row];
-    
     [self popOptionsAlertWithNotification:theNotif];
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -139,7 +133,6 @@
         [[UIApplication sharedApplication]cancelLocalNotification:theNotif];
         
         [self refresh];
-        
     }];
     
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
@@ -153,14 +146,12 @@
 - (NSString *)stringFromDate:(NSDate *)date {
     
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    
     formatter.dateFormat = @"yyyy-MMM-dd HH:mm:ss";
     
     return [formatter stringFromDate:date];
 }
 
 - (NSString *)cutString:(NSString *)stringToCut {
-    
     NSString *newString = [stringToCut stringByReplacingOccurrencesOfString:@"A friendly reminder, " withString:@""];
     
     return newString;

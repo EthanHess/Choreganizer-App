@@ -136,13 +136,10 @@
     }]];
     
     [self presentViewController:alertController animated:YES completion:nil];
-
 }
 
 - (void)dismiss {
-    
     [self dismissViewControllerAnimated:YES completion:nil];
-    
 }
 
 - (void)didReceiveMemoryWarning {

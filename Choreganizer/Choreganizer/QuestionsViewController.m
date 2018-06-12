@@ -33,32 +33,21 @@
     NSString *schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
     
     if (schemeString) {
-        
         if ([schemeString isEqualToString:@"Space"]) {
-            
             [self backgroundImage:@"ChoreganizerInstructions"];
-            
         } else if ([schemeString isEqualToString:@"Color"]) {
-            
             [self backgroundImage:@"InstructionsColor"];
-            
         }
     }
-    
     else {
-        
         [self backgroundImage:@"ChoreganizerInstructions"];
     }
 }
 
 - (void)setUpViewsWrapper {
-    
     [self setUpScrollView];
-    
     [self setUpLabel];
-    
     [self setUpToolbar];
-    
     [self setUpSegControl];
 }
 
@@ -155,7 +144,6 @@
     [navItems addObject:flexItem1];
     
     [self.toolbar setItems:navItems];
-    
 }
 
 - (void)addImageToToolbar:(NSString *)imageName andToolbar:(UIToolbar *)toolbar {
@@ -211,7 +199,6 @@
 }
 
 - (void)home {
-    
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
@@ -220,9 +207,7 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Are you sure you want to cancel all notifications?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
         [[UIApplication sharedApplication]cancelAllLocalNotifications];
-        
     }];
     
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Nevermind" style:UIAlertActionStyleCancel handler:nil];

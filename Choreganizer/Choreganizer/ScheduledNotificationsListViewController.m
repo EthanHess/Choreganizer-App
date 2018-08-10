@@ -7,6 +7,7 @@
 //
 
 #import "ScheduledNotificationsListViewController.h"
+#import "GlobalFunctions.h"
 
 @import UserNotificationsUI; //For iOS 10 (TODO: Update)
 @import UserNotifications;
@@ -77,7 +78,11 @@
 //Table View Delegate + Datasource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 80;
+    
+    UILocalNotification *notif = [self notificationArray][indexPath.row];
+
+    CGFloat heightToAdd = [GlobalFunctions heightFromTextCount:(int)notif.alertBody.length];
+    return 80 + heightToAdd;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -100,13 +105,16 @@
     
     cell.imageView.image = [UIImage imageNamed:@"Clock"];
     
-    CGRect cellFrame = CGRectMake(0, 0, self.tableView.contentSize.width, 80);
+    UILocalNotification *notif = [self notificationArray][indexPath.row];
+    
+    CGFloat heightToAdd = [GlobalFunctions heightFromTextCount:(int)notif.alertBody.length];
+    
+    CGRect cellFrame = CGRectMake(0, 0, self.tableView.contentSize.width, 80 + heightToAdd);
     
     UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:cellFrame];
     cellImageView.image = [UIImage imageNamed:@"NCBG"];
     [cell.contentView insertSubview:cellImageView atIndex:0];
     
-    UILocalNotification *notif = [self notificationArray][indexPath.row];
     
     cell.textLabel.text = [self cutString:notif.alertBody];
     cell.detailTextLabel.text = [self stringFromDate:notif.fireDate];

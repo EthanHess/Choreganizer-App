@@ -10,7 +10,11 @@
 		2703E4FA1B24C412005F82FE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2703E4F81B24C412005F82FE /* Model.xcdatamodeld */; };
 		27212F691E96C2FD0050053B /* ScheduledNotificationsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27212F681E96C2FD0050053B /* ScheduledNotificationsListViewController.m */; };
 		273B782C1E9C96D900E504F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 273B782B1E9C96D900E504F5 /* LaunchScreen.storyboard */; };
+		27448235210B9DCF00EC2E25 /* SpeechContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27448234210B9DCF00EC2E25 /* SpeechContainerView.m */; };
+		27448238210B9DEB00EC2E25 /* GlobalFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 27448237210B9DEB00EC2E25 /* GlobalFunctions.m */; };
+		2744823B210B9DFE00EC2E25 /* SpeechManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2744823A210B9DFE00EC2E25 /* SpeechManager.m */; };
 		27A837231B4B28FF00F02B14 /* QuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A837221B4B28FF00F02B14 /* QuestionsViewController.m */; };
+		27AD9785211E002200251F9E /* SpeechController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AD9784211E002200251F9E /* SpeechController.m */; };
 		27B1274E1B225E0B007BACD1 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B1274D1B225E0B007BACD1 /* Stack.m */; };
 		27B259EA1B30A6CA00544F52 /* Chore.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B259E91B30A6CA00544F52 /* Chore.m */; };
 		27B259ED1B30A6CB00544F52 /* Day.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B259EC1B30A6CB00544F52 /* Day.m */; };
@@ -41,8 +45,16 @@
 		27212F671E96C2FD0050053B /* ScheduledNotificationsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduledNotificationsListViewController.h; sourceTree = "<group>"; };
 		27212F681E96C2FD0050053B /* ScheduledNotificationsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduledNotificationsListViewController.m; sourceTree = "<group>"; };
 		273B782B1E9C96D900E504F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		27448233210B9DCF00EC2E25 /* SpeechContainerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpeechContainerView.h; sourceTree = "<group>"; };
+		27448234210B9DCF00EC2E25 /* SpeechContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechContainerView.m; sourceTree = "<group>"; };
+		27448236210B9DEB00EC2E25 /* GlobalFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalFunctions.h; sourceTree = "<group>"; };
+		27448237210B9DEB00EC2E25 /* GlobalFunctions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalFunctions.m; sourceTree = "<group>"; };
+		27448239210B9DFE00EC2E25 /* SpeechManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpeechManager.h; sourceTree = "<group>"; };
+		2744823A210B9DFE00EC2E25 /* SpeechManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechManager.m; sourceTree = "<group>"; };
 		27A837211B4B28FF00F02B14 /* QuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsViewController.h; sourceTree = "<group>"; };
 		27A837221B4B28FF00F02B14 /* QuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsViewController.m; sourceTree = "<group>"; };
+		27AD9783211E002200251F9E /* SpeechController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpeechController.h; sourceTree = "<group>"; };
+		27AD9784211E002200251F9E /* SpeechController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechController.m; sourceTree = "<group>"; };
 		27B1274C1B225E0B007BACD1 /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		27B1274D1B225E0B007BACD1 /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
 		27B259E81B30A6CA00544F52 /* Chore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chore.h; path = ../Chore.h; sourceTree = "<group>"; };
@@ -122,10 +134,18 @@
 				27B25A721B3353C700544F52 /* PickerViewController.m */,
 				27DF7B251B22397000883F06 /* ChoreController.h */,
 				27DF7B261B22397000883F06 /* ChoreController.m */,
+				27AD9783211E002200251F9E /* SpeechController.h */,
+				27AD9784211E002200251F9E /* SpeechController.m */,
 				27212F671E96C2FD0050053B /* ScheduledNotificationsListViewController.h */,
 				27212F681E96C2FD0050053B /* ScheduledNotificationsListViewController.m */,
 				27A837211B4B28FF00F02B14 /* QuestionsViewController.h */,
 				27A837221B4B28FF00F02B14 /* QuestionsViewController.m */,
+				27448233210B9DCF00EC2E25 /* SpeechContainerView.h */,
+				27448234210B9DCF00EC2E25 /* SpeechContainerView.m */,
+				27448236210B9DEB00EC2E25 /* GlobalFunctions.h */,
+				27448237210B9DEB00EC2E25 /* GlobalFunctions.m */,
+				27448239210B9DFE00EC2E25 /* SpeechManager.h */,
+				2744823A210B9DFE00EC2E25 /* SpeechManager.m */,
 				27B259EB1B30A6CB00544F52 /* Day.h */,
 				27B259EC1B30A6CB00544F52 /* Day.m */,
 				27B259E81B30A6CA00544F52 /* Chore.h */,
@@ -275,13 +295,17 @@
 				27B1274E1B225E0B007BACD1 /* Stack.m in Sources */,
 				27B25A701B326A9100544F52 /* AddChoreViewController.m in Sources */,
 				2703E4FA1B24C412005F82FE /* Model.xcdatamodeld in Sources */,
+				27AD9785211E002200251F9E /* SpeechController.m in Sources */,
+				27448235210B9DCF00EC2E25 /* SpeechContainerView.m in Sources */,
 				27A837231B4B28FF00F02B14 /* QuestionsViewController.m in Sources */,
 				27DF7B081B22389500883F06 /* ViewController.m in Sources */,
 				27DF7B271B22397000883F06 /* ChoreController.m in Sources */,
 				27212F691E96C2FD0050053B /* ScheduledNotificationsListViewController.m in Sources */,
 				27DF7B051B22389500883F06 /* AppDelegate.m in Sources */,
 				27B25A731B3353C700544F52 /* PickerViewController.m in Sources */,
+				2744823B210B9DFE00EC2E25 /* SpeechManager.m in Sources */,
 				27DF7B021B22389500883F06 /* main.m in Sources */,
+				27448238210B9DEB00EC2E25 /* GlobalFunctions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

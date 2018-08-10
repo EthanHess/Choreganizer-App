@@ -12,6 +12,21 @@
 
 @implementation SectionHeader
 
+//Move to subclass/category/extension
+
+//New Choreganizer colors
+//
+//Theme one
+//Header: [UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0]
+//Cell: [UIColor colorWithRed:14.0f/255.0f green:125.0f/255.0f blue:227.0f/255.0f alpha:1.0]
+//Button: [UIColor colorWithRed:165.0f/255.0f green:245.0f/255.0f blue:179.0f/255.0f alpha:1.0]
+//
+//Theme two
+//Header: [UIColor colorWithRed:144.0f/255.0f green:184.0f/255.0f blue:249.0f/255.0f alpha:1.0]
+//Cell: [UIColor colorWithRed:216.0f/255.0f green:226.0f/255.0f blue:242.0f/255.0f alpha:1.0]
+//Button: [UIColor colorWithRed:12.0f/255.0f green:57.0f/255.0f blue:130.0f/255.0f alpha:1.0]
+
+
 - (instancetype)initWithFrame:(CGRect)frame {
     
     self = [super initWithFrame:frame];
@@ -32,7 +47,10 @@
         [self.addButton setTitle:@"+" forState:UIControlStateNormal];
         [self.addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.addButton addTarget:self action:@selector(addChore) forControlEvents:UIControlEventTouchUpInside];
-        self.addButton.backgroundColor = [UIColor colorWithRed:55/255.0f green:155/255.0f blue:255/255.0f alpha:1.0f];
+//        self.addButton.backgroundColor = [UIColor colorWithRed:55/255.0f green:155/255.0f blue:255/255.0f alpha:1.0f];
+        
+        //Check scheme
+       // self.addButton.backgroundColor = [UIColor colorWithRed:165.0f/255.0f green:245.0f/255.0f blue:179.0f/255.0f alpha:1.0];
         
         [self addSubview:self.addButton];
         
@@ -63,12 +81,9 @@
     [self addConstraints:verticalConstraints];
     [self addConstraints:horizontalConstraints];
     [self addConstraint:equalConstraint];
-    
-    
 }
 
 + (CGFloat)headerHeight {
-    
     return 80;
 }
 
@@ -83,23 +98,16 @@
 }
 
 - (void)updateWithDay:(Day *)day {
-    
     self.day = day;
-    
 }
 
 - (void)updateWithTitle:(NSInteger)index {
-    
     Day *day = [ChoreController sharedInstance].days[index];
-    
     self.titleLabel.text = day.name;
-    
 }
 
 - (void)addChore {
-    
     [self.delegate popAddChoreView:self.day];
-    
 }
 
 

@@ -11,21 +11,16 @@
 #import "ChoreController.h"
 #import "QuestionsViewController.h"
 #import "AppDelegate.h"
-#import <Speech/Speech.h>
+#import "SpeechController.h"
+#import "GlobalFunctions.h"
 
 #define IS_IPHONE_4 ([UIScreen mainScreen].bounds.size.height == 480.0)
 
-@interface AddChoreViewController () <UITextFieldDelegate, UITextViewDelegate, SFSpeechRecognizerDelegate>
+@interface AddChoreViewController () <UITextFieldDelegate, UITextViewDelegate, SpeechDelegate>
 
 @property (nonatomic, strong) NSString *schemeString;
 @property (nonatomic, strong) UIColor *labelColor;
 @property (nonatomic, assign) CGRect labelFrame;
-
-//Speech
-@property (nonatomic, strong) SFSpeechRecognizer *speechRec;
-@property (nonatomic, strong) SFSpeechAudioBufferRecognitionRequest *speechRequest;
-@property (nonatomic, strong) SFSpeechRecognitionTask *speechTask;
-@property (nonatomic, strong) AVAudioEngine *theAudioEngine;
 @property (nonatomic, strong) NSString *chosenString;
 
 @end
@@ -92,98 +87,31 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    [self setUpSpeechRecognizer];
+
+    [SpeechController sharedInstance].delegate = self;
 }
 
-- (void)setUpSpeechRecognizer {
+#pragma Speech Del.
+
+- (void)stringDetermined:(NSString *)speechText {
+    [[SpeechController sharedInstance]endAudio];
     
-    NSLocale *theLocale = [[NSLocale alloc]initWithLocaleIdentifier:@"en-US"]; //TODO, update for other languages
-    
-    self.speechRec = [[SFSpeechRecognizer alloc]initWithLocale:theLocale];
-    self.speechRec.delegate = self;
-    
-    self.theAudioEngine = [[AVAudioEngine alloc]init];
-    
-    [SFSpeechRecognizer requestAuthorization:^(SFSpeechRecognizerAuthorizationStatus status) {
-        switch (status) {
-            case SFSpeechRecognizerAuthorizationStatusAuthorized:
-                NSLog(@"Authorized");
-                break;
-            case SFSpeechRecognizerAuthorizationStatusDenied:
-                NSLog(@"Denied");
-                break;
-            case SFSpeechRecognizerAuthorizationStatusRestricted:
-                NSLog(@"Restricted");
-                break;
-            case SFSpeechRecognizerAuthorizationStatusNotDetermined:
-                NSLog(@"Determined");
-                break;
-            default:
-                break;
+    [GlobalFunctions presentChoiceAlertWithTitle:speechText andText:@"Is this what you meant to say?" fromVC:self andCompletion:^(BOOL correct) {
+        if (correct == YES) {
+            self.textView.text = @"";
+            self.textView.text = speechText;
+        } else {
+            //try again
         }
     }];
 }
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [self startRecording];
+- (void)handleError:(NSError *)error {
+    [GlobalFunctions presentAlertWithTitle:error.localizedDescription andText:@"" fromVC:self];
 }
 
-- (void)startRecording {
-    
-    if (self.speechTask != nil) {
-        [self.speechTask cancel];
-        self.speechTask = nil;
-    }
-    
-    AVAudioSession *theSession = [AVAudioSession sharedInstance];
-    
-    NSError *theError = nil;
-    
-    [theSession setCategory:AVAudioSessionCategoryRecord error:&theError];
-    [theSession setMode:AVAudioSessionModeMeasurement error:&theError];
-    [theSession setActive:YES withOptions:AVAudioSessionSetActiveOptionNotifyOthersOnDeactivation error:&theError];
-    
-    self.speechRequest = [[SFSpeechAudioBufferRecognitionRequest alloc]init];
-    
-    if (self.theAudioEngine.inputNode != nil) {
-        if (self.speechRequest) {
-            
-            self.speechRequest.shouldReportPartialResults = YES;
-            self.speechTask = [self.speechRec recognitionTaskWithRequest:self.speechRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
-                if (error) {
-                    NSLog(@"ERROR %@", error.localizedDescription); //Pop alert?
-                }
-                else {
-                    
-                    BOOL isFinal = NO;
-                    
-                    if (result != nil) {
-                        self.chosenString = result.bestTranscription.formattedString;
-                        isFinal = result.isFinal;
-                    }
-                    if (error != nil || isFinal == YES) {
-                        [self.theAudioEngine stop];
-                        [self.theAudioEngine.inputNode removeTapOnBus:0];
-                        
-                        self.speechTask = nil;
-                        self.speechRequest = nil;
-                    }
-                }
-            }];
-            
-            AVAudioFormat *format = [self.theAudioEngine.inputNode outputFormatForBus:0];
-            
-            [self.theAudioEngine.inputNode installTapOnBus:0 bufferSize:1024 format:format block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when) {
-                [self.speechRequest appendAudioPCMBuffer:buffer];
-            }];
-            
-            [self.theAudioEngine prepare];
-            [self.theAudioEngine startAndReturnError:&theError];
-        }
-    } else {
-        NSLog(@"No input node!");
-    }
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    [[SpeechController sharedInstance]startAudio];
 }
 
 - (void)setUpTitleLabel {

@@ -43,6 +43,8 @@ typedef enum {
         } else if ([schemeString isEqualToString:@"Color"]) {
             self.scheme = (Scheme)Color;
         }
+    } else {
+        self.scheme = (Scheme)Space; //default
     }
     
     [self setUpToolbar];
@@ -120,10 +122,10 @@ typedef enum {
 
             break;
             
-        default:
-            [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
-        
-            break;
+//        default:
+//            [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
+//
+//            break;
     }
     
     [self.view addSubview:self.toolbar];
@@ -177,30 +179,58 @@ typedef enum {
     
     switch (self.scheme) {
         case Space:
-            [self.sectionHeader updateWithBackgroundImage:@"SectionHeader"];
+            //[self.sectionHeader updateWithBackgroundImage:@"SectionHeader"];
+            self.sectionHeader.backgroundColor = [UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0];
+            self.sectionHeader.addButton.backgroundColor =  [UIColor colorWithRed:165.0f/255.0f green:245.0f/255.0f blue:179.0f/255.0f alpha:1.0];
             
             break;
             
         case Color:
-            [self.sectionHeader updateWithBackgroundImage:@"DayCellTwo"];
+            //[self.sectionHeader updateWithBackgroundImage:@"DayCellTwo"];
+            self.sectionHeader.backgroundColor = [UIColor colorWithRed:144.0f/255.0f green:184.0f/255.0f blue:249.0f/255.0f alpha:1.0];
+            self.sectionHeader.addButton.backgroundColor = [UIColor colorWithRed:12.0f/255.0f green:57.0f/255.0f blue:130.0f/255.0f alpha:1.0]; 
             
             break;
             
-        default:
-            [self.sectionHeader updateWithBackgroundImage:@"SectionHeader"];
-            
-            break;
+//        default:
+//            [self.sectionHeader updateWithBackgroundImage:@"SectionHeader"];
+//
+//            break;
     }
     
     return self.sectionHeader;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    return 160;
+    return 160; //TODO size for text
 }
 
+- (void)gradientAndColorWithCell:(UITableViewCell *)cell andScheme:(Scheme)scheme {
+    switch (scheme) {
+        case Space:
+            cell.backgroundColor = [UIColor colorWithRed:14.0f/255.0f green:125.0f/255.0f blue:227.0f/255.0f alpha:1.0];
+            break;
+            
+        case Color:
+            cell.backgroundColor = [UIColor colorWithRed:216.0f/255.0f green:226.0f/255.0f blue:242.0f/255.0f alpha:1.0];
+        default:
+            break;
+    }
+}
 
+//Move to subclass/category/extension
+
+//New Choreganizer colors
+//
+//Theme one
+//Header: [UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0]
+//Cell: [UIColor colorWithRed:14.0f/255.0f green:125.0f/255.0f blue:227.0f/255.0f alpha:1.0]
+//Button: [UIColor colorWithRed:165.0f/255.0f green:245.0f/255.0f blue:179.0f/255.0f alpha:1.0]
+//
+//Theme two
+//Header: [UIColor colorWithRed:144.0f/255.0f green:184.0f/255.0f blue:249.0f/255.0f alpha:1.0]
+//Cell: [UIColor colorWithRed:216.0f/255.0f green:226.0f/255.0f blue:242.0f/255.0f alpha:1.0]
+//Button: [UIColor colorWithRed:12.0f/255.0f green:57.0f/255.0f blue:130.0f/255.0f alpha:1.0]
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -228,8 +258,9 @@ typedef enum {
             
         case Space:
 
-            [self addImageToCell:@"ChoreganizerCellBackground" andCell:cell];
+            //[self addImageToCell:@"ChoreganizerCellBackground" andCell:cell];
             
+            [self gradientAndColorWithCell:cell andScheme:self.scheme];
             cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
             cell.textLabel.textColor = [UIColor cyanColor];
             cell.detailTextLabel.textColor = [UIColor whiteColor];
@@ -238,25 +269,26 @@ typedef enum {
             
         case Color:
             
-            [self addImageToCell:@"CellTwo" andCell:cell];
-
+            //[self addImageToCell:@"CellTwo" andCell:cell];
+            
+            [self gradientAndColorWithCell:cell andScheme:self.scheme];
             cell.imageView.image = [UIImage imageNamed:@"CellImageTwo"];
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.detailTextLabel.textColor = [UIColor whiteColor];
             
             break;
             
-        default:
-            
-            [self addImageToCell:@"ChoreganizerCellBackground" andCell:cell];
-            
-            cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
-            
-            cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
-            cell.textLabel.textColor = [UIColor cyanColor];
-            cell.detailTextLabel.textColor = [UIColor whiteColor];
-            
-            break;
+//        default:
+//
+//            [self addImageToCell:@"ChoreganizerCellBackground" andCell:cell];
+//
+//            cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
+//
+//            cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
+//            cell.textLabel.textColor = [UIColor cyanColor];
+//            cell.detailTextLabel.textColor = [UIColor whiteColor];
+//
+//            break;
     }
     
     

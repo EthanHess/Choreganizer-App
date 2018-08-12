@@ -81,7 +81,7 @@ typedef enum {
 
     [self.view addSubview:self.tableView];
     
-    //[self.tableView setEditing:YES]; Will need to do to move chores around
+    [self.tableView setEditing:YES]; //Will need to do to move chores around
     
     [self refresh];
 }
@@ -359,18 +359,17 @@ typedef enum {
     
     if (sourceIndexPath != destinationIndexPath) {
         
+        //Really "remove from"
         Day *dayToRemove = [[ChoreController sharedInstance].days objectAtIndex:sourceIndexPath.section];
         Chore *chore = [dayToRemove.chores objectAtIndex:sourceIndexPath.row];
         
+        //Really "add to"
         Day *dayToAdd = [[ChoreController sharedInstance].days objectAtIndex:destinationIndexPath.section];
         
-        [tableView beginUpdates];
-        [[ChoreController sharedInstance]removeChore:chore];
         [[ChoreController sharedInstance]addChoreWithTitle:chore.title andDescription:chore.detail toDay:dayToAdd];
-        [tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath];
-        [self.tableView endUpdates];
-        
-        [self refresh]; 
+        [[ChoreController sharedInstance]removeChore:chore];
+    
+        [self refresh];
     }
 }
 
@@ -378,6 +377,14 @@ typedef enum {
 //
 //
 //}
+
+//Can discard, was causing trouble :\
+
+//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//            [tableView beginUpdates];
+//            [tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath];
+//            [tableView endUpdates];
+//        });
 
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {

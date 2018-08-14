@@ -8,6 +8,8 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "ScheduledNotificationsListViewController.h"
+#import "QuestionsViewController.h"
 #import "ChoreController.h"
 
 @interface AppDelegate ()
@@ -22,13 +24,15 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    
+    [self configureTabBar]; 
 
-    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[ViewController new]];
-    
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
-    
-    [self setUpCoreData];
+//    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[ViewController new]];
+//
+//    self.window.backgroundColor = [UIColor whiteColor];
+//    [self.window makeKeyAndVisible];
+//
+//    [self setUpCoreData];
     
    /* UILocalNotification *locationNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (locationNotification) {
@@ -57,6 +61,31 @@
         
     }
          
+}
+
+- (void)configureTabBar {
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc]init];
+    
+    ViewController *mainVC = [[ViewController alloc]init];
+    ScheduledNotificationsListViewController *notificationsVC = [[ScheduledNotificationsListViewController alloc]init];
+    QuestionsViewController *qVC = [[QuestionsViewController alloc]init];
+    
+    UINavigationController *mainNav = [[UINavigationController alloc]initWithRootViewController:tabBarController];
+    
+    UIImage *imageOne = [UIImage imageNamed:@""];
+    UIImage *imageTwo = [UIImage imageNamed:@""];
+    UIImage *imageThree = [UIImage imageNamed:@""];
+    
+    mainVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Chores" image:imageOne tag:0];
+    notificationsVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Notifications" image:imageTwo tag:0];
+    qVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Settings" image:imageThree tag:0];
+    
+    [tabBarController setViewControllers:@[mainVC, notificationsVC, qVC]];
+    
+    self.window.rootViewController = mainNav;
+    self.window.backgroundColor = [UIColor whiteColor];
+    [self.window makeKeyAndVisible];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

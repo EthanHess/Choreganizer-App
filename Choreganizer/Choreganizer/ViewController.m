@@ -81,7 +81,7 @@ typedef enum {
 
     [self.view addSubview:self.tableView];
     
-    [self.tableView setEditing:YES]; //Will need to do to move chores around
+    [self.tableView setEditing:NO]; //Will need to do to move chores around
     
     [self refresh];
 }
@@ -121,16 +121,12 @@ typedef enum {
             [self addImageToToolbar:@"ColorToolbar" andToolbar:self.toolbar];
 
             break;
-            
-//        default:
-//            [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
-//
-//            break;
     }
     
     [self.view addSubview:self.toolbar];
     
-    UIImage *question = [UIImage imageNamed:@"ToolbarImage"];
+    UIImage *question = [UIImage imageNamed:@"questionMarkI8"];
+    UIImage *edit = [UIImage imageNamed:@"editX"];
     
     NSMutableArray *navItems = [[NSMutableArray alloc] initWithCapacity:3];
     
@@ -144,12 +140,27 @@ typedef enum {
     UIBarButtonItem *flexItem1 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [navItems addObject:flexItem1];
     
+    UIBarButtonItem *editItem = [[UIBarButtonItem alloc]initWithImage:edit style:UIBarButtonItemStylePlain target:self action:@selector(editHandle)];
+    editItem.tintColor = [UIColor whiteColor];
+    [navItems addObject:editItem];
+    
+    UIBarButtonItem *flexItem2 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [navItems addObject:flexItem2];
+    
     [self.toolbar setItems:navItems];
 }
 
 - (void)pushToOnboarding {
-    QuestionsViewController *questionsView = [QuestionsViewController new];
-    [self.navigationController pushViewController:questionsView animated:YES];
+
+    
+}
+
+- (void)editHandle {
+    if (self.tableView.isEditing == NO) {
+        [self.tableView setEditing:YES];
+    } else {
+        [self.tableView setEditing:NO];
+    }
 }
 
 
@@ -179,23 +190,16 @@ typedef enum {
     
     switch (self.scheme) {
         case Space:
-            //[self.sectionHeader updateWithBackgroundImage:@"SectionHeader"];
             self.sectionHeader.backgroundColor = [UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0];
             self.sectionHeader.addButton.backgroundColor =  [UIColor colorWithRed:165.0f/255.0f green:245.0f/255.0f blue:179.0f/255.0f alpha:1.0];
             
             break;
             
         case Color:
-            //[self.sectionHeader updateWithBackgroundImage:@"DayCellTwo"];
             self.sectionHeader.backgroundColor = [UIColor colorWithRed:144.0f/255.0f green:184.0f/255.0f blue:249.0f/255.0f alpha:1.0];
             self.sectionHeader.addButton.backgroundColor = [UIColor colorWithRed:12.0f/255.0f green:57.0f/255.0f blue:130.0f/255.0f alpha:1.0]; 
             
             break;
-            
-//        default:
-//            [self.sectionHeader updateWithBackgroundImage:@"SectionHeader"];
-//
-//            break;
     }
     
     return self.sectionHeader;
@@ -218,28 +222,13 @@ typedef enum {
     }
 }
 
-//Move to subclass/category/extension
-
-//New Choreganizer colors
-//
-//Theme one
-//Header: [UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0]
-//Cell: [UIColor colorWithRed:14.0f/255.0f green:125.0f/255.0f blue:227.0f/255.0f alpha:1.0]
-//Button: [UIColor colorWithRed:165.0f/255.0f green:245.0f/255.0f blue:179.0f/255.0f alpha:1.0]
-//
-//Theme two
-//Header: [UIColor colorWithRed:144.0f/255.0f green:184.0f/255.0f blue:249.0f/255.0f alpha:1.0]
-//Cell: [UIColor colorWithRed:216.0f/255.0f green:226.0f/255.0f blue:242.0f/255.0f alpha:1.0]
-//Button: [UIColor colorWithRed:12.0f/255.0f green:57.0f/255.0f blue:130.0f/255.0f alpha:1.0]
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-//    cell.frame = CGRectMake(0, 0, self.view.frame.size.width, 160);
-    
+
     Day *day = [[ChoreController sharedInstance].days objectAtIndex:indexPath.section];
     Chore *chore = [day.chores objectAtIndex:indexPath.row];
     
@@ -258,8 +247,6 @@ typedef enum {
             
         case Space:
 
-            //[self addImageToCell:@"ChoreganizerCellBackground" andCell:cell];
-            
             [self gradientAndColorWithCell:cell andScheme:self.scheme];
             cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
             cell.textLabel.textColor = [UIColor cyanColor];
@@ -268,30 +255,14 @@ typedef enum {
             break;
             
         case Color:
-            
-            //[self addImageToCell:@"CellTwo" andCell:cell];
-            
+
             [self gradientAndColorWithCell:cell andScheme:self.scheme];
             cell.imageView.image = [UIImage imageNamed:@"CellImageTwo"];
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.detailTextLabel.textColor = [UIColor whiteColor];
             
             break;
-            
-//        default:
-//
-//            [self addImageToCell:@"ChoreganizerCellBackground" andCell:cell];
-//
-//            cell.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"ChoreganizerCellBackground"]];
-//
-//            cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
-//            cell.textLabel.textColor = [UIColor cyanColor];
-//            cell.detailTextLabel.textColor = [UIColor whiteColor];
-//
-//            break;
     }
-    
-    
     
     return cell;
 }
@@ -325,11 +296,8 @@ typedef enum {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         
         Day *day = [ChoreController sharedInstance].days[indexPath.section];
-        
         [[ChoreController sharedInstance]removeChore:day.chores[indexPath.row]];
-        
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-        
         [self.tableView reloadData];
     }
 }
@@ -372,20 +340,6 @@ typedef enum {
         [self refresh];
     }
 }
-
-//- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-//
-//
-//}
-
-//Can discard, was causing trouble :\
-
-//        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//            [tableView beginUpdates];
-//            [tableView moveRowAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath];
-//            [tableView endUpdates];
-//        });
-
 
 - (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
     return YES;

@@ -27,12 +27,7 @@
     
     [self configureTabBar]; 
 
-//    self.window.rootViewController = [[UINavigationController alloc] initWithRootViewController:[ViewController new]];
-//
-//    self.window.backgroundColor = [UIColor whiteColor];
-//    [self.window makeKeyAndVisible];
-//
-//    [self setUpCoreData];
+    [self setUpCoreData];
     
    /* UILocalNotification *locationNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (locationNotification) {
@@ -73,9 +68,9 @@
     
     UINavigationController *mainNav = [[UINavigationController alloc]initWithRootViewController:tabBarController];
     
-    UIImage *imageOne = [UIImage imageNamed:@""];
-    UIImage *imageTwo = [UIImage imageNamed:@""];
-    UIImage *imageThree = [UIImage imageNamed:@""];
+    UIImage *imageOne = [UIImage imageNamed:@"CTab"];
+    UIImage *imageTwo = [UIImage imageNamed:@"NTab"];
+    UIImage *imageThree = [UIImage imageNamed:@"STab"];
     
     mainVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Chores" image:imageOne tag:0];
     notificationsVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Notifications" image:imageTwo tag:0];

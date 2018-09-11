@@ -61,6 +61,8 @@
 - (void)configureTabBar {
     
     UITabBarController *tabBarController = [[UITabBarController alloc]init];
+    tabBarController.tabBar.barTintColor = [UIColor blackColor];
+    tabBarController.tabBar.tintColor = [UIColor whiteColor];
     
     ViewController *mainVC = [[ViewController alloc]init];
     ScheduledNotificationsListViewController *notificationsVC = [[ScheduledNotificationsListViewController alloc]init];
@@ -73,8 +75,8 @@
     UIImage *imageThree = [UIImage imageNamed:@"STab"];
     
     mainVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Chores" image:imageOne tag:0];
-    notificationsVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Notifications" image:imageTwo tag:0];
-    qVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Settings" image:imageThree tag:0];
+    notificationsVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Notifications" image:imageTwo tag:1];
+    qVC.tabBarItem = [[UITabBarItem alloc]initWithTitle:@"Settings" image:imageThree tag:2];
     
     [tabBarController setViewControllers:@[mainVC, notificationsVC, qVC]];
     

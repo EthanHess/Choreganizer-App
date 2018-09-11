@@ -32,8 +32,7 @@
     self = [super initWithFrame:frame];
     
     if (self) {
-        
-        
+    
         self.titleLabel = [UILabel new];
         self.titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
         self.titleLabel.backgroundColor = [UIColor clearColor];
@@ -58,9 +57,6 @@
     }
     
     return self;
-    
-    
-    
 }
 
 - (void)setUpConstraints {
@@ -93,8 +89,6 @@
     
     imageView.image = [UIImage imageNamed:imageName];
     [self insertSubview:imageView atIndex:0];
-    
-//    [self addSubview:imageView];
 }
 
 - (void)updateWithDay:(Day *)day {

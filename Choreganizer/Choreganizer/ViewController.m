@@ -51,11 +51,35 @@ typedef enum {
     [self setUpTableView];
 }
 
+- (BOOL)isIphoneX {
+    return self.view.frame.size.height == 812;
+}
+
+- (CGRect)tableFrame {
+    CGRect rect;
+    if ([self isIphoneX] == YES) {
+        rect = CGRectMake(0, self.toolbar.frame.size.height + 44, self.view.frame.size.width, self.view.frame.size.height - 60);
+    } else {
+        rect = CGRectMake(0, self.toolbar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - 60);
+    }
+    return rect;
+}
+
+- (CGRect)toolbarFrame {
+    CGRect rect;
+    if ([self isIphoneX] == YES) {
+        rect = CGRectMake(0, 44, self.view.frame.size.width, 80);
+    } else {
+        rect = CGRectMake(0, 0, self.view.frame.size.width, 80);
+    }
+    return rect;
+}
+
 - (void)setUpTableView {
     
     self.navigationController.navigationBarHidden = YES;
     
-    self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, self.toolbar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - 60)];
+    self.tableView = [[UITableView alloc]initWithFrame:[self tableFrame]];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
     self.tableView.panGestureRecognizer.cancelsTouchesInView = NO;
@@ -65,22 +89,18 @@ typedef enum {
     switch (self.scheme) {
         case Space:
             self.tableView.backgroundColor = [UIColor blackColor];
-            
             break;
             
         case Color:
             self.tableView.backgroundColor = [UIColor colorWithRed:10.0f/255.0f green:116.0f/255.0f blue:245.0f/255.0f alpha:1.0];
-            
             break;
             
         default:
             self.tableView.backgroundColor = [UIColor blackColor];
-            
             break;
     }
 
     [self.view addSubview:self.tableView];
-    
     [self.tableView setEditing:NO]; //Will need to do to move chores around
     
     [self refresh];
@@ -95,7 +115,6 @@ typedef enum {
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
 }
 
 - (void)addImageToToolbar:(NSString *)imageName andToolbar:(UIToolbar *)toolbar {
@@ -109,17 +128,15 @@ typedef enum {
 
 - (void)setUpToolbar {
     
-    self.toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
+    self.toolbar = [[UIToolbar alloc]initWithFrame:[self toolbarFrame]];
     
     switch (self.scheme) {
         case Space:
             [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
-    
             break;
             
         case Color:
             [self addImageToToolbar:@"ColorToolbar" andToolbar:self.toolbar];
-
             break;
     }
     
@@ -152,7 +169,6 @@ typedef enum {
 
 - (void)pushToOnboarding {
 
-    
 }
 
 - (void)editHandle {

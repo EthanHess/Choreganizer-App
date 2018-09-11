@@ -40,44 +40,44 @@
     
 }
 
+//UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+//
+//imageView.image = [UIImage imageNamed:@"ChoreganizerPicker"];
+//[self.view addSubview:imageView];
+
 - (void)setScheme {
     
     if ([[NSUserDefaults standardUserDefaults]objectForKey:schemeKey]) {
-        
         self.schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
-        
     }
     
     if ([self.schemeString isEqualToString:@"Space"]) {
         
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-        
-        imageView.image = [UIImage imageNamed:@"ChoreganizerPicker"];
-        [self.view addSubview:imageView];
+        [self color:YES];
         
         [self buttonSchemeWithTitleColor:[UIColor whiteColor] backgroundColor:[UIColor blackColor] andBorderColor:[UIColor whiteColor]];
         
     } else if ([self.schemeString isEqualToString:@"Color"]) {
         
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-        
-        imageView.image = [UIImage imageNamed:@"PickerColorBackground"];
-        [self.view addSubview:imageView];
+        [self color:NO];
         
         [self buttonSchemeWithTitleColor:[UIColor blackColor] backgroundColor:[UIColor whiteColor] andBorderColor:[UIColor blackColor]];
     }
     
     else {
         
-        UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-        
-        imageView.image = [UIImage imageNamed:@"ChoreganizerPicker"];
-        [self.view addSubview:imageView];
+        [self color:YES];
         
         [self buttonSchemeWithTitleColor:[UIColor whiteColor] backgroundColor:[UIColor blackColor] andBorderColor:[UIColor whiteColor]];
-        
     };
-    
+}
+
+- (void)color:(BOOL)defaultColor {
+    if (defaultColor == YES) {
+        self.view.backgroundColor = [UIColor colorWithRed:12.0f/255.0f green:62.0f/255.0f blue:144.0f/255.0f alpha:1.0];
+    } else {
+        self.view.backgroundColor = [UIColor colorWithRed:201.0f/255.0f green:218.0f/255.0f blue:248.0f/255.0f alpha:1.0];
+    }
 }
 
 - (void)buttonSchemeWithTitleColor:(UIColor *)titleColor backgroundColor:(UIColor *)backgroundColor andBorderColor:(UIColor *)borderColor {

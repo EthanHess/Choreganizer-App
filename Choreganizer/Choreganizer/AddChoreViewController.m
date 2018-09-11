@@ -16,12 +16,22 @@
 
 #define IS_IPHONE_4 ([UIScreen mainScreen].bounds.size.height == 480.0)
 
+static NSString *const pencilFilled = @"icons8filledPencil";
+static NSString *const microFilled = @"icons8filledMicro";
+static NSString *const pencilWhite = @"icons8whitePencil";
+static NSString *const microWhite = @"icons8whiteMicro";
+
 @interface AddChoreViewController () <UITextFieldDelegate, UITextViewDelegate, SpeechDelegate>
 
 @property (nonatomic, strong) NSString *schemeString;
 @property (nonatomic, strong) UIColor *labelColor;
 @property (nonatomic, assign) CGRect labelFrame;
 @property (nonatomic, strong) NSString *chosenString;
+@property (nonatomic, strong) UIView *containerView; //for write/speech choice
+@property (nonatomic, strong) UIImageView *microImageView;
+@property (nonatomic, strong) UIImageView *pencilImageView;
+
+@property (nonatomic) BOOL microMode;
 
 @end
 
@@ -29,6 +39,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.microMode = YES;
+    
+    //TODO Should reconfigure with stack views
     
     [self setScheme];
     
@@ -117,12 +131,12 @@
 - (void)setUpTitleLabel {
     
     if (IS_IPHONE_4) {
-        _labelFrame = CGRectMake(0, 60, self.view.frame.size.width, 100);
+        self.labelFrame = CGRectMake(0, 60, self.view.frame.size.width, 100);
     } else {
-        _labelFrame = CGRectMake(0, self.view.frame.size.height -100, self.view.frame.size.width, 100);
+        self.labelFrame = CGRectMake(0, self.view.frame.size.height -100, self.view.frame.size.width, 100);
     }
     
-    self.titleLabel = [[UILabel alloc]initWithFrame:_labelFrame];
+    self.titleLabel = [[UILabel alloc]initWithFrame:self.labelFrame];
     self.titleLabel.textAlignment = NSTextAlignmentCenter;
     self.titleLabel.font = [UIFont fontWithName:arialHebrew size:32];
     self.titleLabel.font = [UIFont systemFontOfSize:32];
@@ -206,6 +220,67 @@
     [self.view addConstraint:equalConstraint];
     [self.view addConstraint:equalConstraintII];
     
+    [self addContainerViewWithImages];
+}
+
+- (void)addContainerViewWithImages {
+    
+    CGFloat yCoord = self.view.frame.size.height / 1.5;
+    
+    self.containerView = [[UIView alloc]initWithFrame:CGRectMake(50, yCoord, self.view.frame.size.width - 100, 150)];
+    self.containerView.backgroundColor = [UIColor blackColor]; //Change
+    self.containerView.layer.cornerRadius = 5;
+    self.containerView.layer.borderColor = [[UIColor whiteColor]CGColor];
+    self.containerView.layer.borderWidth = 1;
+    self.containerView.layer.masksToBounds = YES;
+    self.containerView.userInteractionEnabled = YES;
+    [self addImageViewsToContainer];
+    [self.view addSubview:self.containerView];
+}
+
+- (void)addImageViewsToContainer {
+    
+    self.microImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 25, 100, 100)];
+    self.microImageView.userInteractionEnabled = YES;
+    self.microImageView.clipsToBounds = NO;
+    self.microImageView.contentMode = UIViewContentModeScaleToFill;
+    self.microImageView.image = [UIImage imageNamed:microFilled]; //default is filled
+    
+    UITapGestureRecognizer *microTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleMicroTap)];
+    [self.microImageView addGestureRecognizer:microTap];
+    [self.containerView addSubview:self.microImageView];
+    
+    CGFloat secondX = self.containerView.frame.size.width - 120;
+    
+    self.pencilImageView = [[UIImageView alloc]initWithFrame:CGRectMake(secondX, 25, 100, 100)];
+    self.pencilImageView.userInteractionEnabled = YES;
+    self.pencilImageView.clipsToBounds = NO;
+    self.pencilImageView.contentMode = UIViewContentModeScaleToFill;
+    self.pencilImageView.image = [UIImage imageNamed:pencilWhite]; //default is filled
+    
+    UITapGestureRecognizer *pencilTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handlePencilTap)];
+    [self.pencilImageView addGestureRecognizer:pencilTap];
+    [self.containerView addSubview:self.pencilImageView];
+}
+
+- (void)handleMicroTap {
+    if (self.microMode == YES) {
+        //Do nothing
+    } else {
+        self.microImageView.image = [UIImage imageNamed:microFilled];
+        self.pencilImageView.image = [UIImage imageNamed:pencilWhite];
+        self.microMode = YES;
+    }
+}
+
+- (void)handlePencilTap {
+    if (self.microMode == YES) {
+        self.microImageView.image = [UIImage imageNamed:microWhite];
+        self.pencilImageView.image = [UIImage imageNamed:pencilFilled];
+        self.microMode = NO;
+    } else {
+        //Do nothing
+    }
 }
 
 - (void)updateWithDay:(Day *)day {

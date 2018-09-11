@@ -54,14 +54,26 @@
         [self addSubview:self.addButton];
         
         [self setUpConstraints];
+        [self colors];
     }
     
     return self;
 }
 
+- (void)colors {
+    UIColor *topColor = [UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0];
+    UIColor *bottomColor = [UIColor blackColor];
+    
+    CAGradientLayer *theViewGradient = [CAGradientLayer layer];
+    theViewGradient.colors = [NSArray arrayWithObjects: (id)topColor.CGColor, (id)bottomColor.CGColor, nil];
+    theViewGradient.frame = self.bounds;
+    
+    [self.layer insertSublayer:theViewGradient atIndex:0];
+}
+
 - (void)setUpConstraints {
     
-    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_titleLabel, _addButton);
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(self.titleLabel, self.addButton);
     
     NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_titleLabel(==50)]" options:0 metrics:nil views:viewsDictionary];
     

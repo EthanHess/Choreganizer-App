@@ -10,4 +10,6 @@
 
 @interface SpeechContainerView : UIView
 
+- (void)animateDots;
+
 @end

@@ -204,17 +204,16 @@ typedef enum {
     
     [self.sectionHeader updateWithDay:day];
     
+    //Commented out for test, will add gradient internally
+    
     switch (self.scheme) {
         case Space:
-            self.sectionHeader.backgroundColor = [UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0];
+//            self.sectionHeader.backgroundColor = [UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0];
             self.sectionHeader.addButton.backgroundColor =  [UIColor colorWithRed:165.0f/255.0f green:245.0f/255.0f blue:179.0f/255.0f alpha:1.0];
-            
             break;
-            
         case Color:
-            self.sectionHeader.backgroundColor = [UIColor colorWithRed:144.0f/255.0f green:184.0f/255.0f blue:249.0f/255.0f alpha:1.0];
-            self.sectionHeader.addButton.backgroundColor = [UIColor colorWithRed:12.0f/255.0f green:57.0f/255.0f blue:130.0f/255.0f alpha:1.0]; 
-            
+//            self.sectionHeader.backgroundColor = [UIColor colorWithRed:144.0f/255.0f green:184.0f/255.0f blue:249.0f/255.0f alpha:1.0];
+            self.sectionHeader.addButton.backgroundColor = [UIColor colorWithRed:12.0f/255.0f green:57.0f/255.0f blue:130.0f/255.0f alpha:1.0];
             break;
     }
     

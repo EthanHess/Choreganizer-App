@@ -10,6 +10,7 @@
 #import "ViewController.h"
 #import "ChoreController.h"
 #import "QuestionsViewController.h"
+#import "SpeechContainerView.h"
 #import "AppDelegate.h"
 #import "SpeechController.h"
 #import "GlobalFunctions.h"
@@ -30,6 +31,8 @@ static NSString *const microWhite = @"icons8whiteMicro";
 @property (nonatomic, strong) UIView *containerView; //for write/speech choice
 @property (nonatomic, strong) UIImageView *microImageView;
 @property (nonatomic, strong) UIImageView *pencilImageView;
+
+@property (nonatomic, strong) SpeechContainerView *speechContainer;
 
 @property (nonatomic) BOOL microMode;
 
@@ -103,6 +106,15 @@ static NSString *const microWhite = @"icons8whiteMicro";
     [super viewWillAppear:animated];
 
     [SpeechController sharedInstance].delegate = self;
+    //[self kvo];
+}
+
+- (void)kvo {
+    [self addObserver:self forKeyPath:@"chosenString" options:NSKeyValueObservingOptionNew context:nil];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    
 }
 
 #pragma Speech Del.
@@ -126,6 +138,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [[SpeechController sharedInstance]startAudio];
+    self.chosenString = @"Ethan";
 }
 
 - (void)setUpTitleLabel {
@@ -261,6 +274,21 @@ static NSString *const microWhite = @"icons8whiteMicro";
     UITapGestureRecognizer *pencilTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handlePencilTap)];
     [self.pencilImageView addGestureRecognizer:pencilTap];
     [self.containerView addSubview:self.pencilImageView];
+    
+    [self indicator];
+}
+
+- (void)indicator {
+    if (self.speechContainer == nil) {
+        self.speechContainer = [[SpeechContainerView alloc]initWithFrame:CGRectMake(100, (self.view.frame.size.height / 2) - 35, self.view.frame.size.width - 200, 70)];
+        [self.view addSubview:self.speechContainer];
+         //test, hide eventually by default
+        [self performSelector:@selector(animateDots) withObject:nil afterDelay:1];
+    }
+}
+
+- (void)animateDots {
+    [self.speechContainer animateDots];
 }
 
 - (void)handleMicroTap {

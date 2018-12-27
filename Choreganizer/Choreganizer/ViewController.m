@@ -196,6 +196,7 @@ typedef enum {
     
     CGRect frame = CGRectMake(0, 0, tableView.frame.size.width, [SectionHeader headerHeight]);
     
+    //TODO don't necessarily need as property anymore
     self.sectionHeader = [[SectionHeader alloc]initWithFrame:frame];
     [self.sectionHeader updateWithTitle:section];
     self.sectionHeader.delegate = self;
@@ -203,38 +204,45 @@ typedef enum {
     Day *day = [ChoreController sharedInstance].days[section];
     
     [self.sectionHeader updateWithDay:day];
-    
-    //Commented out for test, will add gradient internally
-    
-    switch (self.scheme) {
-        case Space:
-//            self.sectionHeader.backgroundColor = [UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0];
-            self.sectionHeader.addButton.backgroundColor =  [UIColor colorWithRed:165.0f/255.0f green:245.0f/255.0f blue:179.0f/255.0f alpha:1.0];
-            break;
-        case Color:
-//            self.sectionHeader.backgroundColor = [UIColor colorWithRed:144.0f/255.0f green:184.0f/255.0f blue:249.0f/255.0f alpha:1.0];
-            self.sectionHeader.addButton.backgroundColor = [UIColor colorWithRed:12.0f/255.0f green:57.0f/255.0f blue:130.0f/255.0f alpha:1.0];
-            break;
-    }
+    [self configureGradient:self.sectionHeader];
     
     return self.sectionHeader;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 160; //TODO size for text
-}
-
-- (void)gradientAndColorWithCell:(UITableViewCell *)cell andScheme:(Scheme)scheme {
-    switch (scheme) {
+- (void)configureGradient:(SectionHeader *)header {
+    switch (self.scheme) {
         case Space:
-            cell.backgroundColor = [UIColor colorWithRed:14.0f/255.0f green:125.0f/255.0f blue:227.0f/255.0f alpha:1.0];
+            [self addTwoColorsToMakeGradient:[UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0] colorTwo:[UIColor blackColor] andView:self.sectionHeader];
+            self.sectionHeader.addButton.backgroundColor =  [UIColor colorWithRed:165.0f/255.0f green:245.0f/255.0f blue:179.0f/255.0f alpha:1.0];
             break;
-            
         case Color:
-            cell.backgroundColor = [UIColor colorWithRed:216.0f/255.0f green:226.0f/255.0f blue:242.0f/255.0f alpha:1.0];
-        default:
+            [self addTwoColorsToMakeGradient:[UIColor colorWithRed:11.0f/255.0f green:241.0f/255.0f blue:223.0f/255.0f alpha:1.0] colorTwo:[UIColor colorWithRed:11.0f/255.0f green:67.0f/255.0f blue:241.0f/255.0f alpha:1.0] andView:self.sectionHeader];
+            self.sectionHeader.addButton.backgroundColor = [UIColor colorWithRed:12.0f/255.0f green:57.0f/255.0f blue:130.0f/255.0f alpha:1.0];
             break;
     }
+}
+
+//Add util function, eventually move out of VC
+- (void)addTwoColorsToMakeGradient:(UIColor *)colorOne colorTwo:(UIColor *)colorTwo andView:(UIView *)theView {
+    
+    CAGradientLayer *theGradient = [CAGradientLayer layer];
+    theGradient.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+    
+    if ([theView isKindOfClass:[UITableViewCell class]]) {
+        CGFloat width = self.view.frame.size.width;
+        CGFloat height = 160;
+        theGradient.frame = CGRectMake(0, 0, width, height);
+        [theView.layer insertSublayer:theGradient atIndex:0];
+    } else {
+        theGradient.frame = theView.bounds;
+        [theView.layer insertSublayer:theGradient atIndex:0];
+    }
+}
+
+//TV 
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 160; //TODO size for text
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -258,11 +266,16 @@ typedef enum {
     
     cell.detailTextLabel.numberOfLines = 0;
     
+    UIColor *topColorSpace = [UIColor colorWithRed:14.0f/255.0f green:125.0f/255.0f blue:227.0f/255.0f alpha:1.0];
+    UIColor *topColorColor = [UIColor colorWithRed:11.0f/255.0f green:241.0f/255.0f blue:223.0f/255.0f alpha:1.0];
+    
+    //[UIColor colorWithRed:2.0f/255.0f green:34.0f/255.0f blue:20.0f/255.0f alpha:1.0]
+    
     switch (self.scheme) {
             
         case Space:
-
-            [self gradientAndColorWithCell:cell andScheme:self.scheme];
+            
+            [self addTwoColorsToMakeGradient:topColorSpace colorTwo:[UIColor blackColor] andView:cell];
             cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
             cell.textLabel.textColor = [UIColor cyanColor];
             cell.detailTextLabel.textColor = [UIColor whiteColor];
@@ -270,8 +283,8 @@ typedef enum {
             break;
             
         case Color:
-
-            [self gradientAndColorWithCell:cell andScheme:self.scheme];
+            
+            [self addTwoColorsToMakeGradient:topColorColor colorTwo:[UIColor colorWithRed:11.0f/255.0f green:67.0f/255.0f blue:241.0f/255.0f alpha:1.0] andView:cell];
             cell.imageView.image = [UIImage imageNamed:@"CellImageTwo"];
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.detailTextLabel.textColor = [UIColor whiteColor];
@@ -292,13 +305,13 @@ typedef enum {
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    
     Day *day = [[ChoreController sharedInstance].days objectAtIndex:section];
     return day.chores != nil ? day.chores.count : 0;
 }
 
+#pragma cell header delegate
+
 - (void)popAddChoreView:(Day *)day {
-    
     AddChoreViewController *addChoreVC = [AddChoreViewController new];
     [addChoreVC updateWithDay:day];
     
@@ -309,7 +322,6 @@ typedef enum {
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
         Day *day = [ChoreController sharedInstance].days[indexPath.section];
         [[ChoreController sharedInstance]removeChore:day.chores[indexPath.row]];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -324,10 +336,8 @@ typedef enum {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Send notification?" message:@"Would you like to be sent a reminder to do this chore?" preferredStyle:UIAlertControllerStyleAlert];
     
     [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        
         Day *day = [ChoreController sharedInstance].days[indexPath.section];
         Chore *chore = day.chores[indexPath.row];
-        
         [self popPickerViewControllerWithChore:chore andDay:day];
     }]];
      

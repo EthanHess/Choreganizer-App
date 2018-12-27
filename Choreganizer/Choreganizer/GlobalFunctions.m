@@ -50,7 +50,7 @@
     }
 }
 
-//For ipad update, can ignore now
+//For ipad update
 
 + (BOOL)isIphone {
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {

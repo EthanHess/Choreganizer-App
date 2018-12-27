@@ -77,11 +77,18 @@
         return;
     }
     
-    for (UIView *theView in self.dotArray) {
-        [UIView animateWithDuration:1 animations:^{
-            theView.transform = CGAffineTransformMakeScale(1.5, 1.5);
+    for (int i = 0; i < self.dotArray.count; i++) {
+        UIView *view = self.dotArray[i];
+        [UIView animateWithDuration:1 delay:0.5 * i options:UIViewAnimationOptionAutoreverse animations:^{
+            view.transform = CGAffineTransformMakeScale(1.5, 1.5);
+        } completion:^(BOOL finished) {
+            //Do something?
         }];
     }
+    
+//    for (UIView *theView in self.dotArray) {
+//
+//    }
 }
 
 - (void)setBack {

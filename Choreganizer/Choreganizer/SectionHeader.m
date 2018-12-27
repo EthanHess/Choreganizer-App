@@ -46,34 +46,17 @@
         [self.addButton setTitle:@"+" forState:UIControlStateNormal];
         [self.addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [self.addButton addTarget:self action:@selector(addChore) forControlEvents:UIControlEventTouchUpInside];
-//        self.addButton.backgroundColor = [UIColor colorWithRed:55/255.0f green:155/255.0f blue:255/255.0f alpha:1.0f];
-        
-        //Check scheme
-       // self.addButton.backgroundColor = [UIColor colorWithRed:165.0f/255.0f green:245.0f/255.0f blue:179.0f/255.0f alpha:1.0];
-        
         [self addSubview:self.addButton];
         
         [self setUpConstraints];
-        [self colors];
     }
     
     return self;
 }
 
-- (void)colors {
-    UIColor *topColor = [UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0];
-    UIColor *bottomColor = [UIColor blackColor];
-    
-    CAGradientLayer *theViewGradient = [CAGradientLayer layer];
-    theViewGradient.colors = [NSArray arrayWithObjects: (id)topColor.CGColor, (id)bottomColor.CGColor, nil];
-    theViewGradient.frame = self.bounds;
-    
-    [self.layer insertSublayer:theViewGradient atIndex:0];
-}
-
 - (void)setUpConstraints {
     
-    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(self.titleLabel, self.addButton);
+    NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_titleLabel, _addButton);
     
     NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_titleLabel(==50)]" options:0 metrics:nil views:viewsDictionary];
     

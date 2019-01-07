@@ -31,7 +31,6 @@ static NSString *const locale = @"en-UR";
     });
     
     return sharedInstance;
-    
 }
 
 - (instancetype)init {

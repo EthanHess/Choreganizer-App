@@ -36,7 +36,6 @@ typedef enum {
     [super viewWillAppear:animated];
     
     NSString *schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
-    
     if (schemeString) {
         if ([schemeString isEqualToString:@"Space"]) {
             self.scheme = (Scheme)Space;
@@ -46,7 +45,6 @@ typedef enum {
     } else {
         self.scheme = (Scheme)Space; //default
     }
-    
     [self setUpToolbar];
     [self setUpTableView];
 }
@@ -118,57 +116,46 @@ typedef enum {
 }
 
 - (void)addImageToToolbar:(NSString *)imageName andToolbar:(UIToolbar *)toolbar {
-    
     CGRect imageFrame = CGRectMake(0, 0, self.view.frame.size.width, 80);
-    
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:imageFrame];
     imageView.image = [UIImage imageNamed:imageName];
     [toolbar addSubview:imageView];
 }
 
 - (void)setUpToolbar {
-    
     self.toolbar = [[UIToolbar alloc]initWithFrame:[self toolbarFrame]];
-    
     switch (self.scheme) {
         case Space:
             [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
             break;
-            
         case Color:
             [self addImageToToolbar:@"ColorToolbar" andToolbar:self.toolbar];
             break;
     }
     
     [self.view addSubview:self.toolbar];
-    
     UIImage *question = [UIImage imageNamed:@"questionMarkI8"];
     UIImage *edit = [UIImage imageNamed:@"editX"];
-    
     NSMutableArray *navItems = [[NSMutableArray alloc] initWithCapacity:3];
-    
     UIBarButtonItem *flexItem0 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [navItems addObject:flexItem0];
-    
     UIBarButtonItem *questionItem = [[UIBarButtonItem alloc]initWithImage:question style:UIBarButtonItemStylePlain target:self action:@selector(pushToOnboarding)];
     questionItem.tintColor = [UIColor whiteColor]; 
     [navItems addObject:questionItem];
-    
     UIBarButtonItem *flexItem1 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [navItems addObject:flexItem1];
-    
     UIBarButtonItem *editItem = [[UIBarButtonItem alloc]initWithImage:edit style:UIBarButtonItemStylePlain target:self action:@selector(editHandle)];
     editItem.tintColor = [UIColor whiteColor];
     [navItems addObject:editItem];
-    
     UIBarButtonItem *flexItem2 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [navItems addObject:flexItem2];
-    
     [self.toolbar setItems:navItems];
 }
 
+//We already have QVC in the stack, push to new/improved oboarding conroller
 - (void)pushToOnboarding {
-
+    QuestionsViewController *qvc = [QuestionsViewController new];
+    [self.navigationController pushViewController:qvc animated:YES];
 }
 
 - (void)editHandle {
@@ -270,35 +257,25 @@ typedef enum {
     UIColor *topColorColor = [UIColor colorWithRed:11.0f/255.0f green:241.0f/255.0f blue:223.0f/255.0f alpha:1.0];
     
     //[UIColor colorWithRed:2.0f/255.0f green:34.0f/255.0f blue:20.0f/255.0f alpha:1.0]
-    
     switch (self.scheme) {
-            
         case Space:
-            
             [self addTwoColorsToMakeGradient:topColorSpace colorTwo:[UIColor blackColor] andView:cell];
             cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
             cell.textLabel.textColor = [UIColor cyanColor];
             cell.detailTextLabel.textColor = [UIColor whiteColor];
-            
             break;
-            
         case Color:
-            
             [self addTwoColorsToMakeGradient:topColorColor colorTwo:[UIColor colorWithRed:11.0f/255.0f green:67.0f/255.0f blue:241.0f/255.0f alpha:1.0] andView:cell];
             cell.imageView.image = [UIImage imageNamed:@"CellImageTwo"];
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.detailTextLabel.textColor = [UIColor whiteColor];
-            
             break;
     }
-    
     return cell;
 }
 
 - (void)addImageToCell:(NSString *)imageName andCell:(UITableViewCell *)cell {
-    
     CGRect imageFrame = CGRectMake(0, 0, self.tableView.contentSize.width, 160);
-    
     UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:imageFrame];
     cellImageView.image = [UIImage imageNamed:imageName];
     [cell.contentView insertSubview:cellImageView atIndex:0];
@@ -314,13 +291,11 @@ typedef enum {
 - (void)popAddChoreView:(Day *)day {
     AddChoreViewController *addChoreVC = [AddChoreViewController new];
     [addChoreVC updateWithDay:day];
-    
     [self.navigationController presentViewController:addChoreVC animated:YES completion:nil];
 }
 
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Day *day = [ChoreController sharedInstance].days[indexPath.section];
         [[ChoreController sharedInstance]removeChore:day.chores[indexPath.row]];
@@ -331,10 +306,9 @@ typedef enum {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [tableView deselectRowAtIndexPath:indexPath animated:YES]; 
-    
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"Send notification?" message:@"Would you like to be sent a reminder to do this chore?" preferredStyle:UIAlertControllerStyleAlert];
-    
+
     [alert addAction:[UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         Day *day = [ChoreController sharedInstance].days[indexPath.section];
         Chore *chore = day.chores[indexPath.row];
@@ -375,12 +349,9 @@ typedef enum {
 }
 
 - (void)popPickerViewControllerWithChore:(Chore *)chore andDay:(Day *)day {
-    
     PickerViewController *pickerVC = [PickerViewController new];
     [pickerVC updateWithChore:chore andDay:day];
-    
     [self.navigationController presentViewController:pickerVC animated:YES completion:nil];
-    
 }
 
 - (void)didReceiveMemoryWarning {

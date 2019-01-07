@@ -29,9 +29,9 @@
 @implementation QuestionsViewController
 
 - (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     
     NSString *schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
-    
     if (schemeString) {
         if ([schemeString isEqualToString:@"Space"]) {
             [self backgroundImage:@"ChoreganizerInstructions"];
@@ -53,24 +53,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [self setUpViewsWrapper];
 }
 
 - (void)setUpScrollView {
-    
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + 250);
-    
     [self.view sendSubviewToBack:self.scrollView];
-    
     [self.view addSubview:self.scrollView];
 }
 
 - (void)backgroundImage:(NSString *)imageString {
-    
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-    
     imageView.image = [UIImage imageNamed:imageString];
     [self.view insertSubview:imageView atIndex:0];
 }
@@ -89,7 +83,6 @@
     [self.scrollView addSubview:self.questionLabel];
     
     //and buttons to cancel / see notifications
-    
     self.cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(30, 580, self.view.frame.size.width - 60, 50)];
     self.cancelButton.backgroundColor = [UIColor clearColor];
     self.cancelButton.layer.cornerRadius = 5;
@@ -110,9 +103,7 @@
     [self.seeButton addTarget:self action:@selector(seeNotifications) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.seeButton];
     
-    
     //and seg label
-    
     self.segLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 450, self.view.frame.size.width - 60, 50)];
     self.segLabel.text = @"Choose scheme";
     self.segLabel.textColor = [UIColor whiteColor];
@@ -121,7 +112,6 @@
     self.segLabel.font = [UIFont systemFontOfSize:22];
     self.segLabel.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:self.segLabel];
-    
 }
 
 - (void)setUpToolbar {
@@ -131,7 +121,6 @@
     [self.view addSubview:self.toolbar];
     
     UIImage *arrow = [UIImage imageNamed:@"arrow"];
-    
     NSMutableArray *navItems = [[NSMutableArray alloc] initWithCapacity:3];
     
     UIBarButtonItem *flexItem0 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
@@ -147,9 +136,7 @@
 }
 
 - (void)addImageToToolbar:(NSString *)imageName andToolbar:(UIToolbar *)toolbar {
-    
     CGRect imageFrame = CGRectMake(0, 0, self.view.frame.size.width, 80);
-    
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:imageFrame];
     imageView.image = [UIImage imageNamed:imageName];
     [toolbar addSubview:imageView];
@@ -157,42 +144,29 @@
 
 
 - (void)setUpSegControl {
-    
     CGRect segFrame = CGRectMake(30, 500, self.view.frame.size.width - 60, 50);
-    
     self.segController = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Space Scheme", @"Color Scheme", nil]];
-    
     self.segController.frame = segFrame;
     self.segController.tintColor = [UIColor whiteColor];
     self.segController.backgroundColor = [UIColor clearColor];
-    
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIFont fontWithName:arialHebrew size:15], NSFontAttributeName,
                                 [UIColor whiteColor], NSForegroundColorAttributeName, nil];
     [self.segController setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    
-    
     [self.segController addTarget:self action:@selector(valueChanged:) forControlEvents: UIControlEventValueChanged];
     [self.scrollView addSubview:self.segController];
 }
 
 - (void)valueChanged:(UISegmentedControl *)segment {
-    
     switch (segment.selectedSegmentIndex) {
-            
         case 0: {
-            
             [[NSUserDefaults standardUserDefaults]setObject:@"Space" forKey:schemeKey];
-            [self backgroundImage:@"ChoreganizerInstructions"]; 
-            
+            [self backgroundImage:@"ChoreganizerInstructions"];
             break; }
         case 1: {
-            
             [[NSUserDefaults standardUserDefaults]setObject:@"Color" forKey:schemeKey];
-            [self backgroundImage:@"IstructionsColor"]; 
-            
+            [self backgroundImage:@"IstructionsColor"];
             break; }
-            
         default:
             break;
     }
@@ -203,25 +177,18 @@
 }
 
 - (void)cancelNotifications {
-    
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Are you sure you want to cancel all notifications?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
-    
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [[UIApplication sharedApplication]cancelAllLocalNotifications];
     }];
-    
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Nevermind" style:UIAlertActionStyleCancel handler:nil];
-    
     [alertController addAction:yesAction];
     [alertController addAction:cancelAction];
-    
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)seeNotifications {
-    
     ScheduledNotificationsListViewController *scheduledList = [ScheduledNotificationsListViewController new];
-    
     [self.navigationController presentViewController:scheduledList animated:YES completion:nil];
 }
 

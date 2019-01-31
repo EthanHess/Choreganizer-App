@@ -42,6 +42,12 @@
     else {
         [self backgroundImage:@"ChoreganizerInstructions"];
     }
+    
+    self.view.backgroundColor = [UIColor blackColor];
+}
+
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (void)setUpViewsWrapper {
@@ -64,7 +70,14 @@
 }
 
 - (void)backgroundImage:(NSString *)imageString {
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    CGRect frame;
+    if ([self isIphoneX] == YES) {
+        CGFloat yCoord = self.toolbar.frame.size.height + 44;
+        frame = CGRectMake(0, yCoord, self.view.frame.size.width, self.view.frame.size.height - yCoord);
+    } else {
+        frame = CGRectMake(0, self.toolbar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.toolbar.frame.size.height);
+    }
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:frame];
     imageView.image = [UIImage imageNamed:imageString];
     [self.view insertSubview:imageView atIndex:0];
 }
@@ -116,7 +129,7 @@
 
 - (void)setUpToolbar {
     
-    self.toolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 80)];
+    self.toolbar = [[UIToolbar alloc]initWithFrame:[self toolbarFrame]];
     [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
     [self.view addSubview:self.toolbar];
     
@@ -133,6 +146,25 @@
     [navItems addObject:flexItem1];
     
     [self.toolbar setItems:navItems];
+}
+
+- (CGRect)toolbarFrame {
+    CGRect rect;
+    if ([self isIphoneX] == YES) {
+        rect = CGRectMake(0, 44, self.view.frame.size.width, 80);
+    } else {
+        rect = CGRectMake(0, 0, self.view.frame.size.width, 80);
+    }
+    return rect;
+}
+
+//Update for XR etc, 896 height I think?
+- (BOOL)isIphoneX {
+    return self.view.frame.size.height == 812;
+}
+
+- (BOOL)newerDevices {
+    return self.view.frame.size.height == 896;
 }
 
 - (void)addImageToToolbar:(NSString *)imageName andToolbar:(UIToolbar *)toolbar {

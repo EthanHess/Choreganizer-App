@@ -47,10 +47,17 @@ typedef enum {
     }
     [self setUpToolbar];
     [self setUpTableView];
+    //[self preferredStatusBarStyle];
+    self.view.backgroundColor = [UIColor blackColor];
 }
 
 - (BOOL)isIphoneX {
     return self.view.frame.size.height == 812;
+}
+
+//iOS 10
+- (UIStatusBarStyle)preferredStatusBarStyle {
+    return UIStatusBarStyleLightContent;
 }
 
 - (CGRect)tableFrame {
@@ -63,6 +70,7 @@ typedef enum {
     return rect;
 }
 
+//Global functions, since we'll use more than once?
 - (CGRect)toolbarFrame {
     CGRect rect;
     if ([self isIphoneX] == YES) {

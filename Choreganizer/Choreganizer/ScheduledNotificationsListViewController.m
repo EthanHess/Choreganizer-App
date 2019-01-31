@@ -30,14 +30,10 @@
         NSLog(@"No notifications"); //alert
     }
     
-    self.view.backgroundColor = [UIColor grayColor];
+    self.view.backgroundColor = [UIColor blackColor];
     
     [self setUpTableView];
     [self setUpDismissButton];
-    
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-    imageView.image = [UIImage imageNamed:@"NotifBG"];
-    [self.view insertSubview:imageView atIndex:0]; 
 }
 
 - (NSArray *)notificationArray {
@@ -48,18 +44,56 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+//Not really any need for this anymore? Now that it's a tab bar
 - (void)setUpDismissButton {
-    
-    CGRect buttonFrame = CGRectMake(0, 0, self.view.frame.size.width, 75);
-    
-    self.dismissButton = [[UIButton alloc]initWithFrame:buttonFrame];
+    if (self.dismissButton != nil) {
+        NSLog(@"Button already exists"); //to prevent doubling up
+        return;
+    }
+    self.dismissButton = [[UIButton alloc]initWithFrame:[self toolbarFrame]];
     [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
     [self.dismissButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
     [self.dismissButton setBackgroundColor:[UIColor blackColor]];
     [self.view addSubview:self.dismissButton];
+    
+    CGRect frame;
+    if ([self isIphoneX] == YES) {
+        CGFloat yCoord = self.dismissButton.frame.size.height + 44;
+        frame = CGRectMake(0, yCoord, self.view.frame.size.width, self.view.frame.size.height - yCoord);
+    } else {
+        frame = CGRectMake(0, self.dismissButton.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.dismissButton.frame.size.height);
+    }
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithFrame:frame];
+    imageView.image = [UIImage imageNamed:@"NotifBG"];
+    [self.view insertSubview:imageView atIndex:0];
+}
+
+- (CGRect)toolbarFrame {
+    CGRect rect;
+    if ([self isIphoneX] == YES) {
+        rect = CGRectMake(0, 44, self.view.frame.size.width, 80);
+    } else {
+        rect = CGRectMake(0, 0, self.view.frame.size.width, 80);
+    }
+    return rect;
+}
+
+//Update for XR etc, 896 height I think?
+- (BOOL)isIphoneX {
+    return self.view.frame.size.height == 812;
+}
+
+- (BOOL)newerDevices {
+    return self.view.frame.size.height == 896;
 }
 
 - (void)setUpTableView {
+    
+    if (self.tableView != nil) {
+        NSLog(@"Already exists"); //to prevent doubling up
+        return;
+    }
     
     CGRect tableFrame = CGRectMake(0, 75, self.view.frame.size.width, self.view.frame.size.height - 75);
     

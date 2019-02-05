@@ -58,17 +58,27 @@
     }
     [self.dotArray removeAllObjects];
     
-    for (int i = 0; i < 5; i ++) {
+    for (int i = 0; i < 10; i += 2) {
         CGFloat x = (self.frame.size.width / 11) * i;
-        UIView *theView = [[UIView alloc]initWithFrame:CGRectMake(i + x, 40, 20, 20)];
-        theView.backgroundColor = [UIColor whiteColor];
+        CGFloat buffer = x + (self.frame.size.width / 22);
+        UIView *theView = [[UIView alloc]initWithFrame:CGRectMake(i + buffer, 40, 20, 20)];
+        theView.backgroundColor = [self customColors][i / 2];
         theView.layer.cornerRadius = theView.frame.size.width / 2;
-        theView.layer.borderColor = [[UIColor darkGrayColor]CGColor];
-        theView.layer.borderWidth = 3;
+        //theView.layer.borderColor = [[UIColor darkGrayColor]CGColor];
+        //theView.layer.borderWidth = 3;
         theView.layer.masksToBounds = YES;
         [self.dotArray addObject:theView];
         [self addSubview:theView];
     }
+}
+
+- (NSArray *)customColors {
+    UIColor *colorOne = [UIColor colorWithRed:15.0f/255.0f green:242.0f/255.0f blue:208.0f/255.0f alpha:1.0];
+    UIColor *colorTwo = [UIColor colorWithRed:15.0f/255.0f green:144.0f/255.0f blue:242.0f/255.0f alpha:1.0];
+    UIColor *colorThree = [UIColor colorWithRed:216.0f/255.0f green:242.0f/255.0f blue:15.0f/255.0f alpha:1.0];
+    UIColor *colorFour = [UIColor colorWithRed:242.0f/255.0f green:15.0f/255.0f blue:225.0f/255.0f alpha:1.0];
+    UIColor *colorFive = [UIColor colorWithRed:148.0f/255.0f green:242.0f/255.0f blue:15.0f/255.0f alpha:1.0];
+    return @[colorOne, colorTwo, colorThree, colorFour, colorFive];
 }
 
 - (void)animateDots {
@@ -83,12 +93,20 @@
             view.transform = CGAffineTransformMakeScale(1.5, 1.5);
         } completion:^(BOOL finished) {
             //Do something?
+            if (!self.hidden) {
+                [self performSelector:@selector(setHidden) withObject:nil afterDelay:3];
+            }
         }];
     }
     
 //    for (UIView *theView in self.dotArray) {
 //
 //    }
+}
+
+//Fade away? May be too abrupt
+- (void)setHidden {
+    self.hidden = YES;
 }
 
 - (void)setBack {

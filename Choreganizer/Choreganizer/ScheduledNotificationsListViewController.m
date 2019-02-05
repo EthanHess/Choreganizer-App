@@ -14,6 +14,9 @@
 
 @interface ScheduledNotificationsListViewController () <UITableViewDelegate, UITableViewDataSource>
 
+@property (nonatomic, strong) CAGradientLayer *theGradient;
+@property (nonatomic, strong) UIView *noNotifsView;
+
 @end
 
 @implementation ScheduledNotificationsListViewController
@@ -30,10 +33,51 @@
         NSLog(@"No notifications"); //alert
     }
     
-    self.view.backgroundColor = [UIColor blackColor];
+    //self.view.backgroundColor = [UIColor blackColor];
+    
+    if (self.theGradient == nil) {
+        [self addGradient];
+    }
     
     [self setUpTableView];
-    [self setUpDismissButton];
+    //[self setUpDismissButton];
+}
+
+- (void)addGradient {
+    UIColor *blackColor = [UIColor blackColor];
+    UIColor *neptuneBlue = [UIColor colorWithRed:15.0f/255.0f green:165.0f/255.0f blue:242.0f/255.0f alpha:1.0];
+    self.theGradient = [CAGradientLayer layer];
+    self.theGradient.colors = [NSArray arrayWithObjects:(id)blackColor.CGColor, (id)neptuneBlue.CGColor, nil];
+    self.theGradient.frame = self.view.bounds;
+    [self.view.layer insertSublayer:self.theGradient atIndex:0];
+    
+    if ([self notificationArray].count == 0) {
+        [self addNoNotifcationsView];
+    }
+}
+
+//Update frame for devices
+//TODO update text
+- (void)addNoNotifcationsView { //If they don't have any
+    if (self.noNotifsView == nil) {
+        CGRect viewFrame = CGRectMake(self.view.frame.size.width / 4, self.view.frame.size.height / 4, self.view.frame.size.width / 2, self.view.frame.size.height / 4);
+        self.noNotifsView = [[UIView alloc]initWithFrame:viewFrame];
+        self.noNotifsView.layer.cornerRadius = 5;
+        self.noNotifsView.layer.borderColor = [[UIColor whiteColor]CGColor];
+        self.noNotifsView.layer.borderWidth = 1;
+        self.noNotifsView.backgroundColor = [UIColor blackColor];
+        [self addShadowToView];
+        [self.view addSubview:self.noNotifsView];
+    }
+}
+
+//Move to utils?
+- (void)addShadowToView {
+    self.noNotifsView.layer.shadowColor = [UIColor whiteColor].CGColor;
+    self.noNotifsView.layer.shadowOffset = CGSizeMake(0, 1);
+    self.noNotifsView.layer.shadowOpacity = 1;
+    self.noNotifsView.layer.shadowRadius = 5.0;
+    self.noNotifsView.clipsToBounds = NO;
 }
 
 - (NSArray *)notificationArray {
@@ -56,17 +100,19 @@
     [self.dismissButton setBackgroundColor:[UIColor blackColor]];
     [self.view addSubview:self.dismissButton];
     
-    CGRect frame;
-    if ([self isIphoneX] == YES) {
-        CGFloat yCoord = self.dismissButton.frame.size.height + 44;
-        frame = CGRectMake(0, yCoord, self.view.frame.size.width, self.view.frame.size.height - yCoord);
-    } else {
-        frame = CGRectMake(0, self.dismissButton.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.dismissButton.frame.size.height);
-    }
+    //TODO replaced with gradient but will keep temp. just in case
     
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:frame];
-    imageView.image = [UIImage imageNamed:@"NotifBG"];
-    [self.view insertSubview:imageView atIndex:0];
+//    CGRect frame;
+//    if ([self isIphoneX] == YES) {
+//        CGFloat yCoord = self.dismissButton.frame.size.height + 44;
+//        frame = CGRectMake(0, yCoord, self.view.frame.size.width, self.view.frame.size.height - yCoord);
+//    } else {
+//        frame = CGRectMake(0, self.dismissButton.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.dismissButton.frame.size.height);
+//    }
+//
+//    UIImageView *imageView = [[UIImageView alloc]initWithFrame:frame];
+//    imageView.image = [UIImage imageNamed:@"NotifBG"];
+//    [self.view insertSubview:imageView atIndex:0];
 }
 
 - (CGRect)toolbarFrame {

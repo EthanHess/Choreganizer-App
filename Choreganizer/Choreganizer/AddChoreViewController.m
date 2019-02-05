@@ -71,30 +71,30 @@ static NSString *const microWhite = @"icons8whiteMicro";
     
     self.saveButton = [UIButton new];
     self.saveButton.translatesAutoresizingMaskIntoConstraints = NO;
-    //self.saveButton.backgroundColor = [UIColor colorWithRed:182/255.0f green:66/255.0f blue:45/255.0f alpha:1.0f];
+    self.saveButton.backgroundColor = [UIColor colorWithRed:15.0f/255.0f green:157.0f/255.0f blue:242.0f/255.0f alpha:1.0];
     self.saveButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
-    [self.saveButton setBackgroundImage:[UIImage imageNamed:@"BBG"] forState:UIControlStateNormal];
-    [self.saveButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    //[self.saveButton setBackgroundImage:[UIImage imageNamed:@"BBG"] forState:UIControlStateNormal];
+    [self.saveButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.saveButton setTitle:@"Save" forState:UIControlStateNormal];
     [self.saveButton addTarget:self action:@selector(saveChoreToDay) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.saveButton];
     
     self.dismissButton = [UIButton new];
     self.dismissButton.translatesAutoresizingMaskIntoConstraints = NO;
-    //self.dismissButton.backgroundColor = [UIColor colorWithRed:182/255.0f green:243/255.0f blue:13/255.0f alpha:1.0f];
+    self.dismissButton.backgroundColor = [UIColor colorWithRed:15.0f/255.0f green:114.0f/255.0f blue:242.0f/255.0f alpha:1.0];
     self.dismissButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
-    [self.dismissButton setBackgroundImage:[UIImage imageNamed:@"BBG"] forState:UIControlStateNormal];
-    [self.dismissButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    //[self.dismissButton setBackgroundImage:[UIImage imageNamed:@"BBG"] forState:UIControlStateNormal];
+    [self.dismissButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
     [self.dismissButton addTarget:self action:@selector(dismissSelf) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.dismissButton];
     
     self.clearButton = [UIButton new];
     self.clearButton.translatesAutoresizingMaskIntoConstraints = NO;
-    //self.clearButton.backgroundColor = [UIColor colorWithRed:99/255.0f green:48/255.0f blue:225/255.0f alpha:1.0f];
+    self.clearButton.backgroundColor = [UIColor colorWithRed:67.0f/255.0f green:15.0f/255.0f blue:242.0f/255.0f alpha:1.0];
     self.clearButton.titleLabel.font = [UIFont systemFontOfSize:14.0];
-    [self.clearButton setBackgroundImage:[UIImage imageNamed:@"BBG"] forState:UIControlStateNormal];
-    [self.clearButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    //[self.clearButton setBackgroundImage:[UIImage imageNamed:@"BBG"] forState:UIControlStateNormal];
+    [self.clearButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.clearButton setTitle:@"Clear" forState:UIControlStateNormal];
     [self.clearButton addTarget:self action:@selector(clearFields) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:self.clearButton];
@@ -187,9 +187,22 @@ static NSString *const microWhite = @"icons8whiteMicro";
     };
 }
 
+//Update for iPad too
+- (BOOL)isIphoneX {
+    return self.view.frame.size.height == 812;
+}
+
 - (void)setUpConstraints {
     
     NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_textField, _textView, _saveButton, _dismissButton, _clearButton);
+    
+    CGFloat yCoord = 0;
+    if ([self isIphoneX] == YES) {
+        yCoord = 69;
+    } else {
+        yCoord = 25;
+    }
+    //TODO update ^^ (for new iPhones too)
     
     CGFloat buttonWidth = self.view.frame.size.width / 5;
     CGFloat buttonPadding = self.view.frame.size.width / 10;
@@ -209,17 +222,17 @@ static NSString *const microWhite = @"icons8whiteMicro";
     NSLayoutConstraint *equalConstraintII = [NSLayoutConstraint constraintWithItem:self.dismissButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.saveButton attribute:NSLayoutAttributeHeight multiplier:1 constant:0.0];
     
     self.saveButton.layer.cornerRadius = buttonWidth / 2;
-    self.saveButton.layer.borderColor = [[UIColor blackColor]CGColor];
+    self.saveButton.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.saveButton.layer.masksToBounds = YES;
     self.saveButton.layer.borderWidth = 1.5;
     
     self.dismissButton.layer.cornerRadius = buttonWidth / 2;
-    self.dismissButton.layer.borderColor = [[UIColor blackColor]CGColor];
+    self.dismissButton.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.dismissButton.layer.masksToBounds = YES;
     self.dismissButton.layer.borderWidth = 1.5;
     
     self.clearButton.layer.cornerRadius = buttonWidth / 2;
-    self.clearButton.layer.borderColor = [[UIColor blackColor]CGColor];
+    self.clearButton.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.clearButton.layer.masksToBounds = YES;
     self.clearButton.layer.borderWidth = 1.5;
     
@@ -232,6 +245,10 @@ static NSString *const microWhite = @"icons8whiteMicro";
     [self.view addConstraints:horizontalConstraints];
     [self.view addConstraint:equalConstraint];
     [self.view addConstraint:equalConstraintII];
+    
+    [self addShadowToView:self.saveButton];
+    [self addShadowToView:self.dismissButton];
+    [self addShadowToView:self.clearButton];
     
     [self addContainerViewWithImages];
 }
@@ -249,6 +266,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
     self.containerView.userInteractionEnabled = YES;
     [self addImageViewsToContainer];
     [self.view addSubview:self.containerView];
+    [self addShadowToView:self.containerView];
 }
 
 - (void)addImageViewsToContainer {
@@ -282,6 +300,8 @@ static NSString *const microWhite = @"icons8whiteMicro";
     if (self.speechContainer == nil) {
         self.speechContainer = [[SpeechContainerView alloc]initWithFrame:CGRectMake(100, (self.view.frame.size.height / 2) - 35, self.view.frame.size.width - 200, 70)];
         [self.view addSubview:self.speechContainer];
+        [self addShadowToView:self.speechContainer];
+        
          //test, hide eventually by default
         [self performSelector:@selector(animateDots) withObject:nil afterDelay:1];
     }
@@ -358,6 +378,17 @@ static NSString *const microWhite = @"icons8whiteMicro";
         textView.text = @"Chore Description";
     }
 }
+
+- (void)addShadowToView:(UIView *)view {
+    view.layer.shadowColor = [UIColor whiteColor].CGColor;
+    view.layer.shadowOffset = CGSizeMake(0, 1);
+    view.layer.shadowOpacity = 1;
+    view.layer.shadowRadius = 5.0;
+    if (![view isKindOfClass:[UIButton class]]) {
+        view.clipsToBounds = NO;
+    }
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

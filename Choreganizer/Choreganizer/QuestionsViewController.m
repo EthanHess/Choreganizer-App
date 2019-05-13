@@ -11,12 +11,15 @@
 #import "AppDelegate.h"
 #import "ScheduledNotificationsListViewController.h"
 
+@import UserNotifications;
+@import UserNotificationsUI;
+
 @interface QuestionsViewController ()
 
 @property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) UILabel *segLabel;
 
-@property (nonatomic, strong) UIToolbar *toolbar;
+//@property (nonatomic, strong) UIToolbar *toolbar;
 @property (nonatomic, strong) UISegmentedControl *segController;
 @property (nonatomic, strong) UIScrollView *scrollView;
 
@@ -53,7 +56,6 @@
 - (void)setUpViewsWrapper {
     [self setUpScrollView];
     [self setUpLabel];
-    [self setUpToolbar];
     [self setUpSegControl];
 }
 
@@ -72,10 +74,10 @@
 - (void)backgroundImage:(NSString *)imageString {
     CGRect frame;
     if ([self isIphoneX] == YES) {
-        CGFloat yCoord = self.toolbar.frame.size.height + 44;
+        CGFloat yCoord = 44;
         frame = CGRectMake(0, yCoord, self.view.frame.size.width, self.view.frame.size.height - yCoord);
     } else {
-        frame = CGRectMake(0, self.toolbar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.toolbar.frame.size.height);
+        frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     }
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:frame];
     imageView.image = [UIImage imageNamed:imageString];
@@ -97,7 +99,7 @@
     
     //and buttons to cancel / see notifications
     self.cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(30, 580, self.view.frame.size.width - 60, 50)];
-    self.cancelButton.backgroundColor = [UIColor clearColor];
+    self.cancelButton.backgroundColor = [UIColor colorWithRed:229.0f/255.0f green:92.0f/255.0f blue:92.0f/255.0f alpha:1.0]; //TODO add to custom class/extension
     self.cancelButton.layer.cornerRadius = 5;
     self.cancelButton.layer.borderWidth = 1;
     self.cancelButton.layer.borderColor = [[UIColor whiteColor]CGColor];
@@ -107,7 +109,7 @@
     [self.scrollView addSubview:self.cancelButton];
     
     self.seeButton = [[UIButton alloc]initWithFrame:CGRectMake(30, 660, self.view.frame.size.width - 60, 50)];
-    self.seeButton.backgroundColor = [UIColor clearColor];
+    self.seeButton.backgroundColor = [UIColor colorWithRed:92.0f/255.0f green:154.0f/255.0f blue:229.0f/255.0f alpha:1.0];
     self.seeButton.layer.cornerRadius = 5;
     self.seeButton.layer.borderWidth = 1;
     self.seeButton.layer.borderColor = [[UIColor whiteColor]CGColor];
@@ -116,7 +118,7 @@
     [self.seeButton addTarget:self action:@selector(seeNotifications) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.seeButton];
     
-    //and seg label
+    //and seg label (and selected index?)
     self.segLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 450, self.view.frame.size.width - 60, 50)];
     self.segLabel.text = @"Choose scheme";
     self.segLabel.textColor = [UIColor whiteColor];
@@ -125,27 +127,6 @@
     self.segLabel.font = [UIFont systemFontOfSize:22];
     self.segLabel.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:self.segLabel];
-}
-
-- (void)setUpToolbar {
-    
-    self.toolbar = [[UIToolbar alloc]initWithFrame:[self toolbarFrame]];
-    [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
-    [self.view addSubview:self.toolbar];
-    
-    UIImage *arrow = [UIImage imageNamed:@"arrow"];
-    NSMutableArray *navItems = [[NSMutableArray alloc] initWithCapacity:3];
-    
-    UIBarButtonItem *flexItem0 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [navItems addObject:flexItem0];
-    
-    UIBarButtonItem *arrowItem = [[UIBarButtonItem alloc]initWithImage:arrow style:UIBarButtonItemStylePlain target:self action:@selector(home)];
-    [navItems addObject:arrowItem];
-    
-    UIBarButtonItem *flexItem1 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [navItems addObject:flexItem1];
-    
-    [self.toolbar setItems:navItems];
 }
 
 - (CGRect)toolbarFrame {
@@ -180,7 +161,7 @@
     self.segController = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Space Scheme", @"Color Scheme", nil]];
     self.segController.frame = segFrame;
     self.segController.tintColor = [UIColor whiteColor];
-    self.segController.backgroundColor = [UIColor clearColor];
+    self.segController.backgroundColor = [UIColor colorWithRed:92.0f/255.0f green:154.0f/255.0f blue:229.0f/255.0f alpha:1.0];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIFont fontWithName:arialHebrew size:15], NSFontAttributeName,
                                 [UIColor whiteColor], NSForegroundColorAttributeName, nil];
@@ -212,6 +193,8 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Are you sure you want to cancel all notifications?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [[UIApplication sharedApplication]cancelAllLocalNotifications];
+        //TODO update, the above is deprecated
+        //[[UNUserNotificationCenter currentNotificationCenter]removeAllPendingNotificationRequests];
     }];
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Nevermind" style:UIAlertActionStyleCancel handler:nil];
     [alertController addAction:yesAction];

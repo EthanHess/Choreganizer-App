@@ -41,6 +41,17 @@
     
     [self setUpTableView];
     //[self setUpDismissButton];
+    [self getPendingNotifications];
+}
+
+- (void)getPendingNotifications {
+    [[UNUserNotificationCenter currentNotificationCenter]getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests) {
+        if (requests.count > 0) {
+            
+        } else {
+            
+        }
+    }];
 }
 
 - (void)addGradient {
@@ -180,21 +191,16 @@
     cell.detailTextLabel.textColor = [UIColor greenColor];
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-    
     cell.textLabel.numberOfLines = 0;
-    
     cell.imageView.image = [UIImage imageNamed:@"Clock"];
     
     UILocalNotification *notif = [self notificationArray][indexPath.row];
-    
     CGFloat heightToAdd = [GlobalFunctions heightFromTextCount:(int)notif.alertBody.length];
-    
     CGRect cellFrame = CGRectMake(0, 0, self.tableView.contentSize.width, 80 + heightToAdd);
     
     UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:cellFrame];
     cellImageView.image = [UIImage imageNamed:@"NCBG"];
     [cell.contentView insertSubview:cellImageView atIndex:0];
-    
     
     cell.textLabel.text = [self cutString:notif.alertBody];
     cell.detailTextLabel.text = [self stringFromDate:notif.fireDate];

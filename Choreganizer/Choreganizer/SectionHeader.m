@@ -60,14 +60,15 @@
     
     NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-15-[_titleLabel(==50)]" options:0 metrics:nil views:viewsDictionary];
     
-    NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-15-[_titleLabel(==150)]-90-[_addButton(==50)]" options:NSLayoutFormatAlignAllCenterY metrics:nil views:viewsDictionary];
+    CGFloat bufferBetween = self.frame.size.width - (165 + 65);
+    NSString *constraintStr = [NSString stringWithFormat:@"H:|-15-[_titleLabel(==150)]-%f-[_addButton(==50)]", bufferBetween];
+    NSArray *horizontalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:constraintStr options:NSLayoutFormatAlignAllCenterY metrics:nil views:viewsDictionary];
     
     NSLayoutConstraint *equalConstraint = [NSLayoutConstraint constraintWithItem:self.titleLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.addButton attribute:NSLayoutAttributeHeight multiplier:1 constant:0.0];
     
     self.addButton.layer.cornerRadius = 25;
     self.addButton.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.addButton.layer.borderWidth = 3.0;
-    
     
     [self addConstraints:verticalConstraints];
     [self addConstraints:horizontalConstraints];
@@ -79,9 +80,7 @@
 }
 
 - (void)updateWithBackgroundImage:(NSString *)imageName {
-    
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.bounds];
-    
     imageView.image = [UIImage imageNamed:imageName];
     [self insertSubview:imageView atIndex:0];
 }

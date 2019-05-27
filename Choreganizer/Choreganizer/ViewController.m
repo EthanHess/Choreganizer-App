@@ -55,6 +55,10 @@ typedef enum {
     return self.view.frame.size.height == 812;
 }
 
+- (BOOL)isIphoneXR {
+    return self.view.frame.size.height == 896;
+}
+
 //iOS 10
 - (UIStatusBarStyle)preferredStatusBarStyle {
     return UIStatusBarStyleLightContent;
@@ -62,7 +66,7 @@ typedef enum {
 
 - (CGRect)tableFrame {
     CGRect rect;
-    if ([self isIphoneX] == YES) {
+    if ([self isIphoneX] == YES || [self isIphoneXR] == YES) {
         rect = CGRectMake(0, self.toolbar.frame.size.height + 44, self.view.frame.size.width, self.view.frame.size.height - 60);
     } else {
         rect = CGRectMake(0, self.toolbar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - 60);
@@ -73,7 +77,7 @@ typedef enum {
 //Global functions, since we'll use more than once?
 - (CGRect)toolbarFrame {
     CGRect rect;
-    if ([self isIphoneX] == YES) {
+    if ([self isIphoneX] == YES || [self isIphoneXR] == YES) {
         rect = CGRectMake(0, 44, self.view.frame.size.width, 80);
     } else {
         rect = CGRectMake(0, 0, self.view.frame.size.width, 80);
@@ -162,8 +166,8 @@ typedef enum {
 
 //We already have QVC in the stack, push to new/improved oboarding conroller
 - (void)pushToOnboarding {
-    QuestionsViewController *qvc = [QuestionsViewController new];
-    [self.navigationController pushViewController:qvc animated:YES];
+    //QuestionsViewController *qvc = [QuestionsViewController new];
+    //[self.navigationController pushViewController:qvc animated:YES];
 }
 
 - (void)editHandle {

@@ -192,12 +192,17 @@ static NSString *const microWhite = @"icons8whiteMicro";
     return self.view.frame.size.height == 812;
 }
 
+- (BOOL)isIphoneXR {
+    return self.view.frame.size.height == 896;
+}
+
+
 - (void)setUpConstraints {
     
     NSDictionary *viewsDictionary = NSDictionaryOfVariableBindings(_textField, _textView, _saveButton, _dismissButton, _clearButton);
     
     CGFloat yCoord = 0;
-    if ([self isIphoneX] == YES) {
+    if ([self isIphoneX] == YES || [self isIphoneXR] == YES) {
         yCoord = 69;
     } else {
         yCoord = 25;
@@ -209,7 +214,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
     CGFloat textInputWidth = self.view.frame.size.width - 50; //for both text field and view
     //CGFloat textViewHeight = (self.view.frame.size.height / 2) - 80;
     
-    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-25-[_textField(==50)]-75-[_textView(==200)]-50-[_dismissButton(==%f)]", buttonWidth] options:0 metrics:nil views:viewsDictionary];
+    NSArray *verticalConstraints = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"V:|-%f-[_textField(==50)]-75-[_textView(==200)]-50-[_dismissButton(==%f)]", yCoord, buttonWidth] options:0 metrics:nil views:viewsDictionary];
     
     NSArray *horizontalConstraintI = [NSLayoutConstraint constraintsWithVisualFormat:[NSString stringWithFormat:@"H:|-25-[_textField(==%f)]", textInputWidth] options:0 metrics:nil views:viewsDictionary];
     

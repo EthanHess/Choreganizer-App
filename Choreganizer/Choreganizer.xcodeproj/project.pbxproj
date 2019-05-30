@@ -12,6 +12,7 @@
 		273B782C1E9C96D900E504F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 273B782B1E9C96D900E504F5 /* LaunchScreen.storyboard */; };
 		27448235210B9DCF00EC2E25 /* SpeechContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27448234210B9DCF00EC2E25 /* SpeechContainerView.m */; };
 		27448238210B9DEB00EC2E25 /* GlobalFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 27448237210B9DEB00EC2E25 /* GlobalFunctions.m */; };
+		2750A8E522A07E7500E0B88F /* UIColor+CustomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 2750A8E422A07E7500E0B88F /* UIColor+CustomColors.m */; };
 		27A837231B4B28FF00F02B14 /* QuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A837221B4B28FF00F02B14 /* QuestionsViewController.m */; };
 		27AD9785211E002200251F9E /* SpeechController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AD9784211E002200251F9E /* SpeechController.m */; };
 		27B1274E1B225E0B007BACD1 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B1274D1B225E0B007BACD1 /* Stack.m */; };
@@ -48,16 +49,18 @@
 		27448234210B9DCF00EC2E25 /* SpeechContainerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechContainerView.m; sourceTree = "<group>"; };
 		27448236210B9DEB00EC2E25 /* GlobalFunctions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalFunctions.h; sourceTree = "<group>"; };
 		27448237210B9DEB00EC2E25 /* GlobalFunctions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalFunctions.m; sourceTree = "<group>"; };
+		2750A8E322A07E7500E0B88F /* UIColor+CustomColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+CustomColors.h"; sourceTree = "<group>"; };
+		2750A8E422A07E7500E0B88F /* UIColor+CustomColors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CustomColors.m"; sourceTree = "<group>"; };
 		27A837211B4B28FF00F02B14 /* QuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsViewController.h; sourceTree = "<group>"; };
 		27A837221B4B28FF00F02B14 /* QuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsViewController.m; sourceTree = "<group>"; };
 		27AD9783211E002200251F9E /* SpeechController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpeechController.h; sourceTree = "<group>"; };
 		27AD9784211E002200251F9E /* SpeechController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SpeechController.m; sourceTree = "<group>"; };
 		27B1274C1B225E0B007BACD1 /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		27B1274D1B225E0B007BACD1 /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
-		27B259E81B30A6CA00544F52 /* Chore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Chore.h; path = ../Chore.h; sourceTree = "<group>"; };
-		27B259E91B30A6CA00544F52 /* Chore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Chore.m; path = ../Chore.m; sourceTree = "<group>"; };
-		27B259EB1B30A6CB00544F52 /* Day.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Day.h; path = ../Day.h; sourceTree = "<group>"; };
-		27B259EC1B30A6CB00544F52 /* Day.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Day.m; path = ../Day.m; sourceTree = "<group>"; };
+		27B259E81B30A6CA00544F52 /* Chore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Chore.h; sourceTree = "<group>"; };
+		27B259E91B30A6CA00544F52 /* Chore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Chore.m; sourceTree = "<group>"; };
+		27B259EB1B30A6CB00544F52 /* Day.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Day.h; sourceTree = "<group>"; };
+		27B259EC1B30A6CB00544F52 /* Day.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Day.m; sourceTree = "<group>"; };
 		27B25A6E1B326A9100544F52 /* AddChoreViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddChoreViewController.h; sourceTree = "<group>"; };
 		27B25A6F1B326A9100544F52 /* AddChoreViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddChoreViewController.m; sourceTree = "<group>"; };
 		27B25A711B3353C700544F52 /* PickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerViewController.h; sourceTree = "<group>"; };
@@ -98,6 +101,43 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2750A8E622A0801100E0B88F /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				27448236210B9DEB00EC2E25 /* GlobalFunctions.h */,
+				27448237210B9DEB00EC2E25 /* GlobalFunctions.m */,
+				2750A8E322A07E7500E0B88F /* UIColor+CustomColors.h */,
+				2750A8E422A07E7500E0B88F /* UIColor+CustomColors.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		2750A8E722A0801B00E0B88F /* Data Models */ = {
+			isa = PBXGroup;
+			children = (
+				27B259EB1B30A6CB00544F52 /* Day.h */,
+				27B259EC1B30A6CB00544F52 /* Day.m */,
+				27B259E81B30A6CA00544F52 /* Chore.h */,
+				27B259E91B30A6CA00544F52 /* Chore.m */,
+				27B1274C1B225E0B007BACD1 /* Stack.h */,
+				27B1274D1B225E0B007BACD1 /* Stack.m */,
+			);
+			name = "Data Models";
+			sourceTree = "<group>";
+		};
+		2750A8E822A085E000E0B88F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				27B25A6E1B326A9100544F52 /* AddChoreViewController.h */,
+				27B25A6F1B326A9100544F52 /* AddChoreViewController.m */,
+				27DF7B251B22397000883F06 /* ChoreController.h */,
+				27DF7B261B22397000883F06 /* ChoreController.m */,
+				27AD9783211E002200251F9E /* SpeechController.h */,
+				27AD9784211E002200251F9E /* SpeechController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		27DF7AF31B22389500883F06 = {
 			isa = PBXGroup;
 			children = (
@@ -125,28 +165,17 @@
 				27DF7B071B22389500883F06 /* ViewController.m */,
 				27DF7B2B1B2244A300883F06 /* SectionHeader.h */,
 				27DF7B2C1B2244A300883F06 /* SectionHeader.m */,
-				27B25A6E1B326A9100544F52 /* AddChoreViewController.h */,
-				27B25A6F1B326A9100544F52 /* AddChoreViewController.m */,
 				27B25A711B3353C700544F52 /* PickerViewController.h */,
 				27B25A721B3353C700544F52 /* PickerViewController.m */,
-				27DF7B251B22397000883F06 /* ChoreController.h */,
-				27DF7B261B22397000883F06 /* ChoreController.m */,
-				27AD9783211E002200251F9E /* SpeechController.h */,
-				27AD9784211E002200251F9E /* SpeechController.m */,
 				27212F671E96C2FD0050053B /* ScheduledNotificationsListViewController.h */,
 				27212F681E96C2FD0050053B /* ScheduledNotificationsListViewController.m */,
 				27A837211B4B28FF00F02B14 /* QuestionsViewController.h */,
 				27A837221B4B28FF00F02B14 /* QuestionsViewController.m */,
 				27448233210B9DCF00EC2E25 /* SpeechContainerView.h */,
 				27448234210B9DCF00EC2E25 /* SpeechContainerView.m */,
-				27448236210B9DEB00EC2E25 /* GlobalFunctions.h */,
-				27448237210B9DEB00EC2E25 /* GlobalFunctions.m */,
-				27B259EB1B30A6CB00544F52 /* Day.h */,
-				27B259EC1B30A6CB00544F52 /* Day.m */,
-				27B259E81B30A6CA00544F52 /* Chore.h */,
-				27B259E91B30A6CA00544F52 /* Chore.m */,
-				27B1274C1B225E0B007BACD1 /* Stack.h */,
-				27B1274D1B225E0B007BACD1 /* Stack.m */,
+				2750A8E822A085E000E0B88F /* Controllers */,
+				2750A8E722A0801B00E0B88F /* Data Models */,
+				2750A8E622A0801100E0B88F /* Utils */,
 				2703E4F81B24C412005F82FE /* Model.xcdatamodeld */,
 				27DF7B091B22389500883F06 /* Main.storyboard */,
 				273B782B1E9C96D900E504F5 /* LaunchScreen.storyboard */,
@@ -298,6 +327,7 @@
 				27212F691E96C2FD0050053B /* ScheduledNotificationsListViewController.m in Sources */,
 				27DF7B051B22389500883F06 /* AppDelegate.m in Sources */,
 				27B25A731B3353C700544F52 /* PickerViewController.m in Sources */,
+				2750A8E522A07E7500E0B88F /* UIColor+CustomColors.m in Sources */,
 				27DF7B021B22389500883F06 /* main.m in Sources */,
 				27448238210B9DEB00EC2E25 /* GlobalFunctions.m in Sources */,
 			);

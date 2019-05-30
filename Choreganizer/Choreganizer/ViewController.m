@@ -13,6 +13,7 @@
 #import "PickerViewController.h"
 #import "QuestionsViewController.h"
 #import "AppDelegate.h"
+#import "UIColor+CustomColors.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate>
 
@@ -139,10 +140,12 @@ typedef enum {
     self.toolbar = [[UIToolbar alloc]initWithFrame:[self toolbarFrame]];
     switch (self.scheme) {
         case Space:
-            [self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
+            //[self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
+            [self addTwoColorsToMakeGradient:[UIColor topGradientSpace] colorTwo:[UIColor bottomGradientSpace] andView:self.toolbar];
             break;
         case Color:
-            [self addImageToToolbar:@"ColorToolbar" andToolbar:self.toolbar];
+            //[self addImageToToolbar:@"ColorToolbar" andToolbar:self.toolbar];
+            [self addTwoColorsToMakeGradient:[UIColor topGradientColor] colorTwo:[UIColor bottomGradientColor] andView:self.toolbar];
             break;
     }
     
@@ -212,7 +215,7 @@ typedef enum {
     switch (self.scheme) {
         case Space:
             [self addTwoColorsToMakeGradient:[UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0] colorTwo:[UIColor blackColor] andView:self.sectionHeader];
-            self.sectionHeader.addButton.backgroundColor =  [UIColor colorWithRed:165.0f/255.0f green:245.0f/255.0f blue:179.0f/255.0f alpha:1.0];
+            self.sectionHeader.addButton.backgroundColor = [UIColor topGradientColor];
             break;
         case Color:
             [self addTwoColorsToMakeGradient:[UIColor colorWithRed:11.0f/255.0f green:241.0f/255.0f blue:223.0f/255.0f alpha:1.0] colorTwo:[UIColor colorWithRed:11.0f/255.0f green:67.0f/255.0f blue:241.0f/255.0f alpha:1.0] andView:self.sectionHeader];
@@ -272,13 +275,13 @@ typedef enum {
     switch (self.scheme) {
         case Space:
             [self addTwoColorsToMakeGradient:topColorSpace colorTwo:[UIColor blackColor] andView:cell];
-            cell.imageView.image = [UIImage imageNamed:@"cellDetailImageChore"];
+            cell.imageView.image = [UIImage imageNamed:@"planetCH"];
             cell.textLabel.textColor = [UIColor cyanColor];
             cell.detailTextLabel.textColor = [UIColor whiteColor];
             break;
         case Color:
             [self addTwoColorsToMakeGradient:topColorColor colorTwo:[UIColor colorWithRed:11.0f/255.0f green:67.0f/255.0f blue:241.0f/255.0f alpha:1.0] andView:cell];
-            cell.imageView.image = [UIImage imageNamed:@"CellImageTwo"];
+            cell.imageView.image = [UIImage imageNamed:@"photosCH"];
             cell.textLabel.textColor = [UIColor whiteColor];
             cell.detailTextLabel.textColor = [UIColor whiteColor];
             break;

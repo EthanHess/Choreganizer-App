@@ -108,15 +108,15 @@
     [self.cancelButton addTarget:self action:@selector(cancelNotifications) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.cancelButton];
     
-    self.seeButton = [[UIButton alloc]initWithFrame:CGRectMake(30, 660, self.view.frame.size.width - 60, 50)];
-    self.seeButton.backgroundColor = [UIColor colorWithRed:92.0f/255.0f green:154.0f/255.0f blue:229.0f/255.0f alpha:1.0];
-    self.seeButton.layer.cornerRadius = 5;
-    self.seeButton.layer.borderWidth = 1;
-    self.seeButton.layer.borderColor = [[UIColor whiteColor]CGColor];
-    [self.seeButton setTitle:@"See Notifications" forState:UIControlStateNormal];
-    [self.seeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self.seeButton addTarget:self action:@selector(seeNotifications) forControlEvents:UIControlEventTouchUpInside];
-    [self.scrollView addSubview:self.seeButton];
+//    self.seeButton = [[UIButton alloc]initWithFrame:CGRectMake(30, 660, self.view.frame.size.width - 60, 50)];
+//    self.seeButton.backgroundColor = [UIColor colorWithRed:92.0f/255.0f green:154.0f/255.0f blue:229.0f/255.0f alpha:1.0];
+//    self.seeButton.layer.cornerRadius = 5;
+//    self.seeButton.layer.borderWidth = 1;
+//    self.seeButton.layer.borderColor = [[UIColor whiteColor]CGColor];
+//    [self.seeButton setTitle:@"See Notifications" forState:UIControlStateNormal];
+//    [self.seeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [self.seeButton addTarget:self action:@selector(seeNotifications) forControlEvents:UIControlEventTouchUpInside];
+//    [self.scrollView addSubview:self.seeButton];
     
     //and seg label (and selected index?)
     self.segLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 450, self.view.frame.size.width - 60, 50)];
@@ -202,10 +202,10 @@
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)seeNotifications {
-    ScheduledNotificationsListViewController *scheduledList = [ScheduledNotificationsListViewController new];
-    [self.navigationController presentViewController:scheduledList animated:YES completion:nil];
-}
+//- (void)seeNotifications {
+//    ScheduledNotificationsListViewController *scheduledList = [ScheduledNotificationsListViewController new];
+//    [self.navigationController presentViewController:scheduledList animated:YES completion:nil];
+//}
 
 
 - (void)didReceiveMemoryWarning {

@@ -347,9 +347,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
 }
 
 - (void)saveChoreToDay {
-    
     [[ChoreController sharedInstance]addChoreWithTitle:self.textField.text andDescription:self.textView.text toDay:self.day];
-    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -360,7 +358,6 @@ static NSString *const microWhite = @"icons8whiteMicro";
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-    
     [textField resignFirstResponder];
     return YES;
 }

@@ -127,6 +127,7 @@ typedef enum {
     
 }
 
+//Remove and add gradient
 - (void)addImageToToolbar:(NSString *)imageName andToolbar:(UIToolbar *)toolbar {
     CGRect imageFrame = CGRectMake(0, 0, self.view.frame.size.width, 80);
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:imageFrame];
@@ -146,28 +147,27 @@ typedef enum {
     }
     
     [self.view addSubview:self.toolbar];
-    UIImage *question = [UIImage imageNamed:@"questionMarkI8"];
-    UIImage *edit = [UIImage imageNamed:@"editX"];
+    UIImage *edit = [UIImage imageNamed:@"mainTopEdit"];
+    edit = [edit imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     NSMutableArray *navItems = [[NSMutableArray alloc] initWithCapacity:3];
     UIBarButtonItem *flexItem0 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     [navItems addObject:flexItem0];
-    UIBarButtonItem *questionItem = [[UIBarButtonItem alloc]initWithImage:question style:UIBarButtonItemStylePlain target:self action:@selector(pushToOnboarding)];
-    questionItem.tintColor = [UIColor whiteColor]; 
-    [navItems addObject:questionItem];
-    UIBarButtonItem *flexItem1 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [navItems addObject:flexItem1];
     UIBarButtonItem *editItem = [[UIBarButtonItem alloc]initWithImage:edit style:UIBarButtonItemStylePlain target:self action:@selector(editHandle)];
     editItem.tintColor = [UIColor whiteColor];
     [navItems addObject:editItem];
-    UIBarButtonItem *flexItem2 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
-    [navItems addObject:flexItem2];
+    UIBarButtonItem *flexItem1 = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    [navItems addObject:flexItem1];
     [self.toolbar setItems:navItems];
 }
 
-//We already have QVC in the stack, push to new/improved oboarding conroller
-- (void)pushToOnboarding {
-    //QuestionsViewController *qvc = [QuestionsViewController new];
-    //[self.navigationController pushViewController:qvc animated:YES];
+- (void)addShadowToView:(UIView *)view {
+    view.layer.shadowColor = [UIColor whiteColor].CGColor;
+    view.layer.shadowOffset = CGSizeMake(0, 1);
+    view.layer.shadowOpacity = 1;
+    view.layer.shadowRadius = 5.0;
+    if (![view isKindOfClass:[UIButton class]]) {
+        view.clipsToBounds = NO;
+    }
 }
 
 - (void)editHandle {

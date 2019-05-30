@@ -25,8 +25,8 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="  Copyright © 2017 Ethan Hess. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="obG-Y5-kRd">
-                                <rect key="frame" x="14" y="695" width="387" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  Copyright © 2017 Ethan Hess. All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="obG-Y5-kRd">
+                                <rect key="frame" x="14" y="659" width="387" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -34,11 +34,17 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="20" symbolic="YES" id="19N-u5-MIb"/>
+                            <constraint firstItem="obG-Y5-kRd" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="14" id="9ek-XB-KVl"/>
                             <constraint firstItem="er9-xU-EqF" firstAttribute="bottom" secondItem="xb3-aO-Qok" secondAttribute="top" id="EPy-R0-1kd"/>
                             <constraint firstItem="er9-xU-EqF" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="KYm-9l-u0l"/>
+                            <constraint firstItem="er9-xU-EqF" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="Kts-Vl-aLp"/>
                             <constraint firstItem="er9-xU-EqF" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="MCg-tZ-DVs"/>
+                            <constraint firstItem="er9-xU-EqF" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="PAo-u0-G5T"/>
+                            <constraint firstAttribute="trailing" secondItem="er9-xU-EqF" secondAttribute="trailing" id="QUV-1I-rGU"/>
                             <constraint firstAttribute="trailing" secondItem="er9-xU-EqF" secondAttribute="trailing" id="Zwh-8A-BfH"/>
+                            <constraint firstAttribute="trailing" secondItem="obG-Y5-kRd" secondAttribute="trailing" constant="13" id="dDq-fY-cEz"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="er9-xU-EqF" secondAttribute="bottom" id="oX6-jj-9Lh"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="obG-Y5-kRd" secondAttribute="bottom" constant="56" id="xna-mO-G5d"/>
                         </constraints>
                     </view>
                 </viewController>

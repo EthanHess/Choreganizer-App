@@ -11,6 +11,7 @@
 #import "ScheduledNotificationsListViewController.h"
 #import "QuestionsViewController.h"
 #import "ChoreController.h"
+#import "UIColor+CustomColors.h"
 
 @interface AppDelegate ()
 
@@ -22,11 +23,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
-    [self configureTabBar]; 
-
+    [self configureTabBar];
     [self setUpCoreData];
     
    /* UILocalNotification *locationNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
@@ -39,30 +37,25 @@
 }
      
 - (void)setUpCoreData {
-    
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"hasLaunched"])
-    {
-         
-    [[ChoreController sharedInstance]addDayWithName:@"Monday"];
-    [[ChoreController sharedInstance]addDayWithName:@"Tuesday"];
-    [[ChoreController sharedInstance]addDayWithName:@"Wednesday"];
-    [[ChoreController sharedInstance]addDayWithName:@"Thursday"];
-    [[ChoreController sharedInstance]addDayWithName:@"Friday"];
-    [[ChoreController sharedInstance]addDayWithName:@"Saturday"];
-    [[ChoreController sharedInstance]addDayWithName:@"Sunday"];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"hasLaunched"]) {
+        [[ChoreController sharedInstance]addDayWithName:@"Monday"];
+        [[ChoreController sharedInstance]addDayWithName:@"Tuesday"];
+        [[ChoreController sharedInstance]addDayWithName:@"Wednesday"];
+        [[ChoreController sharedInstance]addDayWithName:@"Thursday"];
+        [[ChoreController sharedInstance]addDayWithName:@"Friday"];
+        [[ChoreController sharedInstance]addDayWithName:@"Saturday"];
+        [[ChoreController sharedInstance]addDayWithName:@"Sunday"];
         
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLaunched"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-        
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasLaunched"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }
-         
 }
 
 - (void)configureTabBar {
     
     UITabBarController *tabBarController = [[UITabBarController alloc]init];
     tabBarController.tabBar.barTintColor = [UIColor blackColor];
-    tabBarController.tabBar.tintColor = [UIColor whiteColor];
+    tabBarController.tabBar.tintColor = [UIColor colorWithRed:48.0f/255.0f green:181.0f/255.0f blue:245.0f/255.0f alpha:1.0];
     
     ViewController *mainVC = [[ViewController alloc]init];
     ScheduledNotificationsListViewController *notificationsVC = [[ScheduledNotificationsListViewController alloc]init];

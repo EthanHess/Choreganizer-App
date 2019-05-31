@@ -16,6 +16,7 @@
 
 @interface QuestionsViewController ()
 
+@property (nonatomic, strong) UIImageView *qmImageView; //question mark
 @property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) UILabel *segLabel;
 
@@ -24,7 +25,6 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic, strong) UIButton *cancelButton;
-@property (nonatomic, strong) UIButton *seeButton;
 
 
 @end
@@ -34,17 +34,19 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    NSString *schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
-    if (schemeString) {
-        if ([schemeString isEqualToString:@"Space"]) {
-            [self backgroundImage:@"ChoreganizerInstructions"];
-        } else if ([schemeString isEqualToString:@"Color"]) {
-            [self backgroundImage:@"InstructionsColor"];
-        }
-    }
-    else {
-        [self backgroundImage:@"ChoreganizerInstructions"];
-    }
+//    NSString *schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
+//    if (schemeString) {
+//        if ([schemeString isEqualToString:@"Space"]) {
+//            [self backgroundImage:@"ChoreganizerInstructions"];
+//        } else if ([schemeString isEqualToString:@"Color"]) {
+//            [self backgroundImage:@"InstructionsColor"];
+//        }
+//    }
+//    else {
+//        [self backgroundImage:@"ChoreganizerInstructions"];
+//    }
+    
+    [self backgroundImage:@"skyCH"];
     
     self.view.backgroundColor = [UIColor blackColor];
 }
@@ -54,6 +56,7 @@
 }
 
 - (void)setUpViewsWrapper {
+    //check nil?
     [self setUpScrollView];
     [self setUpLabel];
     [self setUpSegControl];
@@ -67,6 +70,7 @@
 - (void)setUpScrollView {
     self.scrollView = [[UIScrollView alloc] initWithFrame:self.view.bounds];
     self.scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + 250);
+    self.scrollView.backgroundColor = [UIColor clearColor];
     [self.view sendSubviewToBack:self.scrollView];
     [self.view addSubview:self.scrollView];
 }
@@ -84,11 +88,12 @@
     [self.view insertSubview:imageView atIndex:0];
 }
 
-- (void)setUpLabel {
-    
+//Hide, and when they click "?" this will animate
+- (void)setUpInitiallyHiddenInfoLabel {
     self.questionLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 150, self.view.frame.size.width - 60, 300)];
     self.questionLabel.layer.cornerRadius = 10;
     self.questionLabel.layer.masksToBounds = YES;
+    self.questionLabel.hidden = YES;
     self.questionLabel.numberOfLines = 0;
     self.questionLabel.textAlignment = NSTextAlignmentCenter;
     self.questionLabel.textColor = [UIColor whiteColor];
@@ -96,6 +101,47 @@
     self.questionLabel.backgroundColor = [UIColor blackColor];
     self.questionLabel.text = @"Welcome to Choreganizer! Start by clicking the '+' button beside any day of the week to add a chore. If you happen to be forgetful and wish to have a notification sent to your phone, no problem. Just select the chore and send yourself as many notifications as you like! When you've finished just swipe to delete.";
     [self.scrollView addSubview:self.questionLabel];
+}
+
+//Global functions, DRY -- will use a lot
+- (void)addShadowToView:(UIView *)view andColor:(UIColor *)shadowColor {
+    view.layer.shadowColor = shadowColor.CGColor;
+    view.layer.shadowOffset = CGSizeMake(0, 3);
+    view.layer.shadowOpacity = 1;
+    view.layer.shadowRadius = 5.0;
+//    if (![view isKindOfClass:[UIButton class]]) {
+        view.clipsToBounds = NO;
+    //}
+}
+
+- (void)pulsateButton {
+    CABasicAnimation *pulsate = [CABasicAnimation animationWithKeyPath:@"transform"];
+    pulsate.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)];
+    pulsate.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.5, 1.5, 1.5)];
+    [pulsate setDuration:1.5];
+    [pulsate setAutoreverses:YES];
+    [pulsate setRepeatCount:HUGE_VALF];
+    [self.qmImageView.layer addAnimation:pulsate forKey:@"transform"];
+}
+
+- (void)addTapGestureToIV {
+    UITapGestureRecognizer *infoTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(info)];
+    self.qmImageView.userInteractionEnabled = YES;
+    [self.qmImageView addGestureRecognizer:infoTap];
+}
+
+- (void)setUpLabel {
+    
+    if (self.qmImageView == nil) { //TODO other properties
+        UIColor *shadowColor = [UIColor colorWithRed:48.0f/255.0f green:181.0f/255.0f blue:245.0f/255.0f alpha:1.0];
+        self.qmImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 3, 150, self.view.frame.size.width / 3, self.view.frame.size.width / 3)];
+        self.qmImageView.image = [UIImage imageNamed:@"QMCH"];
+        self.qmImageView.layer.cornerRadius = self.view.frame.size.width / 6;
+        [self addShadowToView:self.qmImageView andColor:shadowColor]; //custom?
+        [self addTapGestureToIV];
+        [self pulsateButton];
+        [self.scrollView addSubview:self.qmImageView];
+    }
     
     //and buttons to cancel / see notifications
     self.cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(30, 580, self.view.frame.size.width - 60, 50)];
@@ -107,16 +153,6 @@
     [self.cancelButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.cancelButton addTarget:self action:@selector(cancelNotifications) forControlEvents:UIControlEventTouchUpInside];
     [self.scrollView addSubview:self.cancelButton];
-    
-//    self.seeButton = [[UIButton alloc]initWithFrame:CGRectMake(30, 660, self.view.frame.size.width - 60, 50)];
-//    self.seeButton.backgroundColor = [UIColor colorWithRed:92.0f/255.0f green:154.0f/255.0f blue:229.0f/255.0f alpha:1.0];
-//    self.seeButton.layer.cornerRadius = 5;
-//    self.seeButton.layer.borderWidth = 1;
-//    self.seeButton.layer.borderColor = [[UIColor whiteColor]CGColor];
-//    [self.seeButton setTitle:@"See Notifications" forState:UIControlStateNormal];
-//    [self.seeButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [self.seeButton addTarget:self action:@selector(seeNotifications) forControlEvents:UIControlEventTouchUpInside];
-//    [self.scrollView addSubview:self.seeButton];
     
     //and seg label (and selected index?)
     self.segLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 450, self.view.frame.size.width - 60, 50)];
@@ -189,6 +225,10 @@
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
+- (void)info {
+    
+}
+
 - (void)cancelNotifications {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Are you sure you want to cancel all notifications?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -201,11 +241,6 @@
     [alertController addAction:cancelAction];
     [self presentViewController:alertController animated:YES completion:nil];
 }
-
-//- (void)seeNotifications {
-//    ScheduledNotificationsListViewController *scheduledList = [ScheduledNotificationsListViewController new];
-//    [self.navigationController presentViewController:scheduledList animated:YES completion:nil];
-//}
 
 
 - (void)didReceiveMemoryWarning {

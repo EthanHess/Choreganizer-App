@@ -34,20 +34,17 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-//    NSString *schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
-//    if (schemeString) {
-//        if ([schemeString isEqualToString:@"Space"]) {
-//            [self backgroundImage:@"ChoreganizerInstructions"];
-//        } else if ([schemeString isEqualToString:@"Color"]) {
-//            [self backgroundImage:@"InstructionsColor"];
-//        }
-//    }
-//    else {
-//        [self backgroundImage:@"ChoreganizerInstructions"];
-//    }
-    
-    [self backgroundImage:@"skyCH"];
-    
+    NSString *schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
+    if (schemeString) {
+        if ([schemeString isEqualToString:@"Space"]) {
+            [self backgroundImage:@"skyCH"];
+        } else if ([schemeString isEqualToString:@"Color"]) {
+            [self backgroundImage:@"waterCH"];
+        }
+    } else {
+        [self backgroundImage:@"skyCH"];
+    }
+
     self.view.backgroundColor = [UIColor blackColor];
 }
 
@@ -77,12 +74,13 @@
 
 - (void)backgroundImage:(NSString *)imageString {
     CGRect frame;
-    if ([self isIphoneX] == YES) {
+    if ([self isIphoneX] || [self newerDevices] == YES) {
         CGFloat yCoord = 44;
         frame = CGRectMake(0, yCoord, self.view.frame.size.width, self.view.frame.size.height - yCoord);
     } else {
         frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     }
+    //make property since they can change back and forth
     UIImageView *imageView = [[UIImageView alloc]initWithFrame:frame];
     imageView.image = [UIImage imageNamed:imageString];
     [self.view insertSubview:imageView atIndex:0];
@@ -210,11 +208,11 @@
     switch (segment.selectedSegmentIndex) {
         case 0: {
             [[NSUserDefaults standardUserDefaults]setObject:@"Space" forKey:schemeKey];
-            [self backgroundImage:@"ChoreganizerInstructions"];
+            [self backgroundImage:@"skyCH"];
             break; }
         case 1: {
             [[NSUserDefaults standardUserDefaults]setObject:@"Color" forKey:schemeKey];
-            [self backgroundImage:@"IstructionsColor"];
+            [self backgroundImage:@"waterCH"];
             break; }
         default:
             break;

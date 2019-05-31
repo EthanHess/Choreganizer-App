@@ -128,8 +128,6 @@
 		2750A8E822A085E000E0B88F /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				27B25A6E1B326A9100544F52 /* AddChoreViewController.h */,
-				27B25A6F1B326A9100544F52 /* AddChoreViewController.m */,
 				27DF7B251B22397000883F06 /* ChoreController.h */,
 				27DF7B261B22397000883F06 /* ChoreController.m */,
 				27AD9783211E002200251F9E /* SpeechController.h */,
@@ -173,6 +171,8 @@
 				27A837221B4B28FF00F02B14 /* QuestionsViewController.m */,
 				27448233210B9DCF00EC2E25 /* SpeechContainerView.h */,
 				27448234210B9DCF00EC2E25 /* SpeechContainerView.m */,
+				27B25A6E1B326A9100544F52 /* AddChoreViewController.h */,
+				27B25A6F1B326A9100544F52 /* AddChoreViewController.m */,
 				2750A8E822A085E000E0B88F /* Controllers */,
 				2750A8E722A0801B00E0B88F /* Data Models */,
 				2750A8E622A0801100E0B88F /* Utils */,

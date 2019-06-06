@@ -10,11 +10,12 @@
 #import "ViewController.h"
 #import "AppDelegate.h"
 #import "ScheduledNotificationsListViewController.h"
+#import "InstructionsView.h"
 
 @import UserNotifications;
 @import UserNotificationsUI;
 
-@interface QuestionsViewController ()
+@interface QuestionsViewController () <InstructionsDelegate>
 
 @property (nonatomic, strong) UIImageView *qmImageView; //question mark
 @property (nonatomic, strong) UILabel *questionLabel;
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) UIScrollView *scrollView;
 
 @property (nonatomic, strong) UIButton *cancelButton;
+@property (nonatomic, strong) InstructionsView *instructionsView;
 
 
 @end
@@ -161,6 +163,13 @@
     self.segLabel.font = [UIFont systemFontOfSize:22];
     self.segLabel.backgroundColor = [UIColor clearColor];
     [self.scrollView addSubview:self.segLabel];
+    
+    if (self.instructionsView == nil) {
+        self.instructionsView = [[InstructionsView alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2, 0, 0)];
+        self.instructionsView.delegate = self;
+        self.instructionsView.hidden = YES;
+        [self.view addSubview:self.instructionsView];
+    }
 }
 
 - (CGRect)toolbarFrame {
@@ -224,7 +233,14 @@
 }
 
 - (void)info {
-    
+    if (self.instructionsView == nil) {
+        return;
+    }
+    [UIView animateWithDuration:1 animations:^{
+        self.instructionsView.hidden = NO; //unnecessary maybe?
+        self.instructionsView.frame = CGRectMake(50, 150, self.view.frame.size.width - 100, self.view.frame.size.height - 300);
+        [self.instructionsView expandedInit];
+    }];
 }
 
 - (void)cancelNotifications {
@@ -238,6 +254,13 @@
     [alertController addAction:yesAction];
     [alertController addAction:cancelAction];
     [self presentViewController:alertController animated:YES completion:nil];
+}
+
+//IV delegate
+
+- (void)hideTapped {
+    //Set frame back?
+    self.instructionsView.hidden = YES;
 }
 
 

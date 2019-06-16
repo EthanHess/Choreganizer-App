@@ -7,6 +7,7 @@
 //
 
 #import "ScheduledNotificationsListViewController.h"
+#import "UIColor+CustomColors.h"
 #import "GlobalFunctions.h"
 
 @import UserNotificationsUI; //For iOS 10 (TODO: Update)
@@ -192,20 +193,38 @@
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.numberOfLines = 0;
-    cell.imageView.image = [UIImage imageNamed:@"Clock"];
+    cell.imageView.image = [UIImage imageNamed:@"clockIcon"];
     
     UILocalNotification *notif = [self notificationArray][indexPath.row];
     CGFloat heightToAdd = [GlobalFunctions heightFromTextCount:(int)notif.alertBody.length];
     CGRect cellFrame = CGRectMake(0, 0, self.tableView.contentSize.width, 80 + heightToAdd);
     
-    UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:cellFrame];
-    cellImageView.image = [UIImage imageNamed:@"NCBG"];
-    [cell.contentView insertSubview:cellImageView atIndex:0];
+//    UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:cellFrame];
+//    cellImageView.image = [UIImage imageNamed:@"NCBG"];
+//    [cell.contentView insertSubview:cellImageView atIndex:0];
+    
+    [self addTwoColorsToMakeGradient:[UIColor topGradientSpace] colorTwo:[UIColor bottomGradientSpace] andView:cell.contentView];
     
     cell.textLabel.text = [self cutString:notif.alertBody];
     cell.detailTextLabel.text = [self stringFromDate:notif.fireDate];
     
     return cell; 
+}
+
+- (void)addTwoColorsToMakeGradient:(UIColor *)colorOne colorTwo:(UIColor *)colorTwo andView:(UIView *)theView {
+    
+    CAGradientLayer *theGradient = [CAGradientLayer layer];
+    theGradient.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
+    
+    if ([theView isKindOfClass:[UITableViewCell class]]) {
+        CGFloat width = self.view.frame.size.width;
+        CGFloat height = 160;
+        theGradient.frame = CGRectMake(0, 0, width, height);
+        [theView.layer insertSublayer:theGradient atIndex:0];
+    } else {
+        theGradient.frame = theView.bounds;
+        [theView.layer insertSublayer:theGradient atIndex:0];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -223,9 +242,7 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Remove notification?" message:@"" preferredStyle:UIAlertControllerStyleAlert];
     
     UIAlertAction *yesAction = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        
         [[UIApplication sharedApplication]cancelLocalNotification:theNotif];
-        
         [self refresh];
     }];
     
@@ -238,16 +255,13 @@
 }
 
 - (NSString *)stringFromDate:(NSDate *)date {
-    
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy-MMM-dd HH:mm:ss";
-    
     return [formatter stringFromDate:date];
 }
 
 - (NSString *)cutString:(NSString *)stringToCut {
     NSString *newString = [stringToCut stringByReplacingOccurrencesOfString:@"A friendly reminder, " withString:@""];
-    
     return newString;
 }
 

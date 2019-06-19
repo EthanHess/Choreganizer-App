@@ -397,6 +397,12 @@ static NSString *const microWhite = @"icons8whiteMicro";
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    [[SpeechController sharedInstance]endAudio];
+}
+
 /*
 #pragma mark - Navigation
 

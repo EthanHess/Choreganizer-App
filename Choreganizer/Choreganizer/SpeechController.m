@@ -45,6 +45,7 @@ static NSString *const locale = @"en-UR";
     self.theEngine = [[AVAudioEngine alloc] init];
     self.speechRec = [[SFSpeechRecognizer alloc] initWithLocale:[NSLocale localeWithLocaleIdentifier:locale]];
     self.theRequest = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
+    self.theRequest.shouldReportPartialResults = YES;
     
     AVAudioInputNode *node =  [self.theEngine inputNode];
     AVAudioFormat *format = [node outputFormatForBus:0];
@@ -70,15 +71,22 @@ static NSString *const locale = @"en-UR";
                 [self.delegate handleError:error];
                 return;
             }
-            
             if ([result.bestTranscription formattedString] && self.delegate) {
-                [self.delegate stringDetermined:[result.bestTranscription formattedString]];
+                NSLog(result.isFinal ? @"FN YES" : @"FN NO");
+                if (result.isFinal) {
+                    [self.delegate stringDetermined:[result.bestTranscription formattedString]];
+                } else {
+                    NSLog(@"STRING SEGMENT %@", [result.bestTranscription formattedString]);
+                }
             }
         }];
     }
 }
 
 - (void)endAudio {
+    if (self.theTask == nil || self.theEngine == nil) {
+        return;
+    }
     [self.theTask finish];
     self.theTask = nil;
     [self.theEngine stop];

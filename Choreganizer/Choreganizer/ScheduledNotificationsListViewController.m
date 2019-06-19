@@ -203,7 +203,7 @@
 //    cellImageView.image = [UIImage imageNamed:@"NCBG"];
 //    [cell.contentView insertSubview:cellImageView atIndex:0];
     
-    [self addTwoColorsToMakeGradient:[UIColor topGradientSpace] colorTwo:[UIColor bottomGradientSpace] andView:cell.contentView];
+    [self addTwoColorsToMakeGradient:[UIColor topGradientSpace] colorTwo:[UIColor bottomGradientSpace] andView:cell];
     
     cell.textLabel.text = [self cutString:notif.alertBody];
     cell.detailTextLabel.text = [self stringFromDate:notif.fireDate];
@@ -218,7 +218,7 @@
     
     if ([theView isKindOfClass:[UITableViewCell class]]) {
         CGFloat width = self.view.frame.size.width;
-        CGFloat height = 160;
+        CGFloat height = 80;
         theGradient.frame = CGRectMake(0, 0, width, height);
         [theView.layer insertSublayer:theGradient atIndex:0];
     } else {

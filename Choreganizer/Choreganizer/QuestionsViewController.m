@@ -263,6 +263,13 @@
     self.instructionsView.hidden = YES;
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    if (self.instructionsView != nil) {
+        [self hideTapped];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

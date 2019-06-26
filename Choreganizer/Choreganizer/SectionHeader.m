@@ -68,7 +68,7 @@
     
     self.addButton.layer.cornerRadius = 25;
     self.addButton.layer.borderColor = [[UIColor whiteColor]CGColor];
-    self.addButton.layer.borderWidth = 3.0;
+    self.addButton.layer.borderWidth = 1.0;
     
     [self addConstraints:verticalConstraints];
     [self addConstraints:horizontalConstraints];

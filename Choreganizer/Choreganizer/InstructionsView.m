@@ -51,6 +51,7 @@
 
 - (void)hideTappedHandler {
     dispatch_async(dispatch_get_main_queue(), ^{
+        [self.typewriter setText:@""];
         [self.delegate hideTapped];
     });
 }
@@ -76,16 +77,22 @@
     self.dismissButton.layer.cornerRadius = 30;
     self.dismissButton.backgroundColor = [UIColor topGradientColor];
     self.dismissButton.alpha = 1;
+    self.dismissButton.layer.borderColor = [[UIColor whiteColor]CGColor];
+    self.dismissButton.layer.borderWidth = 1;
     [self.dismissButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self.dismissButton addTarget:self action:@selector(hideTappedHandler) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:self.dismissButton];
+    [self addSubview:self.dismissButton]; //Make sure to add above everything and that the overlapping part still recognizes touch
     
+    [self.typewriter setText:@""];
     [self performSelector:@selector(animationWrapper) withObject:nil afterDelay:1];
 }
 
 - (void)animationWrapper {
+    if (![self.typewriter.text  isEqual: @""]) {
+        return;
+    }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [self typwriterText:@"Welcome to Choreganizer, this is some dummy text to test the typewriter effect" delayBetweenChars:0.05];
+        [self typwriterText:@"Welcome to Choreganizer, this is some dummy text to test the typewriter effect" delayBetweenChars:0.025];
     });
 }
 
@@ -101,10 +108,18 @@
 //https://stackoverflow.com/questions/11686642/letter-by-letter-animation-for-uilabel
 
 - (void)typwriterText:(NSString *)text delayBetweenChars:(NSTimeInterval)delay {
-    [self.typewriter setText:@""];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.typewriter setText:@""];
+    });
     for (int i=0; i < text.length; i++) {
-        NSString *toSet = [NSString stringWithFormat:@"%@%C", self.typewriter.text, [text characterAtIndex:i]];
         dispatch_async(dispatch_get_main_queue(), ^{ //may be on main thread, check?
+            if (self.hidden == YES) {
+                return; //Set string property back?
+            }
+            NSString *toSet = [NSString stringWithFormat:@"%@%C", self.typewriter.text, [text characterAtIndex:i]];
+            if (!toSet) {
+                return;
+            }
             [self.typewriter setText:toSet];
         });
         //Necessary?

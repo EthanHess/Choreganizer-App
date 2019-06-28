@@ -14,6 +14,8 @@
 #import "QuestionsViewController.h"
 #import "AppDelegate.h"
 #import "UIColor+CustomColors.h"
+#import "GlobalFunctions.h"
+#import "EditChorePopupView.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate>
 
@@ -140,11 +142,9 @@ typedef enum {
     self.toolbar = [[UIToolbar alloc]initWithFrame:[self toolbarFrame]];
     switch (self.scheme) {
         case Space:
-            //[self addImageToToolbar:@"toolbarBackground" andToolbar:self.toolbar];
             [self addTwoColorsToMakeGradient:[UIColor topGradientSpace] colorTwo:[UIColor bottomGradientSpace] andView:self.toolbar];
             break;
         case Color:
-            //[self addImageToToolbar:@"ColorToolbar" andToolbar:self.toolbar];
             [self addTwoColorsToMakeGradient:[UIColor topGradientColor] colorTwo:[UIColor bottomGradientColor] andView:self.toolbar];
             break;
     }
@@ -249,7 +249,7 @@ typedef enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    //[tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
@@ -270,6 +270,8 @@ typedef enum {
     
     UIColor *topColorSpace = [UIColor colorWithRed:14.0f/255.0f green:125.0f/255.0f blue:227.0f/255.0f alpha:1.0];
     UIColor *topColorColor = [UIColor colorWithRed:11.0f/255.0f green:241.0f/255.0f blue:223.0f/255.0f alpha:1.0];
+    
+    [self configureEditImageForCell:cell];
     
     //[UIColor colorWithRed:2.0f/255.0f green:34.0f/255.0f blue:20.0f/255.0f alpha:1.0]
     switch (self.scheme) {
@@ -294,6 +296,40 @@ typedef enum {
     UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:imageFrame];
     cellImageView.image = [UIImage imageNamed:imageName];
     [cell.contentView insertSubview:cellImageView atIndex:0];
+}
+
+- (void)configureEditImageForCell:(UITableViewCell *)theCell {
+    UIImageView *editImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, theCell.contentView.frame.size.width - 60, 50, 50)];
+    editImageView.layer.cornerRadius = 25;
+    editImageView.image = [UIImage imageNamed:@"blueEdit"];
+    editImageView.userInteractionEnabled = YES;
+    //addShadow?
+    UITapGestureRecognizer *theTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleEditChore:)];
+    [editImageView addGestureRecognizer:theTap];
+    theCell.accessoryView = editImageView;
+}
+
+- (void)handleEditChore:(id)sender {
+    NSLog(@"--- SENDER --- %@", sender);
+    UITapGestureRecognizer *senderGR = (UITapGestureRecognizer *)sender;
+    CGPoint senderPosition = [senderGR.view convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:senderPosition];
+    if (indexPath != nil) {
+        NSLog(@"--- ROW --- %ld --- SECTION --- %ld", (long)indexPath.row, (long)indexPath.section);
+        //Get chore
+        Day *chosenDay = [ChoreController sharedInstance].days[indexPath.section];
+        Chore *chosenChore = chosenDay.chores[indexPath.row];
+        NSString *title = [NSString stringWithFormat:@"Would you like to edit %@?", chosenChore.title];
+        [GlobalFunctions presentChoiceAlertWithTitle:title andText:@"" fromVC:self andCompletion:^(BOOL correct) { //Correct in this case will just be chose yes, but we'll use the same utils method
+            if (correct == YES) {
+                //Present edit view
+            } else {
+                //Do nothing
+            }
+        }];
+    } else {
+        
+    }
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

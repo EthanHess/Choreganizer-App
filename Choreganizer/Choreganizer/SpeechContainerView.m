@@ -82,11 +82,9 @@
 }
 
 - (void)animateDots {
-    
     if (!self.dotArray) {
         return;
     }
-    
     for (int i = 0; i < self.dotArray.count; i++) {
         UIView *view = self.dotArray[i];
         [UIView animateWithDuration:1 delay:0.5 * i options:UIViewAnimationOptionAutoreverse animations:^{
@@ -98,10 +96,6 @@
             }
         }];
     }
-    
-//    for (UIView *theView in self.dotArray) {
-//
-//    }
 }
 
 //Fade away? May be too abrupt
@@ -111,7 +105,7 @@
 
 - (void)setBack {
     for (UIView *theView in self.dotArray) {
-        
+        NSLog(@"--- DESC --- %@", theView.description);
     }
 }
 

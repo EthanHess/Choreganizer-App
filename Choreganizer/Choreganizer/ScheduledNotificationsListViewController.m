@@ -147,7 +147,6 @@
 }
 
 - (void)setUpTableView {
-    
     if (self.tableView != nil) {
         NSLog(@"Already exists"); //to prevent doubling up
         return;
@@ -170,9 +169,7 @@
 //Table View Delegate + Datasource
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     UILocalNotification *notif = [self notificationArray][indexPath.row];
-
     CGFloat heightToAdd = [GlobalFunctions heightFromTextCount:(int)notif.alertBody.length];
     return 80 + heightToAdd;
 }

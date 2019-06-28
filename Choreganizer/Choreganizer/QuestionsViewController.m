@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "ScheduledNotificationsListViewController.h"
 #import "InstructionsView.h"
+#import "UIColor+CustomColors.h"
 
 @import UserNotifications;
 @import UserNotificationsUI;
@@ -96,7 +97,7 @@
     self.questionLabel.hidden = YES;
     self.questionLabel.numberOfLines = 0;
     self.questionLabel.textAlignment = NSTextAlignmentCenter;
-    self.questionLabel.textColor = [UIColor whiteColor];
+    self.questionLabel.textColor = [UIColor topGradientColor];
     self.questionLabel.font = [UIFont fontWithName:arialHebrew size:14];
     self.questionLabel.backgroundColor = [UIColor blackColor];
     self.questionLabel.text = @"Welcome to Choreganizer! Start by clicking the '+' button beside any day of the week to add a chore. If you happen to be forgetful and wish to have a notification sent to your phone, no problem. Just select the chore and send yourself as many notifications as you like! When you've finished just swipe to delete.";

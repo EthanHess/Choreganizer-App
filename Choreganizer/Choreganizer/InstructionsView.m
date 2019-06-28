@@ -64,7 +64,8 @@
     self.typewriter.backgroundColor = [UIColor blackColor];
     self.typewriter.layer.borderWidth = 1;
     self.typewriter.layer.borderColor = [[UIColor whiteColor]colorWithAlphaComponent:0.5].CGColor;
-    self.typewriter.textColor = [UIColor whiteColor];
+    self.typewriter.textColor = [UIColor cyanColor];
+    self.typewriter.font = [UIFont fontWithName:@"Arial-Hebrew" size:14];
     self.typewriter.textAlignment = NSTextAlignmentCenter;
     self.typewriter.numberOfLines = 0;
     [self addSubview:self.typewriter];

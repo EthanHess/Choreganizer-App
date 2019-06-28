@@ -14,6 +14,8 @@
 		27448235210B9DCF00EC2E25 /* SpeechContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27448234210B9DCF00EC2E25 /* SpeechContainerView.m */; };
 		27448238210B9DEB00EC2E25 /* GlobalFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 27448237210B9DEB00EC2E25 /* GlobalFunctions.m */; };
 		2750A8E522A07E7500E0B88F /* UIColor+CustomColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 2750A8E422A07E7500E0B88F /* UIColor+CustomColors.m */; };
+		27849F8922C6BE210009C68D /* EditChorePopupView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27849F8822C6BE210009C68D /* EditChorePopupView.m */; };
+		27849FA322C6C7B50009C68D /* icons8-edit.svg in Resources */ = {isa = PBXBuildFile; fileRef = 27849FA222C6C7B50009C68D /* icons8-edit.svg */; };
 		27A837231B4B28FF00F02B14 /* QuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A837221B4B28FF00F02B14 /* QuestionsViewController.m */; };
 		27AD9785211E002200251F9E /* SpeechController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AD9784211E002200251F9E /* SpeechController.m */; };
 		27B1274E1B225E0B007BACD1 /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B1274D1B225E0B007BACD1 /* Stack.m */; };
@@ -54,6 +56,9 @@
 		27448237210B9DEB00EC2E25 /* GlobalFunctions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GlobalFunctions.m; sourceTree = "<group>"; };
 		2750A8E322A07E7500E0B88F /* UIColor+CustomColors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+CustomColors.h"; sourceTree = "<group>"; };
 		2750A8E422A07E7500E0B88F /* UIColor+CustomColors.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+CustomColors.m"; sourceTree = "<group>"; };
+		27849F8722C6BE210009C68D /* EditChorePopupView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditChorePopupView.h; sourceTree = "<group>"; };
+		27849F8822C6BE210009C68D /* EditChorePopupView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditChorePopupView.m; sourceTree = "<group>"; };
+		27849FA222C6C7B50009C68D /* icons8-edit.svg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "icons8-edit.svg"; sourceTree = "<group>"; };
 		27A837211B4B28FF00F02B14 /* QuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuestionsViewController.h; sourceTree = "<group>"; };
 		27A837221B4B28FF00F02B14 /* QuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionsViewController.m; sourceTree = "<group>"; };
 		27AD9783211E002200251F9E /* SpeechController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpeechController.h; sourceTree = "<group>"; };
@@ -139,6 +144,27 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		27849F8A22C6BE360009C68D /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				27448233210B9DCF00EC2E25 /* SpeechContainerView.h */,
+				27448234210B9DCF00EC2E25 /* SpeechContainerView.m */,
+				2740657922A9B6D400C431E6 /* InstructionsView.h */,
+				2740657A22A9B6D400C431E6 /* InstructionsView.m */,
+				27849F8722C6BE210009C68D /* EditChorePopupView.h */,
+				27849F8822C6BE210009C68D /* EditChorePopupView.m */,
+			);
+			name = Subviews;
+			sourceTree = "<group>";
+		};
+		27849FA122C6C7A80009C68D /* SVGs */ = {
+			isa = PBXGroup;
+			children = (
+				27849FA222C6C7B50009C68D /* icons8-edit.svg */,
+			);
+			name = SVGs;
+			sourceTree = "<group>";
+		};
 		27DF7AF31B22389500883F06 = {
 			isa = PBXGroup;
 			children = (
@@ -160,6 +186,7 @@
 		27DF7AFE1B22389500883F06 /* Choreganizer */ = {
 			isa = PBXGroup;
 			children = (
+				27849FA122C6C7A80009C68D /* SVGs */,
 				27DF7B031B22389500883F06 /* AppDelegate.h */,
 				27DF7B041B22389500883F06 /* AppDelegate.m */,
 				27DF7B061B22389500883F06 /* ViewController.h */,
@@ -172,12 +199,9 @@
 				27212F681E96C2FD0050053B /* ScheduledNotificationsListViewController.m */,
 				27A837211B4B28FF00F02B14 /* QuestionsViewController.h */,
 				27A837221B4B28FF00F02B14 /* QuestionsViewController.m */,
-				27448233210B9DCF00EC2E25 /* SpeechContainerView.h */,
-				27448234210B9DCF00EC2E25 /* SpeechContainerView.m */,
 				27B25A6E1B326A9100544F52 /* AddChoreViewController.h */,
 				27B25A6F1B326A9100544F52 /* AddChoreViewController.m */,
-				2740657922A9B6D400C431E6 /* InstructionsView.h */,
-				2740657A22A9B6D400C431E6 /* InstructionsView.m */,
+				27849F8A22C6BE360009C68D /* Subviews */,
 				2750A8E822A085E000E0B88F /* Controllers */,
 				2750A8E722A0801B00E0B88F /* Data Models */,
 				2750A8E622A0801100E0B88F /* Utils */,
@@ -298,6 +322,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27849FA322C6C7B50009C68D /* icons8-edit.svg in Resources */,
 				273B782C1E9C96D900E504F5 /* LaunchScreen.storyboard in Resources */,
 				27DF7B0B1B22389500883F06 /* Main.storyboard in Resources */,
 				27DF7B0D1B22389500883F06 /* Images.xcassets in Resources */,
@@ -335,6 +360,7 @@
 				27B25A731B3353C700544F52 /* PickerViewController.m in Sources */,
 				2750A8E522A07E7500E0B88F /* UIColor+CustomColors.m in Sources */,
 				27DF7B021B22389500883F06 /* main.m in Sources */,
+				27849F8922C6BE210009C68D /* EditChorePopupView.m in Sources */,
 				27448238210B9DEB00EC2E25 /* GlobalFunctions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

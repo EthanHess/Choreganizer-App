@@ -17,7 +17,7 @@
 #import "GlobalFunctions.h"
 #import "EditChorePopupView.h"
 
-@interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate>
+@interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate, EditChoreDelegate>
 
 typedef enum {
     Space,
@@ -28,6 +28,7 @@ typedef enum {
 @property (nonatomic, strong) SectionHeader *sectionHeader;
 @property (nonatomic, strong) UIToolbar *toolbar; 
 @property (nonatomic, strong) Day *day;
+@property (nonatomic, strong) EditChorePopupView *editChoreView;
 
 @property (nonatomic, assign) Scheme scheme;
 
@@ -50,8 +51,20 @@ typedef enum {
     }
     [self setUpToolbar];
     [self setUpTableView];
+    [self editChoreViewSetup];
+    
     //[self preferredStatusBarStyle];
     self.view.backgroundColor = [UIColor blackColor];
+}
+
+- (void)editChoreViewSetup {
+    if (self.editChoreView == nil) {
+        //TODO account for safe area y coord for new devices
+        self.editChoreView = [[EditChorePopupView alloc]initWithFrame:CGRectMake(50, 100, self.view.frame.size.width - 100, self.view.frame.size.height - 200)];
+        self.editChoreView.delegate = self;
+        self.editChoreView.hidden = YES;
+        [self.view addSubview:self.editChoreView];
+    }
 }
 
 - (BOOL)isIphoneX {
@@ -330,6 +343,11 @@ typedef enum {
     } else {
         
     }
+}
+
+//Delegate
+- (void)choreEditedWithChore:(Chore *)chore andNewText:(NSString *)newText andNewTitle:(NSString *)newTitle {
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

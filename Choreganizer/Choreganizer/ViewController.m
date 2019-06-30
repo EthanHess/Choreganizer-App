@@ -336,6 +336,7 @@ typedef enum {
         [GlobalFunctions presentChoiceAlertWithTitle:title andText:@"" fromVC:self andCompletion:^(BOOL correct) { //Correct in this case will just be chose yes, but we'll use the same utils method
             if (correct == YES) {
                 //Present edit view
+                [self handleShowHideEditView:NO];
             } else {
                 //Do nothing
             }
@@ -343,6 +344,14 @@ typedef enum {
     } else {
         
     }
+}
+
+- (void)handleShowHideEditView:(BOOL)hide {
+    if (self.editChoreView == nil) {
+        return;
+    }
+    self.editChoreView.hidden = NO;
+    //TODO animate
 }
 
 //Delegate

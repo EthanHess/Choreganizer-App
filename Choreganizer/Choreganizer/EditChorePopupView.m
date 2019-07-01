@@ -53,20 +53,38 @@
 - (void)updateChore:(Chore *)chore {
     self.chore = chore;
     //Set TF and TV here
+    if (self.textField != nil) {
+        self.textField.text = chore.title;
+    }
+    if (self.textView != nil) {
+        self.textView.text = chore.detail;
+    }
+}
+
+- (NSArray *)uiColors {
+    UIColor *tfColor = [UIColor colorWithRed:204.0f/255.0f green:207.0f/255.0f blue:238.0f/255.0f alpha:1.0];
+    UIColor *tvColor = [UIColor colorWithRed:198.0f/255.0f green:238.0f/255.0f blue:245.0f/255.0f alpha:1.0];
+    UIColor *dmColor = [UIColor colorWithRed:12.0f/255.0f green:145.0f/255.0f blue:168.0f/255.0f alpha:1.0];
+    UIColor *svColor = [UIColor colorWithRed:17.0f/255.0f green:114.0f/255.0f blue:231.0f/255.0f alpha:1.0];
+    return @[tfColor, tvColor, dmColor, svColor];
 }
 
 - (void)subviewConfig {
-    NSString *choreTitle = self.chore != nil ? self.chore.title : @"";
+    NSString *choreTitle = self.chore != nil ? self.chore.title : @""; //can remove?
     NSString *choreBody = self.chore != nil ? self.chore.detail : @"";
     if (self.textField == nil) {
         self.textField = [[UITextField alloc]initWithFrame:[self tfFrame]];
         self.textField.text = choreTitle;
+        self.textField.textColor = [UIColor blueColor];
+        self.textField.backgroundColor = [self uiColors][0];
         [self stylizeSubview:self.textField];
         [self addSubview:self.textField];
     }
     if (self.textView == nil) {
         self.textView = [[UITextView alloc]initWithFrame:[self tvFrame]];
         self.textView.text = choreBody;
+        self.textView.textColor = [UIColor blueColor];
+        self.textView.backgroundColor = [self uiColors][1];
         [self stylizeSubview:self.textView];
         [self addSubview:self.textView];
     }
@@ -74,6 +92,7 @@
         self.dismissButton = [[UIButton alloc]initWithFrame:[self dbFrame]];
         [self.dismissButton setTitle:@"Dismiss" forState:UIControlStateNormal];
         [self.dismissButton addTarget:self action:@selector(hideSelf) forControlEvents:UIControlEventTouchUpInside];
+        self.dismissButton.backgroundColor = [self uiColors][2];
         [self stylizeSubview:self.dismissButton];
         [self addSubview:self.dismissButton];
     }
@@ -81,13 +100,14 @@
         self.saveButton = [[UIButton alloc]initWithFrame:[self sbFrame]];
         [self.saveButton setTitle:@"Save" forState:UIControlStateNormal];
         [self.saveButton addTarget:self action:@selector(finished) forControlEvents:UIControlEventTouchUpInside];
+        self.saveButton.backgroundColor = [self uiColors][3];
         [self stylizeSubview:self.saveButton];
         [self addSubview:self.saveButton];
     }
 }
 
 - (void)stylizeSubview:(UIView *)theView {
-    theView.backgroundColor = [UIColor blueColor]; //TODO update for schemes
+    //theView.backgroundColor = [UIColor blueColor]; //TODO update for schemes
     theView.layer.borderColor = [[UIColor whiteColor]CGColor];
     theView.layer.borderWidth = 1;
     theView.layer.cornerRadius = 5;

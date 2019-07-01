@@ -337,6 +337,8 @@ typedef enum {
             if (correct == YES) {
                 //Present edit view
                 [self handleShowHideEditView:NO];
+                self.editChoreView.chore = chosenChore;
+                [self.editChoreView updateChore:chosenChore];
             } else {
                 //Do nothing
             }
@@ -352,6 +354,17 @@ typedef enum {
     }
     self.editChoreView.hidden = NO;
     //TODO animate
+    
+    //[self dimBackgroundWhenViewIsPopped:!hide];
+}
+
+- (void)dimBackgroundWhenViewIsPopped:(BOOL)dim {
+    for (UIView *theView in self.view.subviews) {
+        if (![theView isKindOfClass:[EditChorePopupView class]]) {
+            theView.alpha = dim == YES ? 0.7 : 1;
+            theView.userInteractionEnabled = dim == YES ? NO : YES;
+        }
+    }
 }
 
 //Delegate
@@ -431,6 +444,10 @@ typedef enum {
     [pickerVC updateWithChore:chore andDay:day];
     [self.navigationController presentViewController:pickerVC animated:YES completion:nil];
 }
+
+#pragma TField + TView delegates
+
+//TODO imp.
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

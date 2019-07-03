@@ -158,6 +158,7 @@
     self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self registerTableView:self.tableView];
     [self.view addSubview:self.tableView];
 }
@@ -185,8 +186,8 @@
     cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     
     cell.backgroundColor = [UIColor darkGrayColor];
-    cell.textLabel.textColor = [UIColor greenColor];
-    cell.detailTextLabel.textColor = [UIColor greenColor];
+    cell.textLabel.textColor = [UIColor whiteColor];
+    cell.detailTextLabel.textColor = [UIColor whiteColor];
     cell.textLabel.backgroundColor = [UIColor clearColor];
     cell.detailTextLabel.backgroundColor = [UIColor clearColor];
     cell.textLabel.numberOfLines = 0;
@@ -196,26 +197,26 @@
     CGFloat heightToAdd = [GlobalFunctions heightFromTextCount:(int)notif.alertBody.length];
     CGRect cellFrame = CGRectMake(0, 0, self.tableView.contentSize.width, 80 + heightToAdd);
     
-//    UIImageView *cellImageView = [[UIImageView alloc]initWithFrame:cellFrame];
-//    cellImageView.image = [UIImage imageNamed:@"NCBG"];
-//    [cell.contentView insertSubview:cellImageView atIndex:0];
-    
-    [self addTwoColorsToMakeGradient:[UIColor topGradientSpace] colorTwo:[UIColor bottomGradientSpace] andView:cell];
+    [self addTwoColorsToMakeGradient:[UIColor topGradientSpace] colorTwo:[UIColor bottomGradientSpace] andView:cell andHeightToAdd:heightToAdd];
     
     cell.textLabel.text = [self cutString:notif.alertBody];
     cell.detailTextLabel.text = [self stringFromDate:notif.fireDate];
     
+    cell.contentView.frame = UIEdgeInsetsInsetRect(cell.contentView.frame, UIEdgeInsetsMake(5, 7.5, 5, 7.5));
+    cell.contentView.layer.masksToBounds = YES;
+    [cell layoutIfNeeded];
+    
     return cell; 
 }
 
-- (void)addTwoColorsToMakeGradient:(UIColor *)colorOne colorTwo:(UIColor *)colorTwo andView:(UIView *)theView {
+- (void)addTwoColorsToMakeGradient:(UIColor *)colorOne colorTwo:(UIColor *)colorTwo andView:(UIView *)theView andHeightToAdd:(CGFloat)heightToAdd {
     
     CAGradientLayer *theGradient = [CAGradientLayer layer];
     theGradient.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
     
     if ([theView isKindOfClass:[UITableViewCell class]]) {
         CGFloat width = self.view.frame.size.width;
-        CGFloat height = 80;
+        CGFloat height = 80 + heightToAdd;
         theGradient.frame = CGRectMake(0, 0, width, height);
         [theView.layer insertSublayer:theGradient atIndex:0];
     } else {

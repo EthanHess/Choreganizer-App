@@ -105,12 +105,15 @@ typedef enum {
     
     self.navigationController.navigationBarHidden = YES;
     
-    self.tableView = [[UITableView alloc]initWithFrame:[self tableFrame]];
-    self.tableView.dataSource = self;
-    self.tableView.delegate = self;
-    self.tableView.panGestureRecognizer.cancelsTouchesInView = NO;
-    [self registerTableView:self.tableView];
-    [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+    if (self.tableView == nil) {
+        self.tableView = [[UITableView alloc]initWithFrame:[self tableFrame]];
+        self.tableView.dataSource = self;
+        self.tableView.delegate = self;
+        self.tableView.panGestureRecognizer.cancelsTouchesInView = NO;
+        [self registerTableView:self.tableView];
+        [self.tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        [self.view addSubview:self.tableView];
+    }
     
     switch (self.scheme) {
         case Space:
@@ -126,7 +129,6 @@ typedef enum {
             break;
     }
 
-    [self.view addSubview:self.tableView];
     [self.tableView setEditing:NO]; //Will need to do to move chores around
     
     [self refresh];

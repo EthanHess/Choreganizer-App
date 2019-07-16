@@ -19,6 +19,7 @@
 @interface QuestionsViewController () <InstructionsDelegate>
 
 @property (nonatomic, strong) UIImageView *qmImageView; //question mark
+@property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) UILabel *segLabel;
 
@@ -84,9 +85,12 @@
         frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     }
     //make property since they can change back and forth
-    UIImageView *imageView = [[UIImageView alloc]initWithFrame:frame];
-    imageView.image = [UIImage imageNamed:imageString];
-    [self.view insertSubview:imageView atIndex:0];
+    if (self.backgroundImageView == nil) {
+        self.backgroundImageView = [[UIImageView alloc]initWithFrame:frame];
+        [self.view insertSubview:self.backgroundImageView atIndex:0];
+    }
+    //self.backgroundImageView.image = nil;
+    self.backgroundImageView.image = [UIImage imageNamed:imageString];
 }
 
 //Hide, and when they click "?" this will animate

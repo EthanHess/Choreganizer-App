@@ -282,6 +282,7 @@ typedef enum {
     cell.detailTextLabel.font = [UIFont systemFontOfSize:18];
     
     cell.detailTextLabel.numberOfLines = 0;
+    //[self cellContentView:cell];
     
     UIColor *topColorSpace = [UIColor colorWithRed:14.0f/255.0f green:125.0f/255.0f blue:227.0f/255.0f alpha:1.0];
     UIColor *topColorColor = [UIColor colorWithRed:11.0f/255.0f green:241.0f/255.0f blue:223.0f/255.0f alpha:1.0];
@@ -304,6 +305,12 @@ typedef enum {
             break;
     }
     return cell;
+}
+
+//Will want to subclass for best effect
+- (void)cellContentView:(UITableViewCell *)cell {
+    cell.contentView.layer.cornerRadius = 5;
+    cell.contentView.layer.masksToBounds = YES; 
 }
 
 - (void)addImageToCell:(NSString *)imageName andCell:(UITableViewCell *)cell {

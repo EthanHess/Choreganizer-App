@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2703E4FA1B24C412005F82FE /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2703E4F81B24C412005F82FE /* Model.xcdatamodeld */; };
+		2707724722DD4EEE00AE0928 /* ReminderCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707724622DD4EEE00AE0928 /* ReminderCell.m */; };
+		2707724A22DD4F0200AE0928 /* ChoreTodoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2707724922DD4F0200AE0928 /* ChoreTodoCell.m */; };
 		27212F691E96C2FD0050053B /* ScheduledNotificationsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27212F681E96C2FD0050053B /* ScheduledNotificationsListViewController.m */; };
 		273B782C1E9C96D900E504F5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 273B782B1E9C96D900E504F5 /* LaunchScreen.storyboard */; };
 		2740657B22A9B6D400C431E6 /* InstructionsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2740657A22A9B6D400C431E6 /* InstructionsView.m */; };
@@ -45,6 +47,10 @@
 
 /* Begin PBXFileReference section */
 		2703E4F91B24C412005F82FE /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		2707724522DD4EEE00AE0928 /* ReminderCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReminderCell.h; sourceTree = "<group>"; };
+		2707724622DD4EEE00AE0928 /* ReminderCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReminderCell.m; sourceTree = "<group>"; };
+		2707724822DD4F0200AE0928 /* ChoreTodoCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChoreTodoCell.h; sourceTree = "<group>"; };
+		2707724922DD4F0200AE0928 /* ChoreTodoCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChoreTodoCell.m; sourceTree = "<group>"; };
 		27212F671E96C2FD0050053B /* ScheduledNotificationsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScheduledNotificationsListViewController.h; sourceTree = "<group>"; };
 		27212F681E96C2FD0050053B /* ScheduledNotificationsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScheduledNotificationsListViewController.m; sourceTree = "<group>"; };
 		273B782B1E9C96D900E504F5 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -109,6 +115,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2707724B22DD4F1900AE0928 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				2707724522DD4EEE00AE0928 /* ReminderCell.h */,
+				2707724622DD4EEE00AE0928 /* ReminderCell.m */,
+				2707724822DD4F0200AE0928 /* ChoreTodoCell.h */,
+				2707724922DD4F0200AE0928 /* ChoreTodoCell.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
 		2750A8E622A0801100E0B88F /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +218,7 @@
 				27A837221B4B28FF00F02B14 /* QuestionsViewController.m */,
 				27B25A6E1B326A9100544F52 /* AddChoreViewController.h */,
 				27B25A6F1B326A9100544F52 /* AddChoreViewController.m */,
+				2707724B22DD4F1900AE0928 /* Cells */,
 				27849F8A22C6BE360009C68D /* Subviews */,
 				2750A8E822A085E000E0B88F /* Controllers */,
 				2750A8E722A0801B00E0B88F /* Data Models */,
@@ -344,6 +362,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				27B259ED1B30A6CB00544F52 /* Day.m in Sources */,
+				2707724A22DD4F0200AE0928 /* ChoreTodoCell.m in Sources */,
 				27DF7B2D1B2244A300883F06 /* SectionHeader.m in Sources */,
 				27B259EA1B30A6CA00544F52 /* Chore.m in Sources */,
 				27B1274E1B225E0B007BACD1 /* Stack.m in Sources */,
@@ -362,6 +381,7 @@
 				27DF7B021B22389500883F06 /* main.m in Sources */,
 				27849F8922C6BE210009C68D /* EditChorePopupView.m in Sources */,
 				27448238210B9DEB00EC2E25 /* GlobalFunctions.m in Sources */,
+				2707724722DD4EEE00AE0928 /* ReminderCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

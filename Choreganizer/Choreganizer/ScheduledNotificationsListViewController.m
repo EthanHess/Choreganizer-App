@@ -9,6 +9,7 @@
 #import "ScheduledNotificationsListViewController.h"
 #import "UIColor+CustomColors.h"
 #import "GlobalFunctions.h"
+#import "ReminderCell.h"
 
 @import UserNotificationsUI; //For iOS 10 (TODO: Update)
 @import UserNotifications;
@@ -164,7 +165,7 @@
 }
 
 - (void)registerTableView:(UITableView *)tableView {
-    [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [tableView registerClass:[ReminderCell class] forCellReuseIdentifier:@"cell"];
 }
 
 //Table View Delegate + Datasource
@@ -181,30 +182,37 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
+    ReminderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    //cell = [[ReminderCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
     
-    cell.backgroundColor = [UIColor darkGrayColor];
-    cell.textLabel.textColor = [UIColor whiteColor];
-    cell.detailTextLabel.textColor = [UIColor whiteColor];
-    cell.textLabel.backgroundColor = [UIColor clearColor];
-    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-    cell.textLabel.numberOfLines = 0;
-    cell.imageView.image = [UIImage imageNamed:@"clockIcon"];
+//    cell.backgroundColor = [UIColor darkGrayColor];
+//    cell.textLabel.textColor = [UIColor whiteColor];
+//    cell.detailTextLabel.textColor = [UIColor whiteColor];
+//    cell.textLabel.backgroundColor = [UIColor clearColor];
+//    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
+//    cell.textLabel.numberOfLines = 0;
+//    cell.imageView.image = [UIImage imageNamed:@"clockIcon"];
     
     UILocalNotification *notif = [self notificationArray][indexPath.row];
     CGFloat heightToAdd = [GlobalFunctions heightFromTextCount:(int)notif.alertBody.length];
-    CGRect cellFrame = CGRectMake(0, 0, self.tableView.contentSize.width, 80 + heightToAdd);
+    
+    cell.heightToAdd = heightToAdd + 80;
+    
+    [cell viewSetup];
+    
+//    cell.contentView.layer.masksToBounds = YES;
+//    cell.contentView.layer.cornerRadius = 5;
     
     [self addTwoColorsToMakeGradient:[UIColor topGradientSpace] colorTwo:[UIColor bottomGradientSpace] andView:cell andHeightToAdd:heightToAdd];
     
-    cell.textLabel.text = [self cutString:notif.alertBody];
-    cell.detailTextLabel.text = [self stringFromDate:notif.fireDate];
+    NSString *topText = [self cutString:notif.alertBody];
+    NSString *bottomText = [self stringFromDate:notif.fireDate];
     
-    cell.contentView.frame = UIEdgeInsetsInsetRect(cell.contentView.frame, UIEdgeInsetsMake(5, 7.5, 5, 7.5));
-    cell.contentView.layer.masksToBounds = YES;
-    [cell layoutIfNeeded];
+    cell.topLabel.text = topText;
+    cell.bottomLabel.text = bottomText;
+    
+    [cell layoutIfNeeded]; //calls layout subviews (which shouldn't be called directly)
     
     return cell; 
 }
@@ -217,7 +225,7 @@
     if ([theView isKindOfClass:[UITableViewCell class]]) {
         CGFloat width = self.view.frame.size.width;
         CGFloat height = 80 + heightToAdd;
-        theGradient.frame = CGRectMake(0, 0, width, height);
+        theGradient.frame = CGRectMake(7.5, 5, width - 15, height - 10);
         [theView.layer insertSublayer:theGradient atIndex:0];
     } else {
         theGradient.frame = theView.bounds;

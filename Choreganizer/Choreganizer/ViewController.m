@@ -158,10 +158,10 @@ typedef enum {
     self.toolbar = [[UIToolbar alloc]initWithFrame:[self toolbarFrame]];
     switch (self.scheme) {
         case Space:
-            [self addTwoColorsToMakeGradient:[UIColor topGradientSpace] colorTwo:[UIColor bottomGradientSpace] andView:self.toolbar];
+            [self addTwoColorsToMakeGradient:[UIColor topGradientSpace] colorTwo:[UIColor bottomGradientSpace] andView:self.toolbar andAddedHeight:0];
             break;
         case Color:
-            [self addTwoColorsToMakeGradient:[UIColor topGradientColor] colorTwo:[UIColor bottomGradientColor] andView:self.toolbar];
+            [self addTwoColorsToMakeGradient:[UIColor topGradientColor] colorTwo:[UIColor bottomGradientColor] andView:self.toolbar andAddedHeight:0];
             break;
     }
     
@@ -230,25 +230,32 @@ typedef enum {
 - (void)configureGradient:(SectionHeader *)header {
     switch (self.scheme) {
         case Space:
-            [self addTwoColorsToMakeGradient:[UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0] colorTwo:[UIColor blackColor] andView:self.sectionHeader];
+            [self addTwoColorsToMakeGradient:[UIColor colorWithRed:3.0f/255.0f green:33.0f/255.0f blue:61.0f/255.0f alpha:1.0] colorTwo:[UIColor blackColor] andView:self.sectionHeader andAddedHeight:0];
             self.sectionHeader.addButton.backgroundColor = [UIColor topGradientColor];
             break;
         case Color:
-            [self addTwoColorsToMakeGradient:[UIColor colorWithRed:11.0f/255.0f green:241.0f/255.0f blue:223.0f/255.0f alpha:1.0] colorTwo:[UIColor colorWithRed:11.0f/255.0f green:67.0f/255.0f blue:241.0f/255.0f alpha:1.0] andView:self.sectionHeader];
+            [self addTwoColorsToMakeGradient:[UIColor colorWithRed:11.0f/255.0f green:241.0f/255.0f blue:223.0f/255.0f alpha:1.0] colorTwo:[UIColor colorWithRed:11.0f/255.0f green:67.0f/255.0f blue:241.0f/255.0f alpha:1.0] andView:self.sectionHeader andAddedHeight:0];
             self.sectionHeader.addButton.backgroundColor = [UIColor colorWithRed:12.0f/255.0f green:57.0f/255.0f blue:130.0f/255.0f alpha:1.0];
             break;
     }
 }
 
 //Add util function, eventually move out of VC
-- (void)addTwoColorsToMakeGradient:(UIColor *)colorOne colorTwo:(UIColor *)colorTwo andView:(UIView *)theView {
+- (void)addTwoColorsToMakeGradient:(UIColor *)colorOne colorTwo:(UIColor *)colorTwo andView:(UIView *)theView andAddedHeight:(CGFloat)addedHeight {
     
     CAGradientLayer *theGradient = [CAGradientLayer layer];
     theGradient.colors = [NSArray arrayWithObjects:(id)colorOne.CGColor, (id)colorTwo.CGColor, nil];
     
+    for (CALayer *layer in [theView.layer sublayers]) {
+        if ([layer isKindOfClass:[CAGradientLayer class]]) {
+            [layer removeFromSuperlayer];
+            break; //will crash if mutated while enumerating
+        }
+    }
+    
     if ([theView isKindOfClass:[UITableViewCell class]]) {
         CGFloat width = self.view.frame.size.width;
-        CGFloat height = 160;
+        CGFloat height = 160 + addedHeight;
         theGradient.frame = CGRectMake(7.5, 5, width - 15, height - 10);
         theGradient.cornerRadius = 5;
         [theView.layer insertSublayer:theGradient atIndex:0];
@@ -261,8 +268,14 @@ typedef enum {
 //TV 
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 160; //TODO size for text
+    Day *day = [[ChoreController sharedInstance].days objectAtIndex:indexPath.section];
+    Chore *chore = [day.chores objectAtIndex:indexPath.row];
+    CGFloat heightToAddOne = [GlobalFunctions heightFromTextCount:(int)chore.title.length];
+    CGFloat heightToAddTwo = [GlobalFunctions heightFromTextCount:(int)chore.detail.length];
+    CGFloat fullHeight = heightToAddOne + heightToAddTwo;
+    return 160 + fullHeight; //TODO size for text
 }
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -270,8 +283,12 @@ typedef enum {
     
     Day *day = [[ChoreController sharedInstance].days objectAtIndex:indexPath.section];
     Chore *chore = [day.chores objectAtIndex:indexPath.row];
+    
+    CGFloat heightToAddOne = [GlobalFunctions heightFromTextCount:(int)chore.title.length];
+    CGFloat heightToAddTwo = [GlobalFunctions heightFromTextCount:(int)chore.detail.length];
+    CGFloat fullHeight = heightToAddOne + heightToAddTwo;
 
-    cell.heightToAdd = 160; //TODO update with global functions for text count
+    cell.heightToAdd = 160 + fullHeight; //TODO update with global functions for text count
     [cell cellSetup];
     
     cell.headerLabel.text = chore.title;
@@ -284,13 +301,13 @@ typedef enum {
     
     switch (self.scheme) {
         case Space:
-            [self addTwoColorsToMakeGradient:topColorSpace colorTwo:[UIColor blackColor] andView:cell];
+            [self addTwoColorsToMakeGradient:topColorSpace colorTwo:[UIColor blackColor] andView:cell andAddedHeight:fullHeight];
             cell.mainImageView.image = [UIImage imageNamed:@"planetCH"];
             cell.headerLabel.textColor = [UIColor cyanColor];
             cell.bodyLabel.textColor = [UIColor whiteColor];
             break;
         case Color:
-            [self addTwoColorsToMakeGradient:topColorColor colorTwo:[UIColor colorWithRed:11.0f/255.0f green:67.0f/255.0f blue:241.0f/255.0f alpha:1.0] andView:cell];
+            [self addTwoColorsToMakeGradient:topColorColor colorTwo:[UIColor colorWithRed:11.0f/255.0f green:67.0f/255.0f blue:241.0f/255.0f alpha:1.0] andView:cell andAddedHeight:fullHeight];
             cell.mainImageView.image = [UIImage imageNamed:@"photosCH"];
             cell.headerLabel.textColor = [UIColor whiteColor];
             cell.bodyLabel.textColor = [UIColor whiteColor];

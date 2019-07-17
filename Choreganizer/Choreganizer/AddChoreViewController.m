@@ -43,7 +43,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.microMode = YES;
+    self.microMode = NO;
     
     //TODO Should reconfigure with stack views
     
@@ -122,6 +122,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
 - (void)stringDetermined:(NSString *)speechText {
     [[SpeechController sharedInstance]endAudio];
     
+    //Strong self >> Weak self?
     [GlobalFunctions presentChoiceAlertWithTitle:speechText andText:@"Is this what you meant to say?" fromVC:self andCompletion:^(BOOL correct) {
         if (correct == YES) {
             self.textView.text = @"";
@@ -258,6 +259,8 @@ static NSString *const microWhite = @"icons8whiteMicro";
     [self addContainerViewWithImages];
 }
 
+//TODO add button to toggle container
+
 - (void)addContainerViewWithImages {
     
     CGFloat yCoord = self.view.frame.size.height / 1.5;
@@ -280,7 +283,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
     self.microImageView.userInteractionEnabled = YES;
     self.microImageView.clipsToBounds = NO;
     self.microImageView.contentMode = UIViewContentModeScaleToFill;
-    self.microImageView.image = [UIImage imageNamed:microFilled]; //default is filled
+    self.microImageView.image = [UIImage imageNamed:microWhite]; //default is filled
     
     UITapGestureRecognizer *microTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleMicroTap)];
     [self.microImageView addGestureRecognizer:microTap];
@@ -292,7 +295,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
     self.pencilImageView.userInteractionEnabled = YES;
     self.pencilImageView.clipsToBounds = NO;
     self.pencilImageView.contentMode = UIViewContentModeScaleToFill;
-    self.pencilImageView.image = [UIImage imageNamed:pencilWhite]; //default is filled
+    self.pencilImageView.image = [UIImage imageNamed:pencilFilled]; //default is filled
     
     UITapGestureRecognizer *pencilTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handlePencilTap)];
     [self.pencilImageView addGestureRecognizer:pencilTap];

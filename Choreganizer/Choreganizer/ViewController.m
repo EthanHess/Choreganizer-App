@@ -16,6 +16,7 @@
 #import "UIColor+CustomColors.h"
 #import "GlobalFunctions.h"
 #import "EditChorePopupView.h"
+#import "ChoreTodoCell.h"
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate, EditChoreDelegate>
 
@@ -198,7 +199,7 @@ typedef enum {
 
 
 - (void)registerTableView:(UITableView *)tableView {
-    [tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    [tableView registerClass:[ChoreTodoCell class] forCellReuseIdentifier:@"cell"];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -248,7 +249,8 @@ typedef enum {
     if ([theView isKindOfClass:[UITableViewCell class]]) {
         CGFloat width = self.view.frame.size.width;
         CGFloat height = 160;
-        theGradient.frame = CGRectMake(0, 0, width, height);
+        theGradient.frame = CGRectMake(7.5, 5, width - 15, height - 10);
+        theGradient.cornerRadius = 5;
         [theView.layer insertSublayer:theGradient atIndex:0];
     } else {
         theGradient.frame = theView.bounds;
@@ -264,46 +266,37 @@ typedef enum {
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    //[tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"cell"];
+    ChoreTodoCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
     
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-
     Day *day = [[ChoreController sharedInstance].days objectAtIndex:indexPath.section];
     Chore *chore = [day.chores objectAtIndex:indexPath.row];
+
+    cell.heightToAdd = 160; //TODO update with global functions for text count
+    [cell cellSetup];
     
-    cell.textLabel.text = chore.title;
-    cell.textLabel.font = [UIFont fontWithName:arialHebrew size:22];
-    cell.textLabel.font = [UIFont systemFontOfSize:22];
-    
-    cell.textLabel.numberOfLines = 0;
-    cell.detailTextLabel.text = chore.detail;
-    cell.detailTextLabel.font = [UIFont fontWithName:arialHebrew size:18];
-    cell.detailTextLabel.font = [UIFont systemFontOfSize:18];
-    
-    cell.detailTextLabel.numberOfLines = 0;
-    //[self cellContentView:cell];
+    cell.headerLabel.text = chore.title;
+    cell.bodyLabel.text = chore.detail;
     
     UIColor *topColorSpace = [UIColor colorWithRed:14.0f/255.0f green:125.0f/255.0f blue:227.0f/255.0f alpha:1.0];
     UIColor *topColorColor = [UIColor colorWithRed:11.0f/255.0f green:241.0f/255.0f blue:223.0f/255.0f alpha:1.0];
     
     [self configureEditImageForCell:cell];
     
-    //[UIColor colorWithRed:2.0f/255.0f green:34.0f/255.0f blue:20.0f/255.0f alpha:1.0]
     switch (self.scheme) {
         case Space:
             [self addTwoColorsToMakeGradient:topColorSpace colorTwo:[UIColor blackColor] andView:cell];
-            cell.imageView.image = [UIImage imageNamed:@"planetCH"];
-            cell.textLabel.textColor = [UIColor cyanColor];
-            cell.detailTextLabel.textColor = [UIColor whiteColor];
+            cell.mainImageView.image = [UIImage imageNamed:@"planetCH"];
+            cell.headerLabel.textColor = [UIColor cyanColor];
+            cell.bodyLabel.textColor = [UIColor whiteColor];
             break;
         case Color:
             [self addTwoColorsToMakeGradient:topColorColor colorTwo:[UIColor colorWithRed:11.0f/255.0f green:67.0f/255.0f blue:241.0f/255.0f alpha:1.0] andView:cell];
-            cell.imageView.image = [UIImage imageNamed:@"photosCH"];
-            cell.textLabel.textColor = [UIColor whiteColor];
-            cell.detailTextLabel.textColor = [UIColor whiteColor];
+            cell.mainImageView.image = [UIImage imageNamed:@"photosCH"];
+            cell.headerLabel.textColor = [UIColor whiteColor];
+            cell.bodyLabel.textColor = [UIColor whiteColor];
             break;
     }
+    
     return cell;
 }
 
@@ -320,15 +313,12 @@ typedef enum {
     [cell.contentView insertSubview:cellImageView atIndex:0];
 }
 
-- (void)configureEditImageForCell:(UITableViewCell *)theCell {
-    UIImageView *editImageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, theCell.contentView.frame.size.width - 60, 50, 50)];
-    editImageView.layer.cornerRadius = 25;
-    editImageView.image = [UIImage imageNamed:@"blueEdit"];
-    editImageView.userInteractionEnabled = YES;
+- (void)configureEditImageForCell:(ChoreTodoCell *)theCell {
+    theCell.editImageView.image = [UIImage imageNamed:@"blueEdit"];
+    theCell.editImageView.userInteractionEnabled = YES;
     //addShadow?
     UITapGestureRecognizer *theTap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleEditChore:)];
-    [editImageView addGestureRecognizer:theTap];
-    theCell.accessoryView = editImageView;
+    [theCell.editImageView addGestureRecognizer:theTap];
 }
 
 - (void)handleEditChore:(id)sender {

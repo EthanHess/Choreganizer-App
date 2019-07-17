@@ -23,6 +23,9 @@
 }
 
 - (void)viewSetup {
+    
+//    [self.layer setRasterizationScale:[[UIScreen mainScreen] scale]];
+    
     //For main labels
     CGFloat theHeight = self.heightToAdd / 2;
     //will be same size in top left corner
@@ -50,13 +53,13 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    self.contentView.frame = UIEdgeInsetsInsetRect(self.contentView.frame, UIEdgeInsetsMake(5, 7.5, 5, 7.5));
+    self.contentView.layer.masksToBounds = YES;
     self.contentView.layer.cornerRadius = 5;
     self.contentView.layer.borderColor = [[UIColor whiteColor]CGColor];
     self.contentView.layer.borderWidth = 1;
+    self.contentView.clipsToBounds = YES;
     self.backgroundColor = [UIColor clearColor];
-    
-    self.contentView.frame = UIEdgeInsetsInsetRect(self.contentView.frame, UIEdgeInsetsMake(5, 7.5, 5, 7.5));
-    self.contentView.layer.masksToBounds = YES;
 }
 
 @end

@@ -183,26 +183,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     ReminderCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    
-    //cell = [[ReminderCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
-    
-//    cell.backgroundColor = [UIColor darkGrayColor];
-//    cell.textLabel.textColor = [UIColor whiteColor];
-//    cell.detailTextLabel.textColor = [UIColor whiteColor];
-//    cell.textLabel.backgroundColor = [UIColor clearColor];
-//    cell.detailTextLabel.backgroundColor = [UIColor clearColor];
-//    cell.textLabel.numberOfLines = 0;
-//    cell.imageView.image = [UIImage imageNamed:@"clockIcon"];
-    
+
     UILocalNotification *notif = [self notificationArray][indexPath.row];
     CGFloat heightToAdd = [GlobalFunctions heightFromTextCount:(int)notif.alertBody.length];
     
     cell.heightToAdd = heightToAdd + 80;
     
     [cell viewSetup];
-    
-//    cell.contentView.layer.masksToBounds = YES;
-//    cell.contentView.layer.cornerRadius = 5;
     
     [self addTwoColorsToMakeGradient:[UIColor topGradientSpace] colorTwo:[UIColor bottomGradientSpace] andView:cell andHeightToAdd:heightToAdd];
     
@@ -226,9 +213,11 @@
         CGFloat width = self.view.frame.size.width;
         CGFloat height = 80 + heightToAdd;
         theGradient.frame = CGRectMake(7.5, 5, width - 15, height - 10);
+        theGradient.cornerRadius = 5;
         [theView.layer insertSublayer:theGradient atIndex:0];
     } else {
         theGradient.frame = theView.bounds;
+        theGradient.cornerRadius = 5; 
         [theView.layer insertSublayer:theGradient atIndex:0];
     }
 }

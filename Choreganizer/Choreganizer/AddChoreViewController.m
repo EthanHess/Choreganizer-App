@@ -31,6 +31,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
 @property (nonatomic, strong) UIView *containerView; //for write/speech choice
 @property (nonatomic, strong) UIImageView *microImageView;
 @property (nonatomic, strong) UIImageView *pencilImageView;
+@property (nonatomic, strong) UIButton *textOptionsButton;
 
 @property (nonatomic, strong) SpeechContainerView *speechContainer;
 
@@ -147,7 +148,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
     if (IS_IPHONE_4) {
         self.labelFrame = CGRectMake(0, 60, self.view.frame.size.width, 100);
     } else {
-        self.labelFrame = CGRectMake(0, self.view.frame.size.height -100, self.view.frame.size.width, 100);
+        self.labelFrame = CGRectMake(0, self.view.frame.size.height - 100, self.view.frame.size.width, 100);
     }
     
     self.titleLabel = [[UILabel alloc]initWithFrame:self.labelFrame];
@@ -272,6 +273,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
     self.containerView.layer.borderWidth = 1;
     self.containerView.layer.masksToBounds = YES;
     self.containerView.userInteractionEnabled = YES;
+    self.containerView.hidden = YES; 
     [self addImageViewsToContainer];
     [self.view addSubview:self.containerView];
     [self addShadowToView:self.containerView];
@@ -302,6 +304,28 @@ static NSString *const microWhite = @"icons8whiteMicro";
     [self.containerView addSubview:self.pencilImageView];
     
     [self indicator];
+    [self textOptionsToggleButton];
+}
+
+- (void)textOptionsToggleButton {
+    if (self.textOptionsButton == nil) {
+        self.textOptionsButton = [[UIButton alloc]initWithFrame:CGRectMake(50, self.view.frame.size.height - 140, self.view.frame.size.width - 100, 30)];
+        [self.textOptionsButton addTarget:self action:@selector(textOptionsHandler) forControlEvents:UIControlEventTouchUpInside];
+        [self.textOptionsButton setTitle:@"Input options" forState:UIControlStateNormal];
+        [self.textOptionsButton setBackgroundColor:[UIColor colorWithRed:15.0f/255.0f green:114.0f/255.0f blue:242.0f/255.0f alpha:1.0]]; //TODO custom
+        self.textOptionsButton.layer.cornerRadius = 5;
+        [self.textOptionsButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.view addSubview:self.textOptionsButton];
+    }
+}
+
+- (void)textOptionsHandler {
+    if (self.containerView.hidden == YES) {
+        self.containerView.hidden = NO;
+        //TODO config
+    } else {
+        self.containerView.hidden = YES;
+    }
 }
 
 - (void)indicator {

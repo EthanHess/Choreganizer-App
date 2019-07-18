@@ -32,6 +32,8 @@ static NSString *const microWhite = @"icons8whiteMicro";
 @property (nonatomic, strong) UIImageView *microImageView;
 @property (nonatomic, strong) UIImageView *pencilImageView;
 @property (nonatomic, strong) UIButton *textOptionsButton;
+@property (nonatomic, strong) UIButton *containerDismissButton; //CV subviews
+@property (nonatomic, strong) UILabel *inputTypeLabel;
 
 @property (nonatomic, strong) SpeechContainerView *speechContainer;
 
@@ -281,7 +283,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
 
 - (void)addImageViewsToContainer {
     
-    self.microImageView = [[UIImageView alloc]initWithFrame:CGRectMake(20, 25, 100, 100)];
+    self.microImageView = [[UIImageView alloc]initWithFrame:CGRectMake(40, 35, 80, 80)];
     self.microImageView.userInteractionEnabled = YES;
     self.microImageView.clipsToBounds = NO;
     self.microImageView.contentMode = UIViewContentModeScaleToFill;
@@ -293,7 +295,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
     
     CGFloat secondX = self.containerView.frame.size.width - 120;
     
-    self.pencilImageView = [[UIImageView alloc]initWithFrame:CGRectMake(secondX, 25, 100, 100)];
+    self.pencilImageView = [[UIImageView alloc]initWithFrame:CGRectMake(secondX, 35, 80, 80)];
     self.pencilImageView.userInteractionEnabled = YES;
     self.pencilImageView.clipsToBounds = NO;
     self.pencilImageView.contentMode = UIViewContentModeScaleToFill;
@@ -303,8 +305,26 @@ static NSString *const microWhite = @"icons8whiteMicro";
     [self.pencilImageView addGestureRecognizer:pencilTap];
     [self.containerView addSubview:self.pencilImageView];
     
+    [self addOtherSubviewsToContainerView];
     [self indicator];
     [self textOptionsToggleButton];
+}
+
+- (void)addOtherSubviewsToContainerView {
+    self.containerDismissButton = [[UIButton alloc]initWithFrame:CGRectMake(self.containerView.frame.size.width - 35, 10, 25, 25)] ;
+    [self.containerDismissButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self.containerDismissButton setTitle:@"X" forState:UIControlStateNormal];
+    self.containerDismissButton.layer.borderColor = [[UIColor whiteColor]CGColor];
+    self.containerDismissButton.layer.borderWidth = 1;
+    self.containerDismissButton.layer.cornerRadius = 12.5;
+    [self.containerDismissButton addTarget:self action:@selector(textOptionsHandler) forControlEvents:UIControlEventTouchUpInside];
+    [self.containerView addSubview:self.containerDismissButton];
+    
+    self.inputTypeLabel = [[UILabel alloc]initWithFrame:CGRectMake(self.containerView.frame.size.width / 3, 5, self.containerView.frame.size.width / 3, 20)];
+    self.inputTypeLabel.text = self.microMode == YES ? @"Microphone" : @"Manual";
+    self.inputTypeLabel.textColor = [UIColor whiteColor];
+    self.inputTypeLabel.textAlignment = NSTextAlignmentCenter;
+    [self.containerView addSubview:self.inputTypeLabel];
 }
 
 - (void)textOptionsToggleButton {
@@ -346,21 +366,37 @@ static NSString *const microWhite = @"icons8whiteMicro";
 - (void)handleMicroTap {
     if (self.microMode == YES) {
         //Do nothing
+        
     } else {
+        self.inputTypeLabel.text = @"Microphone";
         self.microImageView.image = [UIImage imageNamed:microFilled];
         self.pencilImageView.image = [UIImage imageNamed:pencilWhite];
         self.microMode = YES;
+        [self inputTypeAnimationWrapper]; 
     }
 }
 
 - (void)handlePencilTap {
     if (self.microMode == YES) {
+        self.inputTypeLabel.text = @"Manual";
         self.microImageView.image = [UIImage imageNamed:microWhite];
         self.pencilImageView.image = [UIImage imageNamed:pencilFilled];
         self.microMode = NO;
+        [self inputTypeAnimationWrapper];
     } else {
         //Do nothing
     }
+}
+
+- (void)inputTypeAnimationWrapper {
+    NSString *animationKey = @"transform";
+    CABasicAnimation *pulsate = [CABasicAnimation animationWithKeyPath:animationKey];
+    pulsate.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)];
+    pulsate.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.5, 1.5, 1.5)];
+    [pulsate setDuration:0.5];
+    [pulsate setAutoreverses:YES];
+    [pulsate setRepeatCount:1];
+    [self.inputTypeLabel.layer addAnimation:pulsate forKey:animationKey];
 }
 
 - (void)updateWithDay:(Day *)day {

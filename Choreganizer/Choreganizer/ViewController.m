@@ -385,7 +385,8 @@ typedef enum {
 
 //Delegate
 - (void)choreEditedWithChore:(Chore *)chore andNewText:(NSString *)newText andNewTitle:(NSString *)newTitle {
-    
+    [[ChoreController sharedInstance]updateChore:chore newTitle:newText andNewText:newTitle];
+    [self refresh];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

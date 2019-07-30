@@ -93,7 +93,7 @@
         return;
     }
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [self typwriterText:@"Welcome to Choreganizer, this is some dummy text to test the typewriter effect" delayBetweenChars:0.025];
+        [self typwriterText:@"Welcome to Choreganizer, add to do items and send yourself reminders, via microphone or text" delayBetweenChars:0.015];
     });
 }
 

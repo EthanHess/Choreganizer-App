@@ -19,6 +19,7 @@
 
 + (ChoreController *)sharedInstance;
 
+- (void)updateChore:(Chore *)chore newTitle:(NSString *)newTitle andNewText:(NSString *)newText; 
 - (void)addChoreWithTitle:(NSString *)title andDescription:(NSString *)detail toDay:(Day *)day;
 - (void)addDayWithName:(NSString *)name;
 - (void)removeChore:(Chore *)chore;

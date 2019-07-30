@@ -22,6 +22,24 @@
     return sharedInstance;
 }
 
+- (void)updateChore:(Chore *)chore newTitle:(NSString *)newTitle andNewText:(NSString *)newText {
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Chore" inManagedObjectContext:[Stack sharedInstance].managedObjectContext]];
+    
+    //Timestamp could be better? 
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title == %@", chore.title];
+    [request setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSArray *results = [[Stack sharedInstance].managedObjectContext executeFetchRequest:request error:&error];
+    
+    Chore *toMutate = [results objectAtIndex:0];
+    toMutate.title = newTitle;
+    toMutate.detail = newText;
+    
+    [self synchronize];
+}
+
 - (void)addChoreWithTitle:(NSString *)title andDescription:(NSString *)detail toDay:(Day *)day {
     Chore *chore = [NSEntityDescription insertNewObjectForEntityForName:@"Chore" inManagedObjectContext:[Stack sharedInstance].managedObjectContext];
     chore.title = title;

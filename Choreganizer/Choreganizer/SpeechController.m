@@ -18,6 +18,8 @@ static NSString *const locale = @"en-UR";
 @property (nonatomic, strong) SFSpeechAudioBufferRecognitionRequest *theRequest;
 @property (nonatomic, strong) SFSpeechRecognitionTask *theTask;
 @property (nonatomic, strong) AVAudioEngine *theEngine;
+@property (nonatomic, strong) NSString *stringSoFar;
+@property (nonatomic, assign) BOOL hasPassedFive;
 
 @end
 
@@ -56,8 +58,17 @@ static NSString *const locale = @"en-UR";
     [self.theEngine prepare];
 }
 
+//isFinal boolean is taking forever, so we'll do this temporary workaround
+
+- (void)setHasPassedFiveSeconsBoolean {
+    self.hasPassedFive = YES;
+}
+
 - (void)startAudio {
     [self setup];
+    self.hasPassedFive = NO;
+    self.stringSoFar = @"";
+    [self performSelector:@selector(setHasPassedFiveSeconsBoolean) withObject:nil afterDelay:5];
     
     if (self.theTask != nil || self.speechRec.isAvailable == NO) {
         //Present alert and return
@@ -71,12 +82,19 @@ static NSString *const locale = @"en-UR";
                 [self.delegate handleError:error];
                 return;
             }
-            if ([result.bestTranscription formattedString] && self.delegate) {
+            NSString *resultString = [result.bestTranscription formattedString];
+            self.stringSoFar = resultString;
+            if (resultString && self.delegate) {
                 NSLog(result.isFinal ? @"FN YES" : @"FN NO");
                 if (result.isFinal) {
-                    [self.delegate stringDetermined:[result.bestTranscription formattedString]];
+                    [self.delegate stringDetermined:resultString];
                 } else {
-                    NSLog(@"STRING SEGMENT %@", [result.bestTranscription formattedString]);
+                    NSLog(@"STRING SEGMENT %@", resultString);
+                    if (self.hasPassedFive == YES) {
+                        if ([self.stringSoFar isEqualToString:resultString]) {
+                            [self.delegate stringDetermined:resultString];
+                        }
+                    }
                 }
             }
         }];

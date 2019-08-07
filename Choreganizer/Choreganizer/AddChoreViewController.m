@@ -142,7 +142,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     [[SpeechController sharedInstance]startAudio];
-    self.chosenString = @"Ethan";
+    self.chosenString = @"";
 }
 
 - (void)setUpTitleLabel {
@@ -178,7 +178,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
     } else if ([self.schemeString isEqualToString:@"Color"]) {
         
         UIImageView *imageView = [[UIImageView alloc]initWithFrame:self.view.bounds];
-        imageView.image = [UIImage imageNamed:@"ColorBackground"];
+        imageView.image = [UIImage imageNamed:@"sunchore"];
         [self.view addSubview:imageView];
         self.labelColor = [UIColor whiteColor];
     }
@@ -306,7 +306,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
     [self.containerView addSubview:self.pencilImageView];
     
     [self addOtherSubviewsToContainerView];
-    [self indicator];
+//    [self indicator];
     [self textOptionsToggleButton];
 }
 
@@ -368,6 +368,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
         //Do nothing
         
     } else {
+        [self indicator]; 
         self.inputTypeLabel.text = @"Microphone";
         self.microImageView.image = [UIImage imageNamed:microFilled];
         self.pencilImageView.image = [UIImage imageNamed:pencilWhite];

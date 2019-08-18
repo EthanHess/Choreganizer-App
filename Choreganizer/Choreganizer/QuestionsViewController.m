@@ -22,6 +22,7 @@
 @property (nonatomic, strong) UIImageView *backgroundImageView;
 @property (nonatomic, strong) UILabel *questionLabel;
 @property (nonatomic, strong) UILabel *segLabel;
+@property (nonatomic, strong) UILabel *creditsLabel;
 
 //@property (nonatomic, strong) UIToolbar *toolbar;
 @property (nonatomic, strong) UISegmentedControl *segController;
@@ -137,8 +138,21 @@
 
 - (void)setUpLabel {
     
+    UIColor *shadowColor = [UIColor colorWithRed:48.0f/255.0f green:181.0f/255.0f blue:245.0f/255.0f alpha:1.0];
+    if (self.creditsLabel == nil) {
+        self.creditsLabel = [[UILabel alloc]initWithFrame:CGRectMake(30, 650, self.view.frame.size.width - 60, 100)];
+        self.creditsLabel.textAlignment = NSTextAlignmentCenter;
+        self.creditsLabel.textColor = [UIColor whiteColor]; //TODO custom
+        self.creditsLabel.text = @"Icons and images used around the app are from icons8.com and Pixabay";
+        self.creditsLabel.numberOfLines = 0;
+        self.creditsLabel.backgroundColor = [UIColor blackColor];
+        [self addShadowToView:self.creditsLabel andColor:shadowColor];
+        self.creditsLabel.layer.cornerRadius = 20;
+        self.creditsLabel.layer.masksToBounds = YES;
+        [self.scrollView addSubview:self.creditsLabel];
+    }
+    
     if (self.qmImageView == nil) { //TODO other properties
-        UIColor *shadowColor = [UIColor colorWithRed:48.0f/255.0f green:181.0f/255.0f blue:245.0f/255.0f alpha:1.0];
         self.qmImageView = [[UIImageView alloc]initWithFrame:CGRectMake(self.view.frame.size.width / 3, 150, self.view.frame.size.width / 3, self.view.frame.size.width / 3)];
         self.qmImageView.image = [UIImage imageNamed:@"QMCH"];
         self.qmImageView.layer.cornerRadius = self.view.frame.size.width / 6;

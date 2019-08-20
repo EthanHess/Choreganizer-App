@@ -15,12 +15,17 @@
 #import "SpeechController.h"
 #import "GlobalFunctions.h"
 
+#import <Speech/Speech.h>
+#import <AVKit/AVKit.h>
+
 #define IS_IPHONE_4 ([UIScreen mainScreen].bounds.size.height == 480.0)
 
 static NSString *const pencilFilled = @"icons8filledPencil";
 static NSString *const microFilled = @"icons8filledMicro";
 static NSString *const pencilWhite = @"icons8whitePencil";
 static NSString *const microWhite = @"icons8whiteMicro";
+
+static NSString *const locale = @"en-UR";
 
 @interface AddChoreViewController () <UITextFieldDelegate, UITextViewDelegate, SpeechDelegate>
 
@@ -38,6 +43,15 @@ static NSString *const microWhite = @"icons8whiteMicro";
 @property (nonatomic, strong) SpeechContainerView *speechContainer;
 
 @property (nonatomic) BOOL microMode;
+
+//For speech
+@property (nonatomic, strong) SFSpeechRecognizer *speechRec;
+@property (nonatomic, strong) SFSpeechAudioBufferRecognitionRequest *theRequest;
+@property (nonatomic, strong) SFSpeechRecognitionTask *theTask;
+@property (nonatomic, strong) AVAudioEngine *theEngine;
+@property (nonatomic, strong) NSString *stringSoFar;
+@property (nonatomic, assign) BOOL hasPassedFive;
+@property (nonatomic, assign) BOOL duplicateStringOne;
 
 @end
 
@@ -108,8 +122,8 @@ static NSString *const microWhite = @"icons8whiteMicro";
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 
-    [SpeechController sharedInstance].delegate = self;
     //[self kvo];
+    [self speechFunctionalitySetup];
 }
 
 - (void)kvo {
@@ -123,7 +137,6 @@ static NSString *const microWhite = @"icons8whiteMicro";
 #pragma Speech Del.
 
 - (void)stringDetermined:(NSString *)speechText {
-    [[SpeechController sharedInstance]endAudio];
     
     //Strong self >> Weak self?
     [GlobalFunctions presentChoiceAlertWithTitle:speechText andText:@"Is this what you meant to say?" fromVC:self andCompletion:^(BOOL correct) {
@@ -141,7 +154,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
 }
 
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    [[SpeechController sharedInstance]startAudio];
+    //[[SpeechController sharedInstance]startAudio];
     self.chosenString = @"";
 }
 
@@ -306,7 +319,6 @@ static NSString *const microWhite = @"icons8whiteMicro";
     [self.containerView addSubview:self.pencilImageView];
     
     [self addOtherSubviewsToContainerView];
-//    [self indicator];
     [self textOptionsToggleButton];
 }
 
@@ -373,6 +385,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
         self.microImageView.image = [UIImage imageNamed:microFilled];
         self.pencilImageView.image = [UIImage imageNamed:pencilWhite];
         self.microMode = YES;
+        [self startRecording];
         [self inputTypeAnimationWrapper]; 
     }
 }
@@ -383,6 +396,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
         self.microImageView.image = [UIImage imageNamed:microWhite];
         self.pencilImageView.image = [UIImage imageNamed:pencilFilled];
         self.microMode = NO;
+        [self endRecording];
         [self inputTypeAnimationWrapper];
     } else {
         //Do nothing
@@ -455,16 +469,95 @@ static NSString *const microWhite = @"icons8whiteMicro";
     }
 }
 
+#pragma Speech
+
+- (void)speechFunctionalitySetup {
+    self.theEngine = [[AVAudioEngine alloc] init];
+    self.speechRec = [[SFSpeechRecognizer alloc] initWithLocale:[NSLocale localeWithLocaleIdentifier:locale]];
+    self.theRequest = [[SFSpeechAudioBufferRecognitionRequest alloc] init];
+    self.theRequest.shouldReportPartialResults = YES;
+    
+    AVAudioInputNode *node =  [self.theEngine inputNode];
+    AVAudioFormat *format = [node outputFormatForBus:0];
+    [node installTapOnBus:0 bufferSize:1024 format:format block:^(AVAudioPCMBuffer * _Nonnull buffer, AVAudioTime * _Nonnull when) {
+        [self.theRequest appendAudioPCMBuffer:buffer];
+    }];
+    
+    [self.theEngine prepare];
+}
+
+- (void)startRecording {
+    self.duplicateStringOne = NO;
+    //self.hasPassedFive = NO;
+    self.stringSoFar = @"";
+    //[self performSelector:@selector(setHasPassedFiveSeconsBoolean) withObject:nil afterDelay:5];
+    
+    if (self.speechRec.isAvailable == NO) {
+        NSLog(@"--- SPEECH NOT AVAILABLE ---");
+        return;
+    } else {
+        NSError *error = nil;
+        [self.theEngine startAndReturnError:&error];
+        
+        self.theTask = [self.speechRec recognitionTaskWithRequest:self.theRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
+            if (error) {
+                [self handleError:error];
+                [self.theRequest endAudio];
+                [self endRecording];
+                return;
+            }
+            if (result == nil) {
+                NSLog(@"--- NO RESULT ---");
+                return;
+            }
+            NSString *resultString = [result.bestTranscription formattedString];
+            self.stringSoFar = resultString;
+            if (resultString) {
+                NSLog(result.isFinal ? @"FN YES" : @"FN NO");
+                if (result.isFinal) {
+                    [self.theRequest endAudio];
+                    [self stringDetermined:resultString];
+                    [self endRecording];
+                } else {
+                    NSLog(@"STRING SEGMENT %@ --- %@", resultString, self.stringSoFar);
+                    //if (self.hasPassedFive == YES) {
+                    if ([self.stringSoFar isEqualToString:resultString]) {
+                        if (self.duplicateStringOne == YES) {
+                            [self.theRequest endAudio];
+                            [self stringDetermined:resultString];
+                            [self endRecording];
+                        } else {
+                            self.duplicateStringOne = YES;
+                        }
+                    }
+                    //}
+                }
+            }
+        }];
+    }
+}
+
+- (void)endRecording {
+    if (self.theTask == nil || self.theEngine == nil) {
+        return;
+    }
+    [self.theTask finish];
+    self.theTask = nil;
+    [self.theEngine stop];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+    NSLog(@"Memory warning recieved in %@", self);
 }
+
+//End lifecycle
 
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     
-    [[SpeechController sharedInstance]endAudio];
 }
 
 /*

@@ -43,9 +43,10 @@
     
     [self setUpTableView];
     //[self setUpDismissButton];
-    [self getPendingNotifications];
+    //[self getPendingNotifications];
 }
 
+//For iOS update
 - (void)getPendingNotifications {
     [[UNUserNotificationCenter currentNotificationCenter]getPendingNotificationRequestsWithCompletionHandler:^(NSArray<UNNotificationRequest *> * _Nonnull requests) {
         if (requests.count > 0) {

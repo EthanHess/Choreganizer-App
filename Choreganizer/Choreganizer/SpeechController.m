@@ -10,8 +10,10 @@
 #import <Speech/Speech.h>
 #import <AVKit/AVKit.h>
 
+//TODO move to Add Chore VC
 static NSString *const locale = @"en-UR";
 
+//Can discard this class after test
 @interface SpeechController()
 
 @property (nonatomic, strong) SFSpeechRecognizer *speechRec;
@@ -20,6 +22,7 @@ static NSString *const locale = @"en-UR";
 @property (nonatomic, strong) AVAudioEngine *theEngine;
 @property (nonatomic, strong) NSString *stringSoFar;
 @property (nonatomic, assign) BOOL hasPassedFive;
+@property (nonatomic, assign) BOOL duplicateStringOne;
 
 @end
 
@@ -65,13 +68,15 @@ static NSString *const locale = @"en-UR";
 }
 
 - (void)startAudio {
+    [self.theRequest endAudio]; //?
+    self.duplicateStringOne = NO;
     [self setup];
-    self.hasPassedFive = NO;
+    //self.hasPassedFive = NO;
     self.stringSoFar = @"";
-    [self performSelector:@selector(setHasPassedFiveSeconsBoolean) withObject:nil afterDelay:5];
+    //[self performSelector:@selector(setHasPassedFiveSeconsBoolean) withObject:nil afterDelay:5];
     
-    if (self.theTask != nil || self.speechRec.isAvailable == NO) {
-        //Present alert and return
+    if (self.speechRec.isAvailable == NO) {
+        NSLog(@"--- SPEECH NOT AVAILABLE ---");
         return;
     } else {
         NSError *error = nil;
@@ -80,6 +85,12 @@ static NSString *const locale = @"en-UR";
         self.theTask = [self.speechRec recognitionTaskWithRequest:self.theRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
             if (error) {
                 [self.delegate handleError:error];
+                [self.theRequest endAudio];
+                [self endAudio];
+                return;
+            }
+            if (result == nil) {
+                NSLog(@"--- NO RESULT ---");
                 return;
             }
             NSString *resultString = [result.bestTranscription formattedString];
@@ -87,14 +98,22 @@ static NSString *const locale = @"en-UR";
             if (resultString && self.delegate) {
                 NSLog(result.isFinal ? @"FN YES" : @"FN NO");
                 if (result.isFinal) {
+                    [self.theRequest endAudio];
                     [self.delegate stringDetermined:resultString];
+                    [self endAudio];
                 } else {
-                    NSLog(@"STRING SEGMENT %@", resultString);
-                    if (self.hasPassedFive == YES) {
+                    NSLog(@"STRING SEGMENT %@ --- %@", resultString, self.stringSoFar);
+                    //if (self.hasPassedFive == YES) {
                         if ([self.stringSoFar isEqualToString:resultString]) {
-                            [self.delegate stringDetermined:resultString];
+                            if (self.duplicateStringOne == YES) {
+                                [self.theRequest endAudio];
+                                [self.delegate stringDetermined:resultString];
+                                [self endAudio];
+                            } else {
+                                self.duplicateStringOne = YES;
+                            }
                         }
-                    }
+                    //}
                 }
             }
         }];

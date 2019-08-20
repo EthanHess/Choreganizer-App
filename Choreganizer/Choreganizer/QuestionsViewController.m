@@ -147,8 +147,6 @@
         self.creditsLabel.numberOfLines = 0;
         self.creditsLabel.backgroundColor = [UIColor blackColor];
         [self addShadowToView:self.creditsLabel andColor:shadowColor];
-        self.creditsLabel.layer.cornerRadius = 20;
-        self.creditsLabel.layer.masksToBounds = YES;
         [self.scrollView addSubview:self.creditsLabel];
     }
     

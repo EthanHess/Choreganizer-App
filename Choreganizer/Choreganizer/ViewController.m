@@ -18,7 +18,7 @@
 #import "EditChorePopupView.h"
 #import "ChoreTodoCell.h"
 
-@interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate, EditChoreDelegate>
+@interface ViewController () <UITableViewDataSource, UITableViewDelegate, AddDelegate, EditChoreDelegate, UITextViewDelegate, UITextFieldDelegate>
 
 typedef enum {
     Space,
@@ -61,8 +61,10 @@ typedef enum {
 - (void)editChoreViewSetup {
     if (self.editChoreView == nil) {
         //TODO account for safe area y coord for new devices
-        self.editChoreView = [[EditChorePopupView alloc]initWithFrame:CGRectMake(50, 100, self.view.frame.size.width - 100, self.view.frame.size.height - 200)];
+        self.editChoreView = [[EditChorePopupView alloc]initWithFrame:CGRectMake(50, 150, self.view.frame.size.width - 100, self.view.frame.size.height - 250)];
         self.editChoreView.delegate = self;
+        self.editChoreView.textView.delegate = self;
+        self.editChoreView.textField.delegate = self;
         self.editChoreView.hidden = YES;
         [self.view addSubview:self.editChoreView];
     }
@@ -464,7 +466,19 @@ typedef enum {
 
 #pragma TField + TView delegates
 
-//TODO imp.
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
+}
+
+- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text {
+    if( [text rangeOfCharacterFromSet:[NSCharacterSet newlineCharacterSet]].location == NSNotFound) {
+        return YES;
+    }
+    
+    [textView resignFirstResponder];
+    return NO;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -512,6 +512,7 @@ static NSString *const locale = @"en-UR";
                 self.speechStringSoFar = resultString;
                 self.secondsWithoutSpeaking = 0; //is this the best place to set?
                 
+                //Delayed block here to check has finished boolean, then end audio (from inside block)
                 
 //                if (result.isFinal) { //called after 60 seconds or randomly it seems, maybe remove?
 //                    [self.theRequest endAudio];
@@ -542,6 +543,7 @@ static NSString *const locale = @"en-UR";
                 [self endSpeechTimer];
                 [self endCheckTimer];
                 self.secondsWithoutSpeaking = 0;
+                //set has finished boolean
             } else {
                 //try again (end timer)
             }

@@ -12,10 +12,10 @@
 #import "QuestionsViewController.h"
 #import "SpeechContainerView.h"
 #import "AppDelegate.h"
-#import "SpeechController.h"
+//#import "SpeechController.h"
 #import "GlobalFunctions.h"
 
-#import <Speech/Speech.h>
+#import <Speech/Speech.h> //Should updgrade to Siri kit eventually
 #import <AVKit/AVKit.h>
 
 #define IS_IPHONE_4 ([UIScreen mainScreen].bounds.size.height == 480.0)
@@ -27,7 +27,7 @@ static NSString *const microWhite = @"icons8whiteMicro";
 
 static NSString *const locale = @"en-UR";
 
-@interface AddChoreViewController () <UITextFieldDelegate, UITextViewDelegate, SpeechDelegate>
+@interface AddChoreViewController () <UITextFieldDelegate, UITextViewDelegate>
 
 @property (nonatomic, strong) NSString *schemeString;
 @property (nonatomic, strong) UIColor *labelColor;
@@ -49,9 +49,13 @@ static NSString *const locale = @"en-UR";
 @property (nonatomic, strong) SFSpeechAudioBufferRecognitionRequest *theRequest;
 @property (nonatomic, strong) SFSpeechRecognitionTask *theTask;
 @property (nonatomic, strong) AVAudioEngine *theEngine;
-@property (nonatomic, strong) NSString *stringSoFar;
-@property (nonatomic, assign) BOOL hasPassedFive;
-@property (nonatomic, assign) BOOL duplicateStringOne;
+
+@property (nonatomic, strong) NSString *speechStringSoFar; //chosen string can replace this
+@property (nonatomic, strong) NSTimer *speechTimer; //To detect lack of speech for however many seconds.
+@property (nonatomic, strong) NSTimer *checkFinishedTimer;
+@property (nonatomic, assign) int secondsWithoutSpeaking;
+@property (nonatomic, assign) BOOL shouldEndAudio;
+//@property (nonatomic, assign) BOOL shouldShowAlert;
 
 @end
 
@@ -61,6 +65,9 @@ static NSString *const locale = @"en-UR";
     [super viewDidLoad];
     
     self.microMode = NO;
+    self.secondsWithoutSpeaking = 0;
+    self.shouldEndAudio = NO;
+    //self.shouldShowAlert = NO;
     
     //TODO Should reconfigure with stack views
     
@@ -132,21 +139,6 @@ static NSString *const locale = @"en-UR";
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     
-}
-
-#pragma Speech Del.
-
-- (void)stringDetermined:(NSString *)speechText {
-    
-    //Strong self >> Weak self?
-    [GlobalFunctions presentChoiceAlertWithTitle:speechText andText:@"Is this what you meant to say?" fromVC:self andCompletion:^(BOOL correct) {
-        if (correct == YES) {
-            self.textView.text = @"";
-            self.textView.text = speechText;
-        } else {
-            //try again
-        }
-    }];
 }
 
 - (void)handleError:(NSError *)error {
@@ -487,54 +479,107 @@ static NSString *const locale = @"en-UR";
 }
 
 - (void)startRecording {
-    self.duplicateStringOne = NO;
-    //self.hasPassedFive = NO;
-    self.stringSoFar = @"";
-    //[self performSelector:@selector(setHasPassedFiveSeconsBoolean) withObject:nil afterDelay:5];
-    
     if (self.speechRec.isAvailable == NO) {
         NSLog(@"--- SPEECH NOT AVAILABLE ---");
         return;
     } else {
         NSError *error = nil;
         [self.theEngine startAndReturnError:&error];
+        //Start task
+        
+        [self startSpeechTimer];
+        [self startCheckFinishedTimer];
         
         self.theTask = [self.speechRec recognitionTaskWithRequest:self.theRequest resultHandler:^(SFSpeechRecognitionResult * _Nullable result, NSError * _Nullable error) {
             if (error) {
                 [self handleError:error];
                 [self.theRequest endAudio];
                 [self endRecording];
+                [self endSpeechTimer];
+                [self endCheckTimer];
                 return;
             }
             if (result == nil) {
                 NSLog(@"--- NO RESULT ---");
+                [self.theRequest endAudio];
+                [self endRecording];
+                [self endSpeechTimer];
+                [self endCheckTimer];
                 return;
             }
             NSString *resultString = [result.bestTranscription formattedString];
-            self.stringSoFar = resultString;
             if (resultString) {
-                NSLog(result.isFinal ? @"FN YES" : @"FN NO");
-                if (result.isFinal) {
-                    [self.theRequest endAudio];
-                    [self stringDetermined:resultString];
-                    [self endRecording];
-                } else {
-                    NSLog(@"STRING SEGMENT %@ --- %@", resultString, self.stringSoFar);
-                    //if (self.hasPassedFive == YES) {
-                    if ([self.stringSoFar isEqualToString:resultString]) {
-                        if (self.duplicateStringOne == YES) {
-                            [self.theRequest endAudio];
-                            [self stringDetermined:resultString];
-                            [self endRecording];
-                        } else {
-                            self.duplicateStringOne = YES;
-                        }
-                    }
-                    //}
-                }
+                self.speechStringSoFar = resultString;
+                self.secondsWithoutSpeaking = 0; //is this the best place to set?
+                
+                
+//                if (result.isFinal) { //called after 60 seconds or randomly it seems, maybe remove?
+//                    [self.theRequest endAudio];
+//                    [self stringDetermined:resultString];
+//                    [self endRecording];
+//                    [self endSpeechTimer];
+//                } else {
+//                    if (self.secondsWithoutSpeaking > 3) {
+//                        [self.theRequest endAudio];
+//                        [self stringDetermined:resultString];
+//                        [self endRecording];
+//                        [self endSpeechTimer];
+//                    }
+//                }
             }
         }];
     }
+}
+
+#pragma Speech
+
+- (void)handlePresentSpeechText {
+    if (self.secondsWithoutSpeaking > 3) {
+        [GlobalFunctions presentChoiceAlertWithTitle:self.speechStringSoFar andText:@"Is this what you meant to say?" fromVC:self andCompletion:^(BOOL correct) {
+            if (correct == YES) {
+                self.textView.text = @"";
+                self.textView.text = self.speechStringSoFar;
+                [self endSpeechTimer];
+                [self endCheckTimer];
+                self.secondsWithoutSpeaking = 0;
+            } else {
+                //try again (end timer)
+            }
+        }];
+    }
+}
+
+//- (void)stringDetermined:(NSString *)speechText {
+//    //Strong self >> Weak self? only if self retains this block, the inverse is default however
+//    [GlobalFunctions presentChoiceAlertWithTitle:speechText andText:@"Is this what you meant to say?" fromVC:self andCompletion:^(BOOL correct) {
+//        if (correct == YES) {
+//            self.textView.text = @"";
+//            self.textView.text = speechText;
+//            [self endSpeechTimer];
+//        } else {
+//            //try again (end timer)
+//        }
+//    }];
+//}
+
+- (void)incrementHasntSpokenSeconds {
+    self.secondsWithoutSpeaking = self.secondsWithoutSpeaking + 1;
+}
+
+- (void)startCheckFinishedTimer {
+    self.checkFinishedTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(handlePresentSpeechText) userInfo:nil repeats:YES];
+}
+
+- (void)endCheckTimer {
+    [self.checkFinishedTimer invalidate];
+}
+
+- (void)startSpeechTimer {
+    self.speechTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(incrementHasntSpokenSeconds) userInfo:nil repeats:YES];
+}
+
+- (void)endSpeechTimer {
+    [self.speechTimer invalidate];
 }
 
 - (void)endRecording {

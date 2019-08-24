@@ -512,21 +512,16 @@ static NSString *const locale = @"en-UR";
                 self.speechStringSoFar = resultString;
                 self.secondsWithoutSpeaking = 0; //is this the best place to set?
                 
-                //Delayed block here to check has finished boolean, then end audio (from inside block)
+                //End audio should be called within block so we'll set a bool in another function then right after we'll check, could also use a completion block or return yes/no value
                 
-//                if (result.isFinal) { //called after 60 seconds or randomly it seems, maybe remove?
-//                    [self.theRequest endAudio];
-//                    [self stringDetermined:resultString];
-//                    [self endRecording];
-//                    [self endSpeechTimer];
-//                } else {
-//                    if (self.secondsWithoutSpeaking > 3) {
-//                        [self.theRequest endAudio];
-//                        [self stringDetermined:resultString];
-//                        [self endRecording];
-//                        [self endSpeechTimer];
-//                    }
-//                }
+                //Delayed block here to check has finished boolean, then end audio (from inside block)
+                dispatch_time_t dt = dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC);
+                dispatch_after(dt, dispatch_get_main_queue(), ^{
+                    if (self.shouldEndAudio == YES) {
+                        [self.theRequest endAudio];
+                        [self endRecording];
+                    }
+                });
             }
         }];
     }
@@ -536,33 +531,24 @@ static NSString *const locale = @"en-UR";
 
 - (void)handlePresentSpeechText {
     if (self.secondsWithoutSpeaking > 3) {
+        self.shouldEndAudio = NO;
+        [self endSpeechTimer];
+        [self endCheckTimer];
+        self.secondsWithoutSpeaking = 0;
         [GlobalFunctions presentChoiceAlertWithTitle:self.speechStringSoFar andText:@"Is this what you meant to say?" fromVC:self andCompletion:^(BOOL correct) {
             if (correct == YES) {
                 self.textView.text = @"";
                 self.textView.text = self.speechStringSoFar;
-                [self endSpeechTimer];
-                [self endCheckTimer];
-                self.secondsWithoutSpeaking = 0;
                 //set has finished boolean
             } else {
-                //try again (end timer)
+                //try again (start timer/reset)
+                self.shouldEndAudio = NO;
+                [self startSpeechTimer];
+                [self startCheckFinishedTimer];
             }
         }];
     }
 }
-
-//- (void)stringDetermined:(NSString *)speechText {
-//    //Strong self >> Weak self? only if self retains this block, the inverse is default however
-//    [GlobalFunctions presentChoiceAlertWithTitle:speechText andText:@"Is this what you meant to say?" fromVC:self andCompletion:^(BOOL correct) {
-//        if (correct == YES) {
-//            self.textView.text = @"";
-//            self.textView.text = speechText;
-//            [self endSpeechTimer];
-//        } else {
-//            //try again (end timer)
-//        }
-//    }];
-//}
 
 - (void)incrementHasntSpokenSeconds {
     self.secondsWithoutSpeaking = self.secondsWithoutSpeaking + 1;

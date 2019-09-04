@@ -31,6 +31,8 @@
 @property (nonatomic, strong) UIButton *cancelButton;
 @property (nonatomic, strong) InstructionsView *instructionsView;
 
+@property (nonatomic, assign) BOOL spaceScheme;
+
 
 @end
 
@@ -42,11 +44,14 @@
     NSString *schemeString = [[NSUserDefaults standardUserDefaults]objectForKey:schemeKey];
     if (schemeString) {
         if ([schemeString isEqualToString:@"Space"]) {
+            self.spaceScheme = YES;
             [self backgroundImage:@"skyCH"];
         } else if ([schemeString isEqualToString:@"Color"]) {
+            self.spaceScheme = NO;
             [self backgroundImage:@"waterCH"];
         }
     } else {
+        self.spaceScheme = YES;
         [self backgroundImage:@"skyCH"];
     }
 
@@ -145,7 +150,7 @@
         self.creditsLabel.textColor = [UIColor whiteColor]; //TODO custom
         self.creditsLabel.text = @"Icons and images used around the app are from icons8.com and Pixabay";
         self.creditsLabel.numberOfLines = 0;
-        self.creditsLabel.backgroundColor = [UIColor blackColor];
+        self.creditsLabel.backgroundColor = self.spaceScheme == YES ? [UIColor blackColor] : [UIColor bottomGradientSpace];
         [self addShadowToView:self.creditsLabel andColor:shadowColor];
         [self.scrollView addSubview:self.creditsLabel];
     }
@@ -234,10 +239,12 @@
     switch (segment.selectedSegmentIndex) {
         case 0: {
             [[NSUserDefaults standardUserDefaults]setObject:@"Space" forKey:schemeKey];
+            self.creditsLabel.backgroundColor = [UIColor blackColor];
             [self backgroundImage:@"skyCH"];
             break; }
         case 1: {
             [[NSUserDefaults standardUserDefaults]setObject:@"Color" forKey:schemeKey];
+            self.creditsLabel.backgroundColor = [UIColor bottomGradientSpace];
             [self backgroundImage:@"waterCH"];
             break; }
         default:

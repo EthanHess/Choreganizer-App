@@ -34,7 +34,10 @@
     
     [self setScheme];
     
-    self.datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 150)];
+    //self.datePicker = [[UIDatePicker alloc]initWithFrame:CGRectMake(0, 100, self.view.frame.size.width, 150)];
+    self.datePicker = [[UIDatePicker alloc]initWithFrame:CGRectZero];
+    self.datePicker.center = self.view.center;
+    
     [self.datePicker setValue:[UIColor whiteColor] forKey:@"textColor"];
     [self.view addSubview:self.datePicker];
     

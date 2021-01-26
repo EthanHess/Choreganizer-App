@@ -400,6 +400,7 @@ typedef enum {
 
 - (void)popAddChoreView:(Day *)day {
     AddChoreViewController *addChoreVC = [AddChoreViewController new];
+    addChoreVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [addChoreVC updateWithDay:day];
     [self.navigationController presentViewController:addChoreVC animated:YES completion:nil];
 }
@@ -460,6 +461,7 @@ typedef enum {
 
 - (void)popPickerViewControllerWithChore:(Chore *)chore andDay:(Day *)day {
     PickerViewController *pickerVC = [PickerViewController new];
+    pickerVC.modalPresentationStyle = UIModalPresentationFullScreen;
     [pickerVC updateWithChore:chore andDay:day];
     [self.navigationController presentViewController:pickerVC animated:YES completion:nil];
 }
